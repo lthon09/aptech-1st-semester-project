@@ -1,6 +1,8 @@
 <?php
     require_once "../../utilities.php";
 
+    require_once "../../dependencies/loaders/mustache.php";
+
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
 
@@ -35,4 +37,10 @@
             }
         }
     }
+
+    echo $mustache -> render("base", array(
+        "title" => "Sign Up",
+        "content" => <<<"CONTENT"
+        CONTENT,
+    ));
 ?>
