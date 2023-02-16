@@ -1,7 +1,7 @@
 <?php
-    require_once "../../utilities.php";
-
     require_once "../../dependencies/loaders/mustache.php";
+
+    require_once "../../utilities.php";
 
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
@@ -25,17 +25,17 @@
                     $connection = connect();
 
                     $statement = $connection -> prepare("
-                        INSERT INTO Members (ID, Username, Email, `Password`, Administrator) VALUES (:id, :username, :email, :password, FALSE);
+                        INSERT INTO UnverifiedMembers (ID, Username, Email, `Password`) VALUES (:id, :username, :email, :password);
                     ");
 
                     $statement -> execute(array(
-                        "id" => generate_id(),
+                        "id" => generate_id(32),
                         "username" => $username,
                         "email" => $email,
                         "password" => $hashed_password,
                     ));
 
-                    redirect("log_in.php");
+                    //
                 }
             }
         }

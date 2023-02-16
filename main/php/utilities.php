@@ -12,8 +12,8 @@
 
     const PASSWORD_HASHING_ALGORITHM = PASSWORD_BCRYPT;
 
-    function generate_id() {
-        return bin2hex(random_bytes(16));
+    function generate_id($length = 16) {
+        return bin2hex(random_bytes($length));
     }
 
     function validate_credentials($username, $password) {

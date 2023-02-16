@@ -1,6 +1,17 @@
 CREATE DATABASE IF NOT EXISTS PleasantTours;
 USE PleasantTours;
 
+CREATE TABLE IF NOT EXISTS UnverifiedMembers (
+    ID CHAR(32),
+
+    Username VARCHAR(20) NOT NULL,
+    `Password` CHAR(60) NOT NULL,
+
+    Email VARCHAR(255) NOT NULL,
+
+    PRIMARY KEY (ID)
+);
+
 CREATE TABLE IF NOT EXISTS Members (
     ID CHAR(16),
 

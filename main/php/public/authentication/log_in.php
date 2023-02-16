@@ -1,7 +1,7 @@
 <?php
-    require_once "../../utilities.php";
-
     require_once "../../dependencies/loaders/mustache.php";
+
+    require_once "../../utilities.php";
 
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
