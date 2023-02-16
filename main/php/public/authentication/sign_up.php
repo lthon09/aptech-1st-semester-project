@@ -15,7 +15,7 @@
             if (!validate_credentials($username, $password)) {
                 //
             } else {
-                $hashed_password = _hash($password);
+                $hashed_password = password_hash($password, PASSWORD_HASHING_ALGORITHM);
 
                 if ($hashed_password === false) {
                     //
@@ -32,7 +32,7 @@
                         "password" => $hashed_password,
                     ));
 
-                    redirect("login.php");
+                    redirect("log_in.php");
                 }
             }
         }
@@ -41,6 +41,12 @@
     echo $mustache -> render("base", array(
         "title" => "Sign Up",
         "content" => <<<"CONTENT"
+            <form method="post" action="{$_SERVER["PHP_SELF"]}">
+                <input type="text" name="username">
+                <input type="password" name="password">
+                <input type="password" name="confirm_password">
+                <input type="submit" name="submit">
+            </form>
         CONTENT,
     ));
 ?>

@@ -35,13 +35,13 @@ CREATE TABLE IF NOT EXISTS Tours (
     LongDescription VARCHAR(1000) NOT NULL,
 
     Price DECIMAL(15, 2) NOT NULL,
-    Sale INT DEFAULT 0,
+    Sale TINYINT UNSIGNED DEFAULT 0,
 
-    Country CHAR(16),
+    Country CHAR(16) NOT NULL,
 
     Avatar VARCHAR(25) NOT NULL,
 
-    Category CHAR(16),
+    Category CHAR(16) NOT NULL,
 
     `From` DATETIME NOT NULL,
     `To` DATETIME NOT NULL,
@@ -53,17 +53,17 @@ CREATE TABLE IF NOT EXISTS Tours (
     FOREIGN KEY (Country) REFERENCES Countries(ID),
     FOREIGN KEY (Category) REFERENCES Categories(ID),
 
-    CHECK (0 >= Sale <= 100)
+    CHECK (Sale <= 100)
 );
 
 CREATE TABLE IF NOT EXISTS Reviews (
     ID CHAR(16),
 
-    Tour CHAR(16),
+    Tour CHAR(16) NOT NULL,
 
     Author CHAR(16),
 
-    Content VARCHAR(1000),
+    Content VARCHAR(1000) NOT NULL,
     Rating TINYINT UNSIGNED NOT NULL,
 
     PRIMARY KEY (ID),
@@ -71,5 +71,5 @@ CREATE TABLE IF NOT EXISTS Reviews (
     FOREIGN KEY (Tour) REFERENCES Tours(ID),
     FOREIGN KEY (Author) REFERENCES Members(ID),
 
-    CHECK (Rating <= 5)
+    CHECK (1 >= Rating <= 5)
 );

@@ -10,12 +10,10 @@
         ),
     );
 
+    const PASSWORD_HASHING_ALGORITHM = PASSWORD_BCRYPT;
+
     function generate_id() {
         return bin2hex(random_bytes(16));
-    }
-
-    function _hash($string) {
-        return password_hash($string, PASSWORD_BCRYPT);
     }
 
     function validate_credentials($username, $password) {
