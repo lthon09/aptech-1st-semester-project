@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS Members (
     Username VARCHAR(20) NOT NULL,
     `Password` CHAR(60) NOT NULL,
 
-    Administrator BOOL NOT NULL, 
+    Administrator BOOLEAN NOT NULL, 
 
     PRIMARY KEY (ID)
 );
