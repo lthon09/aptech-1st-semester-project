@@ -23,7 +23,7 @@
                     $connection = connect();
 
                     $statement = $connection -> prepare("
-                        INSERT INTO Members (ID, Username, `Password`) VALUES (:id, :username, :password);
+                        INSERT INTO Members (ID, Username, `Password`, Administrator) VALUES (:id, :username, :password, FALSE);
                     ");
 
                     $statement -> execute(array(
