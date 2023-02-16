@@ -6,6 +6,8 @@
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
 
+        $email = $_POST["email"];
+
         $password = $_POST["password"];
         $confirm_password = $_POST["confirm_password"];
 
@@ -23,12 +25,13 @@
                     $connection = connect();
 
                     $statement = $connection -> prepare("
-                        INSERT INTO Members (ID, Username, `Password`, Administrator) VALUES (:id, :username, :password, FALSE);
+                        INSERT INTO Members (ID, Username, Email, `Password`, Administrator) VALUES (:id, :username, :email, :password, FALSE);
                     ");
 
                     $statement -> execute(array(
                         "id" => generate_id(),
                         "username" => $username,
+                        "email" => $email,
                         "password" => $hashed_password,
                     ));
 
@@ -43,6 +46,7 @@
         "content" => <<<"CONTENT"
             <form method="post" action="{$_SERVER["PHP_SELF"]}">
                 <input type="text" name="username">
+                <input type="email" name="email">
                 <input type="password" name="password">
                 <input type="password" name="confirm_password">
                 <input type="submit" name="submit">
