@@ -7,6 +7,10 @@
 
     require_once __DIR__ . "/vendor/autoload.php";
 
+    // error_reporting(0);
+
+    $script = $_SERVER["SCRIPT_NAME"];
+
     Dotenv\Dotenv::createImmutable(__DIR__) -> load();
 
     const IDS = [
@@ -38,8 +42,10 @@
         ]),
     ]);
 
-    function get_server() {
-        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]);
+    function get_directory() {
+        global $script;
+
+        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . dirname($script); // using SERVER_NAME is fine here since we have UseCanonicalName enabled
     }
 
     function generate_id($length, $database) {
@@ -58,9 +64,7 @@
                 }
 
                 $statement = $connection -> prepare("
-                    SELECT * FROM $database
-                    WHERE ID = :id
-                    LIMIT 1;
+                    SELECT * FROM {$database} WHERE ID = :id LIMIT 1;
                 ");
 
                 $statement -> execute(["id" => $id]);
@@ -76,6 +80,16 @@
         } catch(Exception $_) {
             return false;
         }
+    }
+
+    function validate_id($id) {
+        foreach (mb_str_split($id) as $character) {
+            if (!str_contains(IDS["characters"], $character)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     function validate_email($email) {
@@ -120,10 +134,30 @@
         return validate_username($username) && validate_password($password);
     }
 
+    function hash_password($password) {
+        return password_hash($password, PASSWORD_HASHING_ALGORITHM);
+    }
+
     function redirect($url) {
         header("Location: $url");
 
         die();
+    }
+
+    function is_logged_in() {
+        return isset($_COOKIE["member"]);
+    }
+
+    function not_logged_in_only() {
+        if (is_logged_in()) {
+            redirect("/");
+        }
+    }
+
+    function logged_in_only() {
+        if (!is_logged_in()) {
+            redirect("/authentication/log_in.php?destination=" . urlencode($_SERVER["REQUEST_URI"]));
+        }
     }
 
     function connect() {

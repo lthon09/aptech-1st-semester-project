@@ -1,6 +1,8 @@
 <?php
     require_once "../../global.php";
 
+    not_logged_in_only();
+
     $queries = [];
     parse_str($_SERVER["QUERY_STRING"], $queries);
 
@@ -9,19 +11,14 @@
     } else {
         $unverified_id = $queries["id"];
 
-        foreach (mb_str_split($unverified_id) as $character) {
-            if (!str_contains(ID_CHARACTERS, $character)) {
-                //
-            }
+        if (!validate_id($unverified_id)) {
+            //
         }
 
         $connection = connect();
 
         $statement = $connection -> prepare("
-            SELECT Username, `Password`, Email
-            FROM UnverifiedMembers
-            WHERE ID = :id
-            LIMIT 1;
+            SELECT * FROM UnverifiedMembers WHERE ID = :id LIMIT 1;
         ");
 
         $statement -> execute(["id" => $unverified_id]);

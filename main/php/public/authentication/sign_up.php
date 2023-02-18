@@ -1,6 +1,8 @@
 <?php
     require_once "../../global.php";
 
+    not_logged_in_only();
+
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
 
@@ -31,7 +33,7 @@
                     //
                 }
 
-                $hashed_password = password_hash($password, PASSWORD_HASHING_ALGORITHM);
+                $hashed_password = hash_password($password);
 
                 if ($hashed_password === false) {
                     //
@@ -42,10 +44,10 @@
                         //
                     }
 
-                    $link = get_server() . "/verify.php?id=" . $id;
+                    $link = get_directory() . "/verify.php?id=" . $id;
 
                     if(!send_mail($email, "Confirm Your Email Address",
-                        <<<"BODY"
+                        <<<BODY
                             <strong>{$username}</strong>,
                             <br><br>
                             It seems like a Pleasant Tours account has just been created using your email address. Please verify this by opening the link below.
@@ -99,8 +101,8 @@
 
     echo $mustache -> render("base", [
         "title" => "Sign Up",
-        "content" => <<<"CONTENT"
-            <form method="post" action="{$_SERVER["PHP_SELF"]}">
+        "content" => <<<CONTENT
+            <form method="post" action="{$script}">
                 <input type="text" name="username">
                 <input type="email" name="email">
                 <input type="password" name="password">

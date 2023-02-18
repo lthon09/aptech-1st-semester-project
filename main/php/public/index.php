@@ -3,7 +3,7 @@
 
     echo $mustache -> render("base", [
         "title" => "Home",
-        "content" => <<<"CONTENT"
+        "content" => <<<CONTENT
         CONTENT,
     ]);
 ?>

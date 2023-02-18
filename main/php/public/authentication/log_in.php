@@ -1,6 +1,11 @@
 <?php
     require_once "../../global.php";
 
+    not_logged_in_only();
+
+    $query_string = $_SERVER["QUERY_STRING"];
+    $_query_string = ($query_string !== "") ? "?$query_string" : "";
+
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
         $password = $_POST["password"];
@@ -19,7 +24,7 @@
             if ($statement -> rowCount() === 0) {
                 //
             } else {
-                $hashed_password = $statement -> fetch()["Password"];
+                $hashed_password = ($statement -> fetch())["Password"];
 
                 if (!password_verify($password, $hashed_password)) {
                     //
@@ -33,8 +38,14 @@
                         false,
                         true,
                     );
-    
-                    redirect("..");
+
+                    $queries = [];
+                    parse_str($query_string, $queries);
+
+                    redirect((isset($queries["destination"]))
+                        ? urldecode($queries["destination"])
+                        : ""
+                    );
                 }
             }
         }
@@ -42,8 +53,8 @@
 
     echo $mustache -> render("base", [
         "title" => "Log In",
-        "content" => <<<"CONTENT"
-            <form method="post" action="{$_SERVER["PHP_SELF"]}">
+        "content" => <<<CONTENT
+            <form method="post" action="{$script}{$_query_string}">
                 <input type="text" name="username">
                 <input type="password" name="password">
                 <input type="checkbox" name="remember">

@@ -1,6 +1,8 @@
 <?php
     require_once "../../global.php";
 
+    not_logged_in_only();
+
     if (isset($_POST["submit"])) {
         $method = $_POST["method"];
 
@@ -29,7 +31,7 @@
         $connection = connect();
 
         $statement = $connection -> prepare(
-            "SELECT ID, Username, Email FROM Members WHERE "
+            "SELECT * FROM Members WHERE "
             . strtoupper($method)
             . " = :input LIMIT 1;"
         );
@@ -49,10 +51,10 @@
 
             $reset_password_id = generate_id(IDS["lengths"]["secure"], "ResetPasswordMembers");
 
-            $link = get_server() . "/reset_password.php?id=" . $reset_password_id;
+            $link = get_directory() . "/reset_password.php?id=" . $reset_password_id;
 
             if(!send_mail($email, "Reset Your Password",
-                <<<"BODY"
+                <<<BODY
                     <strong>{$username}</strong>,
                     <br><br>
                     A password reset request has just been for with your account. Please click on the link below in order to reset your password.
@@ -102,8 +104,8 @@
 
     echo $mustache -> render("base", [
         "title" => "Forgot Password",
-        "content" => <<<"CONTENT"
-            <form method="post" action="{$_SERVER["PHP_SELF"]}">
+        "content" => <<<CONTENT
+            <form method="post" action="{$script}">
                 <select name="method">
                     <option>select</option>
                     <option value="username">username</option>
