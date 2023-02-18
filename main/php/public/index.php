@@ -1,9 +1,9 @@
 <?php
-    require_once "../dependencies/loaders/mustache.php";
+    require_once "../global.php";
 
-    echo $mustache -> render("base", array(
+    echo $mustache -> render("base", [
         "title" => "Home",
         "content" => <<<"CONTENT"
         CONTENT,
-    ));
+    ]);
 ?>

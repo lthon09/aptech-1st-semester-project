@@ -1,7 +1,5 @@
 <?php
-    require_once "../../dependencies/loaders/mustache.php";
-
-    require_once "../../utilities.php";
+    require_once "../../global.php";
 
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
@@ -28,12 +26,12 @@
                         INSERT INTO UnverifiedMembers (ID, Username, Email, `Password`) VALUES (:id, :username, :email, :password);
                     ");
 
-                    $statement -> execute(array(
+                    $statement -> execute([
                         "id" => generate_id(32),
                         "username" => $username,
                         "email" => $email,
                         "password" => $hashed_password,
-                    ));
+                    ]);
 
                     //
                 }
@@ -41,7 +39,7 @@
         }
     }
 
-    echo $mustache -> render("base", array(
+    echo $mustache -> render("base", [
         "title" => "Sign Up",
         "content" => <<<"CONTENT"
             <form method="post" action="{$_SERVER["PHP_SELF"]}">
@@ -52,5 +50,5 @@
                 <input type="submit" name="submit">
             </form>
         CONTENT,
-    ));
+    ]);
 ?>

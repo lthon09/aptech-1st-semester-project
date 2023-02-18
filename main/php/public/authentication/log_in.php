@@ -1,7 +1,5 @@
 <?php
-    require_once "../../dependencies/loaders/mustache.php";
-
-    require_once "../../utilities.php";
+    require_once "../../global.php";
 
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
@@ -16,7 +14,7 @@
                 SELECT * FROM Members WHERE Username = :username;
             ");
 
-            $statement -> execute(array("username" => $username));
+            $statement -> execute(["username" => $username]);
 
             if ($statement -> rowCount() === 0) {
                 //
@@ -42,7 +40,7 @@
         }
     }
 
-    echo $mustache -> render("base", array(
+    echo $mustache -> render("base", [
         "title" => "Log In",
         "content" => <<<"CONTENT"
             <form method="post" action="{$_SERVER["PHP_SELF"]}">
@@ -52,5 +50,5 @@
                 <input type="submit" name="submit">
             </form>
         CONTENT,
-    ));
+    ]);
 ?>
