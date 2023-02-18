@@ -18,6 +18,18 @@ CREATE TABLE IF NOT EXISTS UnverifiedMembers (
     INDEX (ID, Expiration)
 );
 
+CREATE TABLE IF NOT EXISTS ResetPasswordMembers (
+    ID CHAR(32),
+
+    Member CHAR(16),
+
+    Expiration DATETIME DEFAULT ADDTIME(NOW(), 900), -- 900 seconds = 15 minutes
+
+    PRIMARY KEY (ID),
+
+    INDEX (ID, Expiration)
+);
+
 CREATE TABLE IF NOT EXISTS Members (
     ID CHAR(16),
 
@@ -101,8 +113,15 @@ CREATE TABLE IF NOT EXISTS Reviews (
     CHECK (1 >= Rating <= 5)
 );
 
-CREATE EVENT IF NOT EXISTS UnverifiedMembersExpirationChecker
+DELIMITER $$
+
+CREATE EVENT IF NOT EXISTS ExpirationChecker
 ON SCHEDULE
 EVERY 1 SECOND
 DO
-    DELETE FROM UnverifiedMembers WHERE Expiration < NOW();
+    BEGIN
+        DELETE FROM UnverifiedMembers WHERE Expiration < NOW();
+        DELETE FROM ResetPasswordMembers WHERE Expiration < NOW();
+    END; $$
+
+DELIMITER ;

@@ -12,7 +12,7 @@
         if ($password !== $confirm_password) {
             //
         } else {
-            if (!validate_credentials($username, $password) || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            if (!validate_credentials($username, $password) || !validate_email($email)) {
                 //
             } else {
                 $connection = connect();
@@ -36,26 +36,26 @@
                 if ($hashed_password === false) {
                     //
                 } else {
-                    $server = get_server();
-
-                    $id = generate_id(32, "UnverifiedMembers");
+                    $id = generate_id(IDS["lengths"]["secure"], "UnverifiedMembers");
 
                     if ($id === false) {
                         //
                     }
 
+                    $link = get_server() . "/verify.php?id=" . $id;
+
                     if(!send_mail($email, "Confirm Your Email Address",
                         <<<"BODY"
                             <strong>{$username}</strong>,
                             <br><br>
-                            It seems like a Pleasant Tours account has just been created using your email address. Please verify this by clicking on the link below.
+                            It seems like a Pleasant Tours account has just been created using your email address. Please verify this by opening the link below.
                             <br>
                             This link will expire in <strong>15 minutes</strong>.
                             <br>
                             <br>
                             If this wasn't you, please ignore this email.
                             <br><br>
-                            <a target="_blank" href="{$server}/verify.php?id={$id}">CONFIRM YOUR EMAIL ADDRESS</a>
+                            <a target="_blank" href="{$link}">CONFIRM YOUR EMAIL ADDRESS</a>
                             <br><br>
                             <strong>
                                 Cheers,
@@ -71,7 +71,7 @@
 
                             If this wasn't you, please ignore this email.
 
-                            CONFIRM YOUR EMAIL ADDRESS: {$server}/verify.php?id={$id}
+                            CONFIRM YOUR EMAIL ADDRESS: {$link}
 
                             Cheers,
                             Pleasant Tours

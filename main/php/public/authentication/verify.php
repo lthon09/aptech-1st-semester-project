@@ -29,7 +29,7 @@
         if ($statement -> rowCount() === 0) {
             //
         } else {
-            $verified_id = generate_id(16, "Members");
+            $verified_id = generate_id(IDS["lengths"]["member"], "Members");
 
             if ($verified_id === false) {
                 //
@@ -55,6 +55,8 @@
                 "password" => $password,
                 "email" => $email,
             ]);
+
+            //
         }
     }
 ?>

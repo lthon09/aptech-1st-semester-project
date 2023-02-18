@@ -9,8 +9,15 @@
 
     Dotenv\Dotenv::createImmutable(__DIR__) -> load();
 
-    const ID_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    $id_characters_length = strlen(ID_CHARACTERS);
+    const IDS = [
+        "characters" => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        "lengths" => [
+            "member" => 16,
+            "secure" => 32,
+        ],
+    ];
+
+    $id_characters_length = strlen(IDS["characters"]);
 
     const CREDENTIALS = [
         "characters" => [
@@ -47,7 +54,7 @@
                 $id = "";
 
                 for ($index = 0; $index < $length; $index++) {
-                    $id .= ID_CHARACTERS[random_int(0, $id_characters_length)];
+                    $id .= IDS["characters"][random_int(0, $id_characters_length)];
                 }
 
                 $statement = $connection -> prepare("
@@ -71,13 +78,14 @@
         }
     }
 
-    function validate_credentials($username, $password) {
+    function validate_email($email) {
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+
+    function validate_username($username) {
         if (
             (strlen($username) < CREDENTIALS["length"]["username"][0]) ||
-            (strlen($username) > CREDENTIALS["length"]["username"][1]) ||
-
-            (strlen($password) < CREDENTIALS["length"]["password"][0]) ||
-            (strlen($password) > CREDENTIALS["length"]["password"][1])
+            (strlen($username) > CREDENTIALS["length"]["username"][1])
         ) {
             return false;
         }
@@ -87,6 +95,18 @@
                 return false;
             }
         }
+
+        return true;
+    }
+
+    function validate_password($password) {
+        if (
+            (strlen($password) < CREDENTIALS["length"]["password"][0]) ||
+            (strlen($password) > CREDENTIALS["length"]["password"][1])
+        ) {
+            return false;
+        }
+
         foreach (mb_str_split($password) as $character) {
             if (!str_contains(CREDENTIALS["characters"]["password"], $character)) {
                 return false;
@@ -94,6 +114,10 @@
         }
 
         return true;
+    }
+
+    function validate_credentials($username, $password) {
+        return validate_username($username) && validate_password($password);
     }
 
     function redirect($url) {
