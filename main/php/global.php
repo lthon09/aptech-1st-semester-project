@@ -9,6 +9,9 @@
 
     Dotenv\Dotenv::createImmutable(__DIR__) -> load();
 
+    const ID_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    $id_characters_length = strlen(ID_CHARACTERS);
+
     const CREDENTIALS = [
         "characters" => [
             "username" => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ",
@@ -32,9 +35,37 @@
         return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]);
     }
 
-    function generate_id($length = 16) {
+    function generate_id($length, $database) {
+        global $id_characters_length;
+
+        $tries = 0;
+
         try {
-            return bin2hex(random_bytes($length));
+            $connection = connect();
+
+            while ($tries < 5) {
+                $id = "";
+
+                for ($index = 0; $index < $length; $index++) {
+                    $id .= ID_CHARACTERS[random_int(0, $id_characters_length)];
+                }
+
+                $statement = $connection -> prepare("
+                    SELECT * FROM $database
+                    WHERE ID = :id
+                    LIMIT 1;
+                ");
+
+                $statement -> execute(["id" => $id]);
+
+                if ($statement -> rowCount() !== 0) {
+                    $tries += 1;
+
+                    continue;
+                }
+
+                return $id;
+            }
         } catch(Exception $_) {
             return false;
         }

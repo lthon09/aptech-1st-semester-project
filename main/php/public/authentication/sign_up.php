@@ -12,9 +12,25 @@
         if ($password !== $confirm_password) {
             //
         } else {
-            if (!validate_credentials($username, $password)) {
+            if (!validate_credentials($username, $password) || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
                 //
             } else {
+                $connection = connect();
+
+                $statement1 = $connection -> prepare("
+                    SELECT * FROM UnverifiedMembers WHERE Email = :email LIMIT 1;
+                ");
+                $statement2 = $connection -> prepare("
+                    SELECT * FROM Members WHERE Email = :email LIMIT 1;
+                ");
+
+                $statement1 -> execute(["email" => $email]);
+                $statement2 -> execute(["email" => $email]);
+
+                if ($statement1 -> rowCount() !== 0 || $statement2 -> rowCount() !== 0) {
+                    //
+                }
+
                 $hashed_password = password_hash($password, PASSWORD_HASHING_ALGORITHM);
 
                 if ($hashed_password === false) {
@@ -22,7 +38,7 @@
                 } else {
                     $server = get_server();
 
-                    $id = generate_id(32);
+                    $id = generate_id(32, "UnverifiedMembers");
 
                     if ($id === false) {
                         //
@@ -39,7 +55,7 @@
                             <br>
                             If this wasn't you, please ignore this email.
                             <br><br>
-                            <a target="_blank" href="{$server}/verify/{$id}">CONFIRM YOUR EMAIL ADDRESS</a>
+                            <a target="_blank" href="{$server}/verify.php?id={$id}">CONFIRM YOUR EMAIL ADDRESS</a>
                             <br><br>
                             <strong>
                                 Cheers,
@@ -55,7 +71,7 @@
 
                             If this wasn't you, please ignore this email.
 
-                            CONFIRM YOUR EMAIL ADDRESS: {$server}/verify/{$id}
+                            CONFIRM YOUR EMAIL ADDRESS: {$server}/verify.php?id={$id}
 
                             Cheers,
                             Pleasant Tours
@@ -63,13 +79,11 @@
                     )) {
                         //
                     } else {
-                        $connection = connect();
-
-                        $statement = $connection -> prepare("
-                            INSERT INTO UnverifiedMembers (ID, Username, Email, `Password`) VALUES (:id, :username, :email, :password);
-                        ");
-
-                        $statement -> execute([
+                        $connection -> prepare("
+                            INSERT INTO UnverifiedMembers
+                            (ID, Username, Email, `Password`)
+                            VALUES (:id, :username, :email, :password);
+                        ") -> execute([
                             "id" => $id,
                             "username" => $username,
                             "email" => $email,

@@ -11,7 +11,7 @@
             $connection = connect();
 
             $statement = $connection -> prepare("
-                SELECT * FROM Members WHERE Username = :username;
+                SELECT * FROM Members WHERE Username = :username LIMIT 1;
             ");
 
             $statement -> execute(["username" => $username]);
