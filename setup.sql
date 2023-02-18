@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS Members (
 
     PRIMARY KEY (ID),
 
-    INDEX (ID, `Password`, Administrator)
+    INDEX (ID, Username, `Password`, Administrator)
 );
 
 CREATE TABLE IF NOT EXISTS Categories (
