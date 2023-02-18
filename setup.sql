@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS UnverifiedMembers (
     ID CHAR(32),
 
     Username VARCHAR(20) NOT NULL,
-    `Password` CHAR(60) NOT NULL,
+    `Password` CHAR(97) NOT NULL,
 
     Email VARCHAR(255) NOT NULL,
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Members (
     ID CHAR(16),
 
     Username VARCHAR(20) NOT NULL,
-    `Password` CHAR(60) NOT NULL,
+    `Password` CHAR(97) NOT NULL,
 
     Email VARCHAR(255) NOT NULL,
 

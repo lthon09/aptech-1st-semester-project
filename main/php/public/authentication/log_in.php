@@ -24,14 +24,28 @@
             if ($statement -> rowCount() === 0) {
                 //
             } else {
-                $hashed_password = ($statement -> fetch())["Password"];
+                $member = $statement -> fetch();
+
+                $id = $member["ID"];
+                $hashed_password = $member["Password"];
 
                 if (!password_verify($password, $hashed_password)) {
                     //
                 } else {
+                    if (password_needs_rehash($password, HASH["algorithm"], HASH["options"])) {
+                        $hashed_password = hash_password($password);
+
+                        $connection -> prepare("
+                            UPDATE Members SET `Password` = :password WHERE ID = :id;
+                        ") -> execute([
+                            "password" => $hashed_password,
+                            "id" => $id,
+                        ]);
+                    }
+
                     setcookie(
                         "member",
-                        base64_encode("$username|$hashed_password"),
+                        base64_encode("$id|$hashed_password"),
                         (isset($_POST["remember"])) ? time() + (86400 * 30) : 0,
                         "/",
                         "",

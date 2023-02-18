@@ -36,9 +36,7 @@
             . " = :input LIMIT 1;"
         );
 
-        $statement -> execute([
-            "input" => ($method === "username") ? $username : $email,
-        ]);
+        $statement -> execute(["input" => $$method]);
 
         if ($statement -> rowCount() === 0) {
             //

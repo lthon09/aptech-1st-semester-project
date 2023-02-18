@@ -27,14 +27,23 @@
         "characters" => [
             "username" => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ",
             "password" => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`~!?@#$%^&_+-*=/\\|,.;:'\"<>()[]{}",
+            "hashed_password" => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$,.+=/",
         ],
         "length" => [
             "username" => [2, 20],
             "password" => [8, 40],
+            "hashed_password" => 97,
         ],
     ];
 
-    const PASSWORD_HASHING_ALGORITHM = PASSWORD_BCRYPT;
+    const HASH = [
+        "algorithm" => PASSWORD_ARGON2ID,
+        "options" => [
+            "memory_cost" => 64 * 1024,
+            "time_cost" => 8,
+            "threads" => 8,
+        ],
+    ];
 
     $mustache = new Mustache_Engine([
         "loader" => new Mustache_Loader_FilesystemLoader(__DIR__ . "/../templates", [
@@ -130,12 +139,26 @@
         return true;
     }
 
+    function validate_hashed_password($password) {
+        if (strlen($password) !== CREDENTIALS["length"]["hashed_password"]) {
+            return false;
+        }
+
+        foreach (mb_str_split($password) as $character) {
+            if (!str_contains(CREDENTIALS["characters"]["hashed_password"], $character)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     function validate_credentials($username, $password) {
         return validate_username($username) && validate_password($password);
     }
 
     function hash_password($password) {
-        return password_hash($password, PASSWORD_HASHING_ALGORITHM);
+        return password_hash($password, HASH["algorithm"], HASH["options"]);
     }
 
     function redirect($url) {
@@ -143,6 +166,52 @@
 
         die();
     }
+
+    function get_member_credentials() {
+        if (!is_logged_in()) {
+            return false;
+        }
+
+        $decoded = base64_decode($_COOKIE["member"], true);
+
+        if ($decoded === false) {
+            return false;
+        }
+
+        try {
+            $credentials = explode("|", $decoded, 2 + 1);
+        } catch (ValueError $_) {
+            return false;
+        }
+
+        if (count($credentials) === 0) {
+            return false;
+        }
+
+        $id = $credentials[0];
+        $password = $credentials[1];
+
+        if (!validate_id($id) || !validate_hashed_password($password)) {
+            return false;
+        }
+
+        $statement = connect() -> prepare("
+            SELECT * FROM Members WHERE ID = :id AND PASSWORD = :password LIMIT 1;
+        ");
+
+        $statement -> execute([
+            "id" => $id,
+            "password" => $password,
+        ]);
+
+        if ($statement -> rowCount() === 0) {
+            return false;
+        }
+
+        return $statement -> fetch();
+    }
+
+    $credentials = get_member_credentials();
 
     function is_logged_in() {
         return isset($_COOKIE["member"]);
@@ -157,6 +226,18 @@
     function logged_in_only() {
         if (!is_logged_in()) {
             redirect("/authentication/log_in.php?destination=" . urlencode($_SERVER["REQUEST_URI"]));
+        }
+    }
+
+    function administrator_only() {
+        global $credentials;
+
+        if ($credentials === false) {
+            redirect("/");
+        }
+
+        if ($credentials["Administrator"] === 0) {
+            redirect("/");
         }
     }
 
@@ -198,8 +279,15 @@
             $mail -> send();
 
             return true;
-        } catch (Exception $_) {
+        } catch (\Exception | \Throwable $_) {
             return false;
         }
+    }
+
+    if ($credentials !== false && password_needs_rehash($credentials["Password"], HASH["algorithm"])) {
+        unset($_COOKIE["member"]);
+        setcookie("member", null, -1, "/");
+
+        redirect("/authentication/log_in.php");
     }
 ?>
