@@ -56,7 +56,7 @@
                 "email" => $email,
             ]);
 
-            //
+            redirect("log_in.php");
         }
     }
 ?>

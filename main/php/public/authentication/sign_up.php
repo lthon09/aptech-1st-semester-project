@@ -89,6 +89,8 @@
                             "email" => $email,
                             "password" => $hashed_password,
                         ]);
+
+                        //
                     }
                 }
             }
