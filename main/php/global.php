@@ -28,6 +28,10 @@
         ]),
     ]);
 
+    function get_server() {
+        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]);
+    }
+
     function generate_id($length = 16) {
         try {
             return bin2hex(random_bytes($length));

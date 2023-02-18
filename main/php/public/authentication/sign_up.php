@@ -20,7 +20,7 @@
                 if ($hashed_password === false) {
                     //
                 } else {
-                    $server = (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]);
+                    $server = get_server();
 
                     $id = generate_id(32);
 
@@ -28,24 +28,14 @@
                         //
                     }
 
-                    $connection = connect();
-
-                    $statement = $connection -> prepare("
-                        INSERT INTO UnverifiedMembers (ID, Username, Email, `Password`) VALUES (:id, :username, :email, :password);
-                    ");
-
-                    $statement -> execute([
-                        "id" => $id,
-                        "username" => $username,
-                        "email" => $email,
-                        "password" => $hashed_password,
-                    ]);
-
                     if(!send_mail($email, "Confirm Your Email Address",
                         <<<"BODY"
                             <strong>{$username}</strong>,
                             <br><br>
                             It seems like a Pleasant Tours account has just been created using your email address. Please verify this by clicking on the link below.
+                            <br>
+                            This link will expire in <strong>15 minutes</strong>.
+                            <br>
                             <br>
                             If this wasn't you, please ignore this email.
                             <br><br>
@@ -61,6 +51,8 @@
                             {$username},
 
                             It seems like a Pleasant Tours account has just been created using your email address. Please verify this by clicking on the link below.
+                            This link will expire in 15 minutes.
+
                             If this wasn't you, please ignore this email.
 
                             CONFIRM YOUR EMAIL ADDRESS: {$server}/verify/{$id}
@@ -71,7 +63,18 @@
                     )) {
                         //
                     } else {
-                        //
+                        $connection = connect();
+
+                        $statement = $connection -> prepare("
+                            INSERT INTO UnverifiedMembers (ID, Username, Email, `Password`) VALUES (:id, :username, :email, :password);
+                        ");
+
+                        $statement -> execute([
+                            "id" => $id,
+                            "username" => $username,
+                            "email" => $email,
+                            "password" => $hashed_password,
+                        ]);
                     }
                 }
             }

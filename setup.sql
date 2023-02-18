@@ -1,3 +1,5 @@
+SET GLOBAL event_scheduler = ON;
+
 CREATE DATABASE IF NOT EXISTS PleasantTours;
 USE PleasantTours;
 
@@ -9,7 +11,11 @@ CREATE TABLE IF NOT EXISTS UnverifiedMembers (
 
     Email VARCHAR(255) NOT NULL,
 
-    PRIMARY KEY (ID)
+    Expiration DATETIME DEFAULT ADDTIME(NOW(), 900), -- 900 seconds = 15 minutes
+
+    PRIMARY KEY (ID),
+
+    INDEX (ID, Expiration)
 );
 
 CREATE TABLE IF NOT EXISTS Members (
@@ -22,7 +28,9 @@ CREATE TABLE IF NOT EXISTS Members (
 
     Administrator BOOLEAN NOT NULL, 
 
-    PRIMARY KEY (ID)
+    PRIMARY KEY (ID),
+
+    INDEX (ID, `Password`, Administrator)
 );
 
 CREATE TABLE IF NOT EXISTS Categories (
@@ -30,7 +38,9 @@ CREATE TABLE IF NOT EXISTS Categories (
 
     `Name` VARCHAR(100) NOT NULL,
 
-    PRIMARY KEY (ID)
+    PRIMARY KEY (ID),
+
+    INDEX (`Name`)
 );
 
 CREATE TABLE IF NOT EXISTS Countries (
@@ -38,7 +48,9 @@ CREATE TABLE IF NOT EXISTS Countries (
 
     `Name` VARCHAR(100) NOT NULL,
 
-    PRIMARY KEY (ID)
+    PRIMARY KEY (ID),
+
+    INDEX (`Name`)
 );
 
 CREATE TABLE IF NOT EXISTS Tours (
@@ -88,3 +100,9 @@ CREATE TABLE IF NOT EXISTS Reviews (
 
     CHECK (1 >= Rating <= 5)
 );
+
+CREATE EVENT IF NOT EXISTS UnverifiedMembersExpirationChecker
+ON SCHEDULE
+EVERY 1 SECOND
+DO
+    DELETE FROM UnverifiedMembers WHERE Expiration < NOW();
