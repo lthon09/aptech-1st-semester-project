@@ -29,7 +29,7 @@
         $connection = connect();
 
         $statement = $connection -> prepare(
-            "SELECT ID, Username FROM Members WHERE "
+            "SELECT ID, Username, Email FROM Members WHERE "
             . strtoupper($method)
             . " = :input LIMIT 1;"
         );
@@ -45,6 +45,7 @@
 
             $member_id = $member["ID"];
             $username = $member["Username"];
+            $email = $member["Email"];
 
             $reset_password_id = generate_id(IDS["lengths"]["secure"], "ResetPasswordMembers");
 
