@@ -28,28 +28,12 @@
         ]),
     ]);
 
-    $mail = new PHPMailer();
-
-    $mail -> isSMTP();
-    $mail -> SMTPDebug = SMTP::DEBUG_OFF;
-    $mail -> SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail -> SMTPAuth = true;
-    $mail -> AuthType = "XOAUTH2";
-    $mail -> Host = "smtp.gmail.com";
-    $mail -> Port = 465;
-    $mail -> setOAuth(new OAuth([
-        "userName" => $_ENV["email_address"],
-        "clientId" => $_ENV["gmail_client_id"],
-        "clientSecret" => $_ENV["gmail_client_secret"],
-        "refreshToken" => $_ENV["gmail_refresh_token"],
-        "provider" => new Google([
-            "clientId" => $_ENV["gmail_client_id"],
-            "clientSecret" => $_ENV["gmail_client_secret"],
-        ]),
-    ]));
-
     function generate_id($length = 16) {
-        return bin2hex(random_bytes($length));
+        try {
+            return bin2hex(random_bytes($length));
+        } catch(Exception $_) {
+            return false;
+        }
     }
 
     function validate_credentials($username, $password) {
@@ -85,5 +69,44 @@
 
     function connect() {
         return new PDO("mysql:host=localhost;port=3306;dbname=PleasantTours", "root", "");
+    }
+
+    function send_mail($receiver, $subject, $primary_body, $alternative_body) {
+        try {
+            $mail = new PHPMailer();
+
+            $mail -> isSMTP();
+            $mail -> SMTPDebug = SMTP::DEBUG_OFF;
+            $mail -> SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail -> SMTPAuth = true;
+            $mail -> AuthType = "XOAUTH2";
+            $mail -> Host = "smtp.gmail.com";
+            $mail -> Port = 465;
+            $mail -> setOAuth(new OAuth([
+                "userName" => $_ENV["email_address"],
+                "clientId" => $_ENV["gmail_client_id"],
+                "clientSecret" => $_ENV["gmail_client_secret"],
+                "refreshToken" => $_ENV["gmail_refresh_token"],
+                "provider" => new Google([
+                    "clientId" => $_ENV["gmail_client_id"],
+                    "clientSecret" => $_ENV["gmail_client_secret"],
+                ]),
+            ]));
+
+            $mail -> setFrom($_ENV["email_address"], "Pleasant Tours");
+            $mail -> addAddress($receiver);
+
+            $mail -> isHTML(true);
+
+            $mail -> Subject = $subject;
+            $mail -> Body = $primary_body;
+            $mail -> AltBody = $alternative_body;
+
+            $mail -> send();
+
+            return true;
+        } catch (Exception $_) {
+            return false;
+        }
     }
 ?>
