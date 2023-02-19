@@ -50,7 +50,7 @@
                         <<<BODY
                             <strong>{$username}</strong>,
                             <br><br>
-                            It seems like a Pleasant Tours account has just been created using your email address. Please verify this by opening the link below.
+                            It looks like a Pleasant Tours account has just been created using your email address. Please verify this by opening the link below.
                             <br>
                             This link will expire in <strong>15 minutes</strong>.
                             <br>
@@ -68,7 +68,7 @@
                         "
                             {$username},
 
-                            It seems like a Pleasant Tours account has just been created using your email address. Please verify this by clicking on the link below.
+                            It looks like a Pleasant Tours account has just been created using your email address. Please verify this by clicking on the link below.
                             This link will expire in 15 minutes.
 
                             If this wasn't you, please ignore this email.
