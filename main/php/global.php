@@ -54,7 +54,7 @@
     function get_directory() {
         global $script;
 
-        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . dirname($script); // using SERVER_NAME is fine here since we have UseCanonicalName enabled
+        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . dirname($script); // using $_SERVER variables here is fine here since we have UseCanonicalName turned on
     }
 
     function generate_id($length, $database) {
