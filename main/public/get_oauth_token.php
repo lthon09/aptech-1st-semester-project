@@ -47,9 +47,6 @@ use Stevenmaguire\OAuth2\Client\Provider\Microsoft;
 //@see https://github.com/greew/oauth2-azure-provider
 use Greew\OAuth2\Client\Provider\Azure;
 
-require_once "../global.php";
-administrator_only();
-
 if (!isset($_GET['code']) && !isset($_POST['provider'])) {
     ?>
 <html>
