@@ -21,88 +21,92 @@
             </div>
         </div>
         <div class="page">
-            <header class="section page-header">
-                <!-- RD Navbar-->
-                <div class="rd-navbar-wrap">
-                    <nav class="rd-navbar rd-navbar-corporate" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed"
-                        data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static"
-                        data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static"
-                        data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static"
-                        data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px"
-                        data-xxl-stick-up-offset="106px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
-                        <div class="rd-navbar-collapse-toggle rd-navbar-fixed-element-1"
-                            data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></div>
-                        <div class="rd-navbar-aside-outer">
-                            <div class="rd-navbar-aside">
-                                <!-- RD Navbar Panel-->
-                                <div class="rd-navbar-panel">
-                                    <!-- RD Navbar Toggle-->
-                                    <button class="rd-navbar-toggle"
-                                        data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
-                                    <!-- RD Navbar Brand-->
-                                    <div class="rd-navbar-brand">
-                                        <!--Brand--><a class="brand" href="/"><img src="/static/assets/images/logo.png"
-                                                alt="" style="width:50px;height:50px" /></a>
+            {{#navigation_bar}}
+                <header class="section page-header">
+                    <!-- RD Navbar-->
+                    <div class="rd-navbar-wrap">
+                        <nav class="rd-navbar rd-navbar-corporate" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed"
+                            data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static"
+                            data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static"
+                            data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static"
+                            data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px"
+                            data-xxl-stick-up-offset="106px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+                            <div class="rd-navbar-collapse-toggle rd-navbar-fixed-element-1"
+                                data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></div>
+                            <div class="rd-navbar-aside-outer">
+                                <div class="rd-navbar-aside">
+                                    <!-- RD Navbar Panel-->
+                                    <div class="rd-navbar-panel">
+                                        <!-- RD Navbar Toggle-->
+                                        <button class="rd-navbar-toggle"
+                                            data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                                        <!-- RD Navbar Brand-->
+                                        <div class="rd-navbar-brand">
+                                            <!--Brand--><a class="brand" href="/"><img src="/static/assets/images/logo.png"
+                                                    alt="" style="width:50px;height:50px" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="rd-navbar-aside-right rd-navbar-collapse">
+                                        <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/log_in.php">Log In</a>
+                                        <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/sign_up.php">Sign Up</a>
                                     </div>
                                 </div>
-                                <div class="rd-navbar-aside-right rd-navbar-collapse">
-                                    <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/log_in.php">Log In</a>
-                                    <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/sign_up.php">Sign Up</a>
-                                </div>
                             </div>
-                        </div>
-                        <div class="rd-navbar-main-outer">
-                            <div class="rd-navbar-main">
-                                <div class="rd-navbar-nav-wrap">
-                                    <!-- RD Navbar Nav-->
-                                    <ul class="rd-navbar-nav">
-                                        <li class="rd-nav-item active"><a class="rd-nav-link" href="/">Home</a>
-                                        </li>
-                                        <li class="rd-nav-item"><a class="rd-nav-link" href="/tours.php">Tours</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </header>
-            {{{ content }}}
-            <footer class="section footer-corporate context-dark">
-                <div class="footer-corporate-inset">
-                    <div class="container">
-                        <div class="row row-40 justify-content-lg-between">
-                            <div class="col-sm-6 col-md-12 col-lg-3 col-xl-4">
-                                <div class="oh-desktop">
-                                    <div class="wow slideInRight" data-wow-delay="0s">
-                                        <h6 class="text-spacing-100 text-uppercase">Contact us</h6>
-                                        <ul class="footer-contacts d-inline-block d-sm-block">
-                                            <li>
-                                                <div class="unit">
-                                                    <div class="unit-left"><span class="icon fa fa-envelope"></span></div>
-                                                    <div class="unit-body"><a class="link-aemail"
-                                                            href="mailto:pgood8471@gmail.com">pgood8471@gmail.com</a></div>
-                                                </div>
+                            <div class="rd-navbar-main-outer">
+                                <div class="rd-navbar-main">
+                                    <div class="rd-navbar-nav-wrap">
+                                        <!-- RD Navbar Nav-->
+                                        <ul class="rd-navbar-nav">
+                                            <li class="rd-nav-item"><a class="rd-nav-link" href="/">Home</a>
+                                            </li>
+                                            <li class="rd-nav-item"><a class="rd-nav-link" href="/tours.php">Tours</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-11 col-md-7 col-lg-5 col-xl-4">
-                                <div class="oh-desktop">
-                                    <div class="wow slideInLeft" data-wow-delay="0s">
-                                        <h6 class="text-spacing-100 text-uppercase">Quick links</h6>
-                                        <ul class="row-6 list-0 list-marked list-marked-md list-marked-secondary list-custom-2">
-                                            <li><a href="/tours.php">Our Tours</a></li>
-                                            <li><a href="/about.php">About Us</a></li>
-                                        </ul>
+                        </nav>
+                    </div>
+                </header>
+            {{/navigation_bar}}
+            {{{ content }}}
+            {{#footer}}
+                <footer class="section footer-corporate context-dark">
+                    <div class="footer-corporate-inset">
+                        <div class="container">
+                            <div class="row row-40 justify-content-lg-between">
+                                <div class="col-sm-6 col-md-12 col-lg-3 col-xl-4">
+                                    <div class="oh-desktop">
+                                        <div class="wow slideInRight" data-wow-delay="0s">
+                                            <h6 class="text-spacing-100 text-uppercase">Contact us</h6>
+                                            <ul class="footer-contacts d-inline-block d-sm-block">
+                                                <li>
+                                                    <div class="unit">
+                                                        <div class="unit-left"><span class="icon fa fa-envelope"></span></div>
+                                                        <div class="unit-body"><a class="link-aemail"
+                                                                href="mailto:pgood8471@gmail.com">pgood8471@gmail.com</a></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 col-md-7 col-lg-5 col-xl-4">
+                                    <div class="oh-desktop">
+                                        <div class="wow slideInLeft" data-wow-delay="0s">
+                                            <h6 class="text-spacing-100 text-uppercase">Quick links</h6>
+                                            <ul class="row-6 list-0 list-marked list-marked-md list-marked-secondary list-custom-2">
+                                                <li><a href="/tours.php">Our Tours</a></li>
+                                                <li><a href="/about.php">About Us</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            {{/footer}}
         </div>
         <div class="snackbars" id="form-output-global"></div>
         <script src="/static/frontend/js/core.min.js"></script>
