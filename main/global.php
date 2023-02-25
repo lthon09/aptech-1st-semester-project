@@ -51,12 +51,16 @@
         ]),
     ]);
 
+    function get_server() {
+        $port = $_SERVER["SERVER_PORT"];
+
+        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . ((!in_array($port, [80, 443])) ? ":{$port}" : "");
+    }
+
     function get_directory() {
         global $script;
 
-        $port = $_SERVER["SERVER_PORT"];
-
-        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . ((!in_array($port, [80, 443])) ? ":{$port}" : "") . dirname($script); // using $_SERVER variables here is fine here since we have UseCanonicalName turned on
+        return get_server() . dirname($script); // using $_SERVER variables here is fine here since we have UseCanonicalName turned on
     }
 
     function generate_id($length, $database) {
@@ -244,7 +248,7 @@
     }
 
     function connect() {
-        return new PDO("mysql:host=localhost;port=3306;dbname=PleasantTours", "root", "");
+        return new PDO("mysql:host=" . get_server() . ";port=3306;dbname=PleasantTours", "root", "");
     }
 
     function send_mail($receiver, $subject, $primary_body, $alternative_body) {
