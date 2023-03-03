@@ -95,6 +95,26 @@ CREATE TABLE IF NOT EXISTS Tours (
     CHECK (Sale <= 100)
 );
 
+CREATE TABLE IF NOT EXISTS ShowcaseCategories (
+    ID CHAR(16),
+
+    Category CHAR(16),
+
+    PRIMARY KEY (ID),
+
+    FOREIGN KEY (Category) REFERENCES Categories(ID)
+);
+
+CREATE TABLE IF NOT EXISTS HotTours (
+    ID CHAR(16),
+
+    Tour CHAR(16),
+
+    PRIMARY KEY (ID),
+
+    FOREIGN KEY (Tour) REFERENCES Tours(ID)
+);
+
 CREATE TABLE IF NOT EXISTS Reviews (
     ID CHAR(16),
 
