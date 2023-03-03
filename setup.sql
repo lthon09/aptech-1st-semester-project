@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS ShowcaseCategories (
     ID CHAR(16),
 
     Category CHAR(16),
+    Avatar VARCHAR(25) NOT NULL,
 
     PRIMARY KEY (ID),
 
