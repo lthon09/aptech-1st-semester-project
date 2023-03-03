@@ -299,7 +299,7 @@
         ])) -> render($template, $variables);
     }
 
-    if ($credentials !== false && password_needs_rehash($credentials["Password"], HASH["algorithm"])) {
+    if ($credentials !== false && password_needs_rehash($credentials["Password"], HASH["algorithm"], HASH["options"])) {
         log_out();
 
         redirect("/authentication/log_in.php");
