@@ -99,7 +99,7 @@
         }
     }
 
-    echo render_template("base", [
+    render_template("base", [
         "title" => "Sign Up",
         "content" => <<<CONTENT
             <form method="post" action="{$script}">

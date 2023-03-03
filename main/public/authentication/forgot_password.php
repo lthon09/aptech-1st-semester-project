@@ -100,7 +100,7 @@
         }
     }
 
-    echo render_template("base", [
+    render_template("base", [
         "title" => "Forgot Password",
         "content" => <<<CONTENT
             <form method="post" action="{$script}">

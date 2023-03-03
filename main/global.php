@@ -7,11 +7,11 @@
 
     require_once __DIR__ . "/vendor/autoload.php";
 
+    Dotenv\Dotenv::createImmutable(__DIR__) -> load();
+
     // error_reporting(0);
 
     $script = $_SERVER["SCRIPT_NAME"];
-
-    Dotenv\Dotenv::createImmutable(__DIR__) -> load();
 
     const IDS = [
         "characters" => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
@@ -45,16 +45,10 @@
         ],
     ];
 
-    $mustache = new Mustache_Engine([
-        "loader" => new Mustache_Loader_FilesystemLoader(__DIR__ . "/templates", [
-            "extension" => ".html",
-        ]),
-    ]);
-
     function get_server() {
         $port = $_SERVER["SERVER_PORT"];
 
-        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . ((!in_array($port, [80, 443])) ? ":{$port}" : ""); // using $_SERVER variables here is fine here since we have UseCanonicalName turned on
+        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . (((!in_array($port, [80, 443]))) ? ":{$port}" : ""); // using $_SERVER variables here is fine here since we have UseCanonicalName turned on
     }
 
     function get_directory() {
@@ -253,7 +247,7 @@
     }
 
     function connect() {
-        return new PDO("mysql:host=" . get_server() . ";port=3306;dbname=PleasantTours", "root", "");
+        return new PDO("mysql:host=localhost;port=3306;dbname=PleasantTours", "root", "");
     }
 
     function send_mail($receiver, $subject, $primary_body, $alternative_body) {
@@ -296,11 +290,13 @@
     }
 
     function render_template($template, $variables) {
-        global $mustache;
-
         $variables["logged_in"] = is_logged_in();
 
-        return $mustache -> render($template, $variables);
+        echo (new Mustache_Engine([
+            "loader" => new Mustache_Loader_FilesystemLoader(__DIR__ . "/templates", [
+                "extension" => ".html",
+            ]),
+        ])) -> render($template, $variables);
     }
 
     if ($credentials !== false && password_needs_rehash($credentials["Password"], HASH["algorithm"])) {
