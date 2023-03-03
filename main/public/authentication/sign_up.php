@@ -99,16 +99,49 @@
         }
     }
 
-    render_template("base", [
+    render_template("authentication", [
         "title" => "Sign Up",
+        "resources" => <<<RESOURCES
+            <link rel="stylesheet" href="/static/frontend/css/authentication_fonts.css">
+            <link rel="stylesheet" href="/static/frontend/css/authentication_style.css">
+        RESOURCES,
         "content" => <<<CONTENT
-            <form method="post" action="{$script}">
+            <!--<form method="post" action="{$script}">
                 <input type="text" name="username">
                 <input type="email" name="email">
                 <input type="password" name="password">
                 <input type="password" name="confirm_password">
                 <input type="submit" name="submit">
-            </form>
+            </form>-->
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Sign Up</h2>
+                    <form method="POST" class="register-form" id="register-form" action="{$script}">
+                        <div class="form-group">
+                            <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="username" id="name" placeholder="Username" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+                            <input type="email" name="email" id="email" placeholder="Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" name="password" id="pass" placeholder="Password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm_password"><i class="zmdi zmdi-lock-outline"></i></label>
+                            <input type="password" name="confirm_password" id="re_pass" placeholder="Confirm Password" />
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="submit" id="signup" class="form-submit" value="Sign Up" />
+                        </div>
+                        <div class="form-group">
+                            <a href="log_in.php" class="signup-image-link" style="text-align:left;margin-top:10px">I'm Already A Member</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         CONTENT,
     ]);
 ?>

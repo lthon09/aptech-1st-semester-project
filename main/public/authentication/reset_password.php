@@ -29,7 +29,7 @@
             //
         } else {
             if (!isset($_POST["submit"])) {
-                render_template("base", [
+                render_template("authentication", [
                     "title" => "Reset Password",
                     "content" => <<<CONTENT
                         <form method="post" action="{$script}?{$query_string}">

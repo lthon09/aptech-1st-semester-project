@@ -65,15 +65,34 @@
         }
     }
 
-    render_template("base", [
+    render_template("authentication", [
         "title" => "Log In",
         "content" => <<<CONTENT
-            <form method="post" action="{$script}{$_query_string}">
-                <input type="text" name="username">
-                <input type="password" name="password">
-                <input type="checkbox" name="remember">
-                <input type="submit" name="submit">
-            </form>
+            <div class="signin-content">
+                <div class="signin-form">
+                    <h2 class="form-title">Log In</h2>
+                    <form method="POST" class="register-form" id="login-form">
+                        <div class="form-group">
+                            <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="username" id="your_name" placeholder="Username" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" name="password" id="your_pass" placeholder="Password" />
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="remember" id="remember" class="agree-term" />
+                            <label for="remember" class="label-agree-term"><span><span></span></span>Remember</label>
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="submit" id="signin" class="form-submit" value="Log In" />
+                        </div>
+                        <div class="form-group">
+                            <a href="sign_up.php" class="signup-image-link" style="text-align:left;margin-top:10px">I'm Not A Member</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         CONTENT,
     ]);
 ?>

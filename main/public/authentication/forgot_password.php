@@ -100,7 +100,7 @@
         }
     }
 
-    render_template("base", [
+    render_template("authentication", [
         "title" => "Forgot Password",
         "content" => <<<CONTENT
             <form method="post" action="{$script}">

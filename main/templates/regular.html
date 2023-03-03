@@ -7,8 +7,8 @@
         <link rel="shortcut icon" type="image/png" href="/static/assets/images/logo.png">
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Montserrat:400,500,600,700%7CPoppins:400%7CTeko:300,400">
         <link rel="stylesheet" href="/static/frontend/css/bootstrap.css">
-        <link rel="stylesheet" href="/static/frontend/css/fonts.css">
-        <link rel="stylesheet" href="/static/frontend/css/style.css">
+        <link rel="stylesheet" href="/static/frontend/css/main_fonts.css">
+        <link rel="stylesheet" href="/static/frontend/css/main_style.css">
         <title>{{ title }} - Pleasant Tours</title>
     </head>
     <body>
@@ -42,19 +42,21 @@
                                             data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                                         <!-- RD Navbar Brand-->
                                         <div class="rd-navbar-brand">
-                                            <!--Brand--><a class="brand" href="/"><img src="/static/assets/images/logo.png"
-                                                    alt="" style="width:50px;height:50px" /></a>
+                                            <!--Brand--><a class="brand" href="#"><img src="/static/assets/images/logo.png"
+                                                    alt="" style="width:35px;height:35px" /></a>
                                         </div>
+                                        <a href="#">Pleasant Tours</a>
                                     </div>
-                                    {{^logged_in}}
-                                        <div class="rd-navbar-aside-right rd-navbar-collapse">
+                                    <div class="rd-navbar-aside-right rd-navbar-collapse">
+                                        {{^logged_in}}
                                             <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/log_in.php">Log In</a>
                                             <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/sign_up.php">Sign Up</a>
-                                        </div>
-                                    {{/logged_in}}
-                                    {{#logged_in}}
-                                        <!-- account -->
-                                    {{/logged_in}}
+                                        {{/logged_in}}
+                                        {{#logged_in}}
+                                            <span>Welcome back,</span><a href="#" style="margin-left:5px">{{ username }}</a><span>!</span>
+                                            <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/log_out.php">Log Out</a>
+                                        {{/logged_in}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="rd-navbar-main-outer">

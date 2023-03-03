@@ -167,7 +167,7 @@
         die();
     }
 
-    function get_member_credentials() {
+    function get_member() {
         if (!is_logged_in()) {
             return false;
         }
@@ -179,17 +179,17 @@
         }
 
         try {
-            $credentials = explode("|", $decoded, 2 + 1);
+            $member = explode("|", $decoded, 2 + 1);
         } catch (ValueError $_) {
             return false;
         }
 
-        if (count($credentials) === 0) {
+        if (count($member) === 0) {
             return false;
         }
 
-        $id = $credentials[0];
-        $password = $credentials[1];
+        $id = $member[0];
+        $password = $member[1];
 
         if (!validate_id($id) || !validate_hashed_password($password)) {
             return false;
@@ -208,10 +208,18 @@
             return false;
         }
 
-        return $statement -> fetch();
+        $member = $statement -> fetch();
+
+        if (password_needs_rehash($member["Password"], HASH["algorithm"], HASH["options"])) {
+            log_out();
+    
+            redirect("/authentication/log_in.php");
+        }
+
+        return $member;
     }
 
-    $credentials = get_member_credentials();
+    $member = get_member();
 
     function is_logged_in() {
         return isset($_COOKIE["member"]);
@@ -230,13 +238,13 @@
     }
 
     function administrator_only() {
-        global $credentials;
+        global $member;
 
-        if ($credentials === false) {
+        if ($member === false) {
             redirect("/");
         }
 
-        if ($credentials["Administrator"] === 0) {
+        if ($member["Administrator"] === 0) {
             redirect("/");
         }
     }
@@ -290,18 +298,20 @@
     }
 
     function render_template($template, $variables) {
-        $variables["logged_in"] = is_logged_in();
+        global $member;
+
+        $is_logged_in = is_logged_in();
+
+        $variables["logged_in"] = $is_logged_in;
+
+        if ($is_logged_in) {
+            $variables["username"] = $member["Username"];
+        }
 
         echo (new Mustache_Engine([
             "loader" => new Mustache_Loader_FilesystemLoader(__DIR__ . "/templates", [
                 "extension" => ".html",
             ]),
         ])) -> render($template, $variables);
-    }
-
-    if ($credentials !== false && password_needs_rehash($credentials["Password"], HASH["algorithm"], HASH["options"])) {
-        log_out();
-
-        redirect("/authentication/log_in.php");
     }
 ?>
