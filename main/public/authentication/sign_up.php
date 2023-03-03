@@ -3,6 +3,9 @@
 
     not_logged_in_only();
 
+    $message_color = "";
+    $message = "";
+
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
 
@@ -12,10 +15,12 @@
         $confirm_password = $_POST["confirm_password"];
 
         if ($password !== $confirm_password) {
-            //
+            $message_color = "red";
+            $message = "The entered passwords don't match!";
         } else {
             if (!validate_credentials($username, $password) || !validate_email($email)) {
-                //
+                $message_color = "red";
+                $message = "Invalid credentials entered! (The username must be 2-20 characters and the password must be 8-40 characters)";
             } else {
                 $connection = connect();
 
@@ -30,18 +35,21 @@
                 $statement2 -> execute(["email" => $email]);
 
                 if (($statement1 -> rowCount() !== 0) || ($statement2 -> rowCount() !== 0)) {
-                    //
+                    $message_color = "red";
+                    $message = "This email is unavailable!";
                 }
 
                 $hashed_password = hash_password($password);
 
                 if ($hashed_password === false) {
-                    //
+                    $message_color = "red";
+                    $message = "Something went wrong.";
                 } else {
                     $id = generate_id(IDS["lengths"]["secure"], "UnverifiedMembers");
 
                     if ($id === false) {
-                        //
+                        $message_color = "red";
+                        $message = "Something went wrong.";
                     }
 
                     $link = get_directory() . "/verify.php?id=" . $id;
@@ -79,7 +87,8 @@
                             Pleasant Tours
                         ",
                     )) {
-                        //
+                        $message_color = "red";
+                        $message = "Something went wrong.";
                     } else {
                         $connection -> prepare("
                             INSERT INTO UnverifiedMembers
@@ -92,7 +101,8 @@
                             "password" => $hashed_password,
                         ]);
 
-                        //
+                        $message_color = "#00ff00";
+                        $message = "Please check your email for an email in order to confirm your membership! (Please check all the folders)";
                     }
                 }
             }
@@ -135,6 +145,9 @@
                         </div>
                         <div class="form-group form-button">
                             <input type="submit" name="submit" id="signup" class="form-submit" value="Sign Up" />
+                        </div>
+                        <div class="form-group">
+                            <span style="color:{$message_color}">{$message}</span>
                         </div>
                         <div class="form-group">
                             <a href="log_in.php" class="signup-image-link" style="text-align:left;margin-top:10px">I'm Already A Member</a>

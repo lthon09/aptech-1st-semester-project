@@ -3,6 +3,9 @@
 
     not_logged_in_only();
 
+    $message_color = "";
+    $message = "";
+
     $query_string = $_SERVER["QUERY_STRING"];
     $_query_string = ($query_string !== "") ? "?$query_string" : "";
 
@@ -11,7 +14,8 @@
         $password = $_POST["password"];
 
         if (!validate_credentials($username, $password)) {
-            //
+            $message_color = "red";
+            $message = "Invalid credentials entered!";
         } else {
             $connection = connect();
 
@@ -22,7 +26,8 @@
             $statement -> execute(["username" => $username]);
 
             if ($statement -> rowCount() === 0) {
-                //
+                $message_color = "red";
+                $message = "Invalid credentials entered!";
             } else {
                 $member = $statement -> fetch();
 
@@ -30,7 +35,8 @@
                 $hashed_password = $member["Password"];
 
                 if (!password_verify($password, $hashed_password)) {
-                    //
+                    $message_color = "red";
+                    $message = "Invalid credentials entered!";
                 } else {
                     if (password_needs_rehash($password, HASH["algorithm"], HASH["options"])) {
                         $hashed_password = hash_password($password);
@@ -88,7 +94,10 @@
                             <input type="submit" name="submit" id="signin" class="form-submit" value="Log In" />
                         </div>
                         <div class="form-group">
-                            <a href="sign_up.php" class="signup-image-link" style="text-align:left;margin-top:10px">I'm Not A Member</a>
+                            <span style="color:{$message_color}">{$message}</span>
+                        </div>
+                        <div class="form-group">
+                            <a href="sign_up.php" class="signup-image-link" style="text-align:left;margin-top:10px">I'm Not A Member Yet</a>
                         </div>
                     </form>
                 </div>
