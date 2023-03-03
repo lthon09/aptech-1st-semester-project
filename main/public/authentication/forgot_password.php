@@ -100,7 +100,7 @@
         }
     }
 
-    echo $mustache -> render("base", [
+    echo render_template("base", [
         "title" => "Forgot Password",
         "content" => <<<CONTENT
             <form method="post" action="{$script}">

@@ -54,13 +54,13 @@
     function get_server() {
         $port = $_SERVER["SERVER_PORT"];
 
-        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . ((!in_array($port, [80, 443])) ? ":{$port}" : "");
+        return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . ((!in_array($port, [80, 443])) ? ":{$port}" : ""); // using $_SERVER variables here is fine here since we have UseCanonicalName turned on
     }
 
     function get_directory() {
         global $script;
 
-        return get_server() . dirname($script); // using $_SERVER variables here is fine here since we have UseCanonicalName turned on
+        return get_server() . dirname($script);
     }
 
     function generate_id($length, $database) {
@@ -247,6 +247,11 @@
         }
     }
 
+    function log_out() {
+        unset($_COOKIE["member"]);
+        setcookie("member", null, -1, "/");
+    }
+
     function connect() {
         return new PDO("mysql:host=" . get_server() . ";port=3306;dbname=PleasantTours", "root", "");
     }
@@ -290,9 +295,16 @@
         }
     }
 
+    function render_template($template, $variables) {
+        global $mustache;
+
+        $variables["logged_in"] = is_logged_in();
+
+        return $mustache -> render($template, $variables);
+    }
+
     if ($credentials !== false && password_needs_rehash($credentials["Password"], HASH["algorithm"])) {
-        unset($_COOKIE["member"]);
-        setcookie("member", null, -1, "/");
+        log_out();
 
         redirect("/authentication/log_in.php");
     }

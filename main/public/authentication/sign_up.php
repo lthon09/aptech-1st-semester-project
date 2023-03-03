@@ -99,7 +99,7 @@
         }
     }
 
-    echo $mustache -> render("base", [
+    echo render_template("base", [
         "title" => "Sign Up",
         "content" => <<<CONTENT
             <form method="post" action="{$script}">

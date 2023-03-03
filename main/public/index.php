@@ -1,7 +1,7 @@
 <?php
     require_once "../global.php";
 
-    echo $mustache -> render("base", [
+    echo render_template("base", [
         "title" => "Home",
         "navigation_bar" => true,
         "footer" => true,

@@ -65,7 +65,7 @@
         }
     }
 
-    echo $mustache -> render("base", [
+    echo render_template("base", [
         "title" => "Log In",
         "content" => <<<CONTENT
             <form method="post" action="{$script}{$_query_string}">

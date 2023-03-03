@@ -29,7 +29,7 @@
             //
         } else {
             if (!isset($_POST["submit"])) {
-                echo $mustache -> render("base", [
+                echo render_template("base", [
                     "title" => "Reset Password",
                     "content" => <<<CONTENT
                         <form method="post" action="{$script}?{$query_string}">
