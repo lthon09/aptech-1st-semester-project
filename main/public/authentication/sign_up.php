@@ -29,7 +29,7 @@
                 $statement1 -> execute(["email" => $email]);
                 $statement2 -> execute(["email" => $email]);
 
-                if ($statement1 -> rowCount() !== 0 || $statement2 -> rowCount() !== 0) {
+                if (($statement1 -> rowCount() !== 0) || ($statement2 -> rowCount() !== 0)) {
                     //
                 }
 
