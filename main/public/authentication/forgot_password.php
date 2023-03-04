@@ -9,102 +9,95 @@
     if (isset($_POST["submit"])) {
         $method = $_POST["method"];
 
-        $username = $_POST["username"];
-        $email = $_POST["email"];
-
-        switch ($method) {
-            case "username":
-                if (!validate_username($username)) {
-                    $message_color = "red";
-                    $message = "Invalid credentials entered!";
-                }
-
-                break;
-            case "email":
-                if (!validate_email($email)) {
-                    $message_color = "red";
-                    $message = "Invalid credentials entered!";
-                }
-
-                break;
-            default:
-                $message_color = "red";
-                $message = "Invalid input method!";
-
-                break;
-        }
-
-        $connection = connect();
-
-        $statement = $connection -> prepare(
-            "SELECT * FROM Members WHERE "
-            . strtoupper($method)
-            . " = :input LIMIT 1;"
-        );
-
-        $statement -> execute(["input" => $$method]);
-
-        if ($statement -> rowCount() === 0) {
+        if (!in_array($method, ["username", "password"])) {
             $message_color = "red";
-            $message = "Invalid credentials entered!";
+            $message = "Invalid input method!";
         } else {
-            $member = $statement -> fetch();
+            $username = $_POST["username"];
+            $email = $_POST["email"];
 
-            $member_id = $member["ID"];
-            $username = $member["Username"];
-            $email = $member["Email"];
-
-            $reset_password_id = generate_id(IDS["lengths"]["secure"], "ResetPasswordMembers");
-
-            $link = get_directory() . "/reset_password.php?id=" . $reset_password_id;
-
-            if(!send_mail($email, "Reset Your Password",
-                <<<BODY
-                    <strong>{$username}</strong>,
-                    <br><br>
-                    A password reset request has just been for with your account. Please click on the link below in order to reset your password.
-                    <br>
-                    This link will expire in <strong>15 minutes</strong>.
-                    <br>
-                    <br>
-                    If this wasn't you, please ignore this email.
-                    <br><br>
-                    <a target="_blank" href="{$link}">RESET YOUR PASSWORD</a>
-                    <br><br>
-                    <strong>
-                        Cheers,
-                        <br>
-                        Pleasant Tours
-                    </strong>
-                BODY,
-                "
-                    {$username},
-
-                    A password reset request has just been for with your account. Please open the link below in order to reset your password.
-                    This link will expire in 15 minutes.
-
-                    If this wasn't you, please ignore this email.
-
-                    RESET YOUR PASSWORD: {$link}
-
-                    Cheers,
-                    Pleasant Tours
-                ",
-            )) {
+            if (
+                (($method === "username") && (!validate_username($username))) ||
+                (($method === "email") && (!validate_email($email)))
+            ) {
                 $message_color = "red";
-                $message = "Something went wrong.";
+                $message = "Invalid credentials entered!";
             } else {
-                $connection -> prepare("
-                    INSERT INTO ResetPasswordMembers
-                    (ID, Member)
-                    VALUES (:id, :member);
-                ") -> execute([
-                    "id" => $reset_password_id,
-                    "member" => $member_id,
-                ]);
+                $connection = connect();
 
-                $message_color = "#00ff00";
-                $message = "Please check your email for an email in order to reset your password! (Make sure to check all the folders)";
+                $statement = $connection -> prepare(
+                    "
+                        SELECT * FROM Members WHERE 
+                    "
+                        . strtoupper($method)
+                        . " = :input LIMIT 1;"
+                );
+
+                $statement -> execute(["input" => $$method]);
+
+                if ($statement -> rowCount() === 0) {
+                    $message_color = "red";
+                    $message = "Invalid credentials entered!";
+                } else {
+                    $member = $statement -> fetch();
+
+                    $member_id = $member["ID"];
+                    $username = $member["Username"];
+                    $email = $member["Email"];
+
+                    $reset_password_id = generate_id(IDS["lengths"]["secure"], "ResetPasswordMembers");
+
+                    $link = get_directory() . "/reset_password.php?id=" . $reset_password_id;
+
+                    if (!send_mail($email, "Reset Your Password",
+                        <<<BODY
+                            <strong>{$username}</strong>,
+                            <br><br>
+                            A password reset request has just been for with your account. Please click on the link below in order to reset your password.
+                            <br>
+                            This link will expire in <strong>15 minutes</strong>.
+                            <br>
+                            <br>
+                            If this wasn't you, please ignore this email.
+                            <br><br>
+                            <a target="_blank" href="{$link}">RESET YOUR PASSWORD</a>
+                            <br><br>
+                            <strong>
+                                Cheers,
+                                <br>
+                                Pleasant Tours
+                            </strong>
+                        BODY,
+                        "
+                            {$username},
+
+                            A password reset request has just been for with your account. Please open the link below in order to reset your password.
+                            This link will expire in 15 minutes.
+
+                            If this wasn't you, please ignore this email.
+
+                            RESET YOUR PASSWORD: {$link}
+
+                            Cheers,
+                            Pleasant Tours
+                        ",
+                    )) {
+                        $message_color = "red";
+                        $message = "Something went wrong, please try again.";
+                    } else {
+                        $connection -> prepare("
+                            INSERT INTO ResetPasswordMembers
+                            (ID, Member)
+                            VALUES (:id, :member);
+                        ") -> execute([
+                            "id" => $reset_password_id,
+                            "member" => $member_id,
+                        ]);
+
+                        $message_color = "#00ff00";
+                        $message = "Please check your email for an email in order to reset your password! (Make sure to check all the folders)";
+                    }
+                }
             }
         }
     }

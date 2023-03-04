@@ -62,9 +62,10 @@
                     $queries = [];
                     parse_str($query_string, $queries);
 
-                    redirect((isset($queries["destination"]))
-                        ? urldecode($queries["destination"])
-                        : ""
+                    redirect(
+                        (isset($queries["destination"]))
+                            ? urldecode($queries["destination"])
+                            : ""
                     );
                 }
             }
