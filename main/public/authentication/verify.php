@@ -25,7 +25,7 @@
             if ($statement -> rowCount() === 0) {
                 redirect("/");
             } else {
-                $verified_id = generate_id(IDS["lengths"]["member"], "Members");
+                $verified_id = generate_id(IDS["lengths"]["general"], "Members");
 
                 if ($verified_id === false) {
                     echo "Something went wrong, please try again.";

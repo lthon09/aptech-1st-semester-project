@@ -16,7 +16,7 @@
     const IDS = [
         "characters" => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
         "lengths" => [
-            "member" => 16,
+            "general" => 16,
             "secure" => 32,
         ],
     ];

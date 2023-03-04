@@ -104,51 +104,6 @@
 
     render_template("authentication", [
         "title" => "Forgot Password",
-        "style" => <<<CSS
-            <style>
-                .select-dropdown {
-                    position: relative;
-                    background-color: #e6e6e6;
-                    width: min-content;
-                    max-width: 100%;
-                    border-radius: 2px;
-                }
-
-                .select-dropdown:after {
-                    content: " ";
-                    position: absolute;
-                    top: 50%;
-                    margin-top: -2px;
-                    right: 8px;
-                    width: 0;
-                    height: 0;
-                    border-left: 5px solid transparent;
-                    border-right: 5px solid transparent;
-                    border-top: 5px solid #aaa;
-                }
-
-                select {
-                    font-size: 14px;
-                    max-width: 100%;
-                    padding: 8px 24px 8px 10px;
-                    border: none;
-                    background-color: transparent;
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                    appearance: none;
-                }
-
-                select:active,
-                select:focus {
-                    outline: none;
-                    box-shadow: none;
-                }
-
-                #input-username, #input-email {
-                    display: none;
-                }
-            </style>
-        CSS,
         "content" => <<<HTML
             <div class="signin-content">
                 <div class="signin-form">
@@ -163,11 +118,11 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" id="input-username">
+                        <div class="form-group" id="input-username" style="display:none">
                             <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <input type="text" name="username" id="your_name" placeholder="Username" />
                         </div>
-                        <div class="form-group" id="input-email">
+                        <div class="form-group" id="input-email" style="display:none">
                             <label for="email"><i class="zmdi zmdi-email"></i></label>
                             <input type="email" name="email" id="email" placeholder="Email" />
                         </div>
@@ -186,7 +141,7 @@
 
                 method.addEventListener("change", () => {
                     for (const input of values) {
-                        document.getElementById("input-" + input).style = "";
+                        document.getElementById("input-" + input).style = "display:none";
                     }
 
                     const value = method.value;
