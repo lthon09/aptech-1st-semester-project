@@ -131,7 +131,7 @@
                                     <!-- Tab panes-->
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="tabs-7-1">
-                                            <p>Wonder Tour is committed to bringing our clients the best in value and
+                                            <p>Pleasant Tours is committed to bringing our clients the best in value and
                                                 quality travel
                                                 arrangements. We are passionate about travel and sharing the world's wonders
                                                 with you.</p>

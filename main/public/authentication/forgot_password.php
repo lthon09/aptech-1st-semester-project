@@ -3,6 +3,9 @@
 
     not_logged_in_only();
 
+    $message_color = "";
+    $message = "";
+
     if (isset($_POST["submit"])) {
         $method = $_POST["method"];
 
@@ -12,18 +15,21 @@
         switch ($method) {
             case "username":
                 if (!validate_username($username)) {
-                    //
+                    $message_color = "red";
+                    $message = "Invalid credentials entered!";
                 }
 
                 break;
             case "email":
                 if (!validate_email($email)) {
-                    //
+                    $message_color = "red";
+                    $message = "Invalid credentials entered!";
                 }
 
                 break;
             default:
-                //
+                $message_color = "red";
+                $message = "Invalid input method!";
 
                 break;
         }
@@ -39,7 +45,8 @@
         $statement -> execute(["input" => $$method]);
 
         if ($statement -> rowCount() === 0) {
-            //
+            $message_color = "red";
+            $message = "Invalid credentials entered!";
         } else {
             $member = $statement -> fetch();
 
@@ -84,7 +91,8 @@
                     Pleasant Tours
                 ",
             )) {
-                //
+                $message_color = "red";
+                $message = "Something went wrong.";
             } else {
                 $connection -> prepare("
                     INSERT INTO ResetPasswordMembers
@@ -95,24 +103,106 @@
                     "member" => $member_id,
                 ]);
 
-                //
+                $message_color = "#00ff00";
+                $message = "Please check your email for an email in order to reset your password! (Make sure to check all the folders)";
             }
         }
     }
 
     render_template("authentication", [
         "title" => "Forgot Password",
+        "style" => <<<STYLE
+            <style>
+                .select-dropdown {
+                    position: relative;
+                    background-color: #e6e6e6;
+                    width: min-content;
+                    max-width: 100%;
+                    border-radius: 2px;
+                }
+
+                .select-dropdown:after {
+                    content: " ";
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -2px;
+                    right: 8px;
+                    width: 0;
+                    height: 0;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid #aaa;
+                }
+
+                select {
+                    font-size: 14px;
+                    max-width: 100%;
+                    padding: 8px 24px 8px 10px;
+                    border: none;
+                    background-color: transparent;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                }
+
+                select:active,
+                select:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+
+                #input-username, #input-email {
+                    display: none;
+                }
+            </style>
+        STYLE,
         "content" => <<<CONTENT
-            <form method="post" action="{$script}">
-                <select name="method">
-                    <option>select</option>
-                    <option value="username">username</option>
-                    <option value="email">email</option>
-                </select>
-                <input type="text" name="username">
-                <input type="email" name="email">
-                <input type="submit" name="submit">
-            </form>
+            <div class="signin-content">
+                <div class="signin-form">
+                    <h2 class="form-title">Forgot Password</h2>
+                    <form method="POST" class="register-form" id="login-form" action="{$script}">
+                        <div class="form-group">
+                            <div class="select-dropdown">
+                                <select name="method">
+                                    <option>Select An Input Method</option>
+                                    <option value="username">Username</option>
+                                    <option value="email">Email</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="input-username">
+                            <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="username" id="your_name" placeholder="Username" />
+                        </div>
+                        <div class="form-group" id="input-email">
+                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+                            <input type="email" name="email" id="email" placeholder="Email" />
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="submit" id="signin" class="form-submit" value="Reset Password" />
+                        </div>
+                        <div class="form-group">
+                            <span style="color:{$message_color}">{$message}</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+                const method = document.getElementsByName("method")[0];
+                const values = ["username", "email"];
+
+                method.addEventListener("change", () => {
+                    for (const input of values) {
+                        document.getElementById("input-" + input).style = "";
+                    }
+
+                    const value = method.value;
+
+                    if (values.includes(value)) {
+                        document.getElementById("input-" + value).style = "display:block";
+                    }
+                });
+            </script>
         CONTENT,
     ]);
 ?>

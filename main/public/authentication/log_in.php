@@ -77,7 +77,7 @@
             <div class="signin-content">
                 <div class="signin-form">
                     <h2 class="form-title">Log In</h2>
-                    <form method="POST" class="register-form" id="login-form">
+                    <form method="POST" class="register-form" id="login-form" action="{$script}">
                         <div class="form-group">
                             <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <input type="text" name="username" id="your_name" placeholder="Username" />
@@ -96,8 +96,9 @@
                         <div class="form-group">
                             <span style="color:{$message_color}">{$message}</span>
                         </div>
-                        <div class="form-group">
-                            <a href="sign_up.php" class="signup-image-link" style="text-align:left;margin-top:10px">I'm Not A Member Yet</a>
+                        <div class="form-group" style="margin-top:10px">
+                            <a href="forgot_password.php" class="signup-image-link" style="text-align:left;margin-bottom:5px">I Forgot My Password</a>
+                            <a href="sign_up.php" class="signup-image-link" style="text-align:left">I'm Not A Member Yet</a>
                         </div>
                     </form>
                 </div>

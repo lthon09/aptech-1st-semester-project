@@ -102,7 +102,7 @@
                         ]);
 
                         $message_color = "#00ff00";
-                        $message = "Please check your email for an email in order to confirm your membership! (Please check all the folders)";
+                        $message = "Please check your email for an email in order to confirm your membership! (Make sure to check all the folders)";
                     }
                 }
             }
@@ -116,13 +116,6 @@
             <link rel="stylesheet" href="/static/frontend/css/authentication_style.css">
         RESOURCES,
         "content" => <<<CONTENT
-            <!--<form method="post" action="{$script}">
-                <input type="text" name="username">
-                <input type="email" name="email">
-                <input type="password" name="password">
-                <input type="password" name="confirm_password">
-                <input type="submit" name="submit">
-            </form>-->
             <div class="signup-content">
                 <div class="signup-form">
                     <h2 class="form-title">Sign Up</h2>
