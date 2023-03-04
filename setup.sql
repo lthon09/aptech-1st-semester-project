@@ -13,9 +13,7 @@ CREATE TABLE IF NOT EXISTS UnverifiedMembers (
 
     Expiration DATETIME DEFAULT ADDTIME(NOW(), 900), -- 900 seconds = 15 minutes
 
-    PRIMARY KEY (ID),
-
-    INDEX (ID, Expiration)
+    PRIMARY KEY (ID)
 );
 
 CREATE TABLE IF NOT EXISTS ResetPasswordMembers (
@@ -25,9 +23,7 @@ CREATE TABLE IF NOT EXISTS ResetPasswordMembers (
 
     Expiration DATETIME DEFAULT ADDTIME(NOW(), 900), -- 900 seconds = 15 minutes
 
-    PRIMARY KEY (ID),
-
-    INDEX (ID, Expiration)
+    PRIMARY KEY (ID)
 );
 
 CREATE TABLE IF NOT EXISTS Members (
@@ -40,9 +36,7 @@ CREATE TABLE IF NOT EXISTS Members (
 
     Administrator BOOLEAN NOT NULL, 
 
-    PRIMARY KEY (ID),
-
-    INDEX (ID, Username, `Password`, Administrator)
+    PRIMARY KEY (ID)
 );
 
 CREATE TABLE IF NOT EXISTS Categories (
@@ -50,9 +44,7 @@ CREATE TABLE IF NOT EXISTS Categories (
 
     `Name` VARCHAR(100) NOT NULL,
 
-    PRIMARY KEY (ID),
-
-    INDEX (`Name`)
+    PRIMARY KEY (ID)
 );
 
 CREATE TABLE IF NOT EXISTS Countries (
@@ -60,9 +52,7 @@ CREATE TABLE IF NOT EXISTS Countries (
 
     `Name` VARCHAR(100) NOT NULL,
 
-    PRIMARY KEY (ID),
-
-    INDEX (`Name`)
+    PRIMARY KEY (ID)
 );
 
 CREATE TABLE IF NOT EXISTS Tours (
