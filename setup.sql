@@ -83,8 +83,6 @@ CREATE TABLE IF NOT EXISTS Tours (
     `From` DATETIME NOT NULL,
     `To` DATETIME NOT NULL,
 
-    Document VARCHAR(25) NOT NULL,
-
     PRIMARY KEY (ID),
 
     FOREIGN KEY (Country) REFERENCES Countries(ID),

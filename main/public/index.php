@@ -10,7 +10,7 @@
             <section class="section swiper-container swiper-slider swiper-slider-corporate swiper-pagination-style-2"
                 data-loop="true" data-autoplay="5000" data-simulate-touch="true" data-nav="false" data-direction="vertical">
                 <div class="swiper-wrapper text-left">
-                    <div class="swiper-slide context-dark" data-slide-bg="images/slider-4-slide-1-1920x678.jpg">
+                    <div class="swiper-slide context-dark" data-slide-bg="/static/assets/images/slide1.jpg">
                         <div class="swiper-slide-caption section-md">
                             <div class="container">
                                 <div class="row">
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide context-dark" data-slide-bg="images/slider-4-slide-2-1920x678.jpg">
+                    <div class="swiper-slide context-dark" data-slide-bg="/static/assets/images/slide2.jpg">
                         <div class="swiper-slide-caption section-md">
                             <div class="container">
                                 <div class="row">
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide context-dark" data-slide-bg="images/slider-4-slide-3-1920x678.jpg">
+                    <div class="swiper-slide context-dark" data-slide-bg="/static/assets/images/slide3.jpg">
                         <div class="swiper-slide-caption section-md">
                             <div class="container">
                                 <div class="row">
@@ -71,36 +71,7 @@
             <!-- Section Box Categories-->
             <section class="section section-lg section-top-1 bg-gray-4">
                 <div class="container offset-negative-1">
-                    <div class="box-categories cta-box-wrap">
-                        <div class="box-categories-content">
-                            <div class="row justify-content-center">
-                                <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
-                                    <ul class="list-marked-2 box-categories-list">
-                                        <li><a href="#"><img src="images/cta-1-368x420.jpg" alt="" width="368"
-                                                    height="420" /></a>
-                                            <h5 class="box-categories-title">Balloon Flights</h5>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
-                                    <ul class="list-marked-2 box-categories-list">
-                                        <li><a href="#"><img src="images/cta-2-368x420.jpg" alt="" width="368"
-                                                    height="420" /></a>
-                                            <h5 class="box-categories-title">Mountain Holiday</h5>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
-                                    <ul class="list-marked-2 box-categories-list">
-                                        <li><a href="#"><img src="images/cta-3-368x420.jpg" alt="" width="368"
-                                                    height="420" /></a>
-                                            <h5 class="box-categories-title">Beach Holidays</h5>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div><a class="link-classic wow fadeInUp" href="/tours.php">Other Tours<span></span></a>
+                    <a class="link-classic wow fadeInUp" href="/tours.php">Other Tours<span></span></a>
                     <!-- Owl Carousel-->
                 </div>
             </section>
