@@ -29,7 +29,7 @@
                     "
                         SELECT * FROM Members WHERE 
                     "
-                        . strtoupper($method)
+                        . ucfirst($method)
                         . " = :input LIMIT 1;"
                 );
 

@@ -36,6 +36,8 @@
         ],
     ];
 
+    const BLACKLISTED_USERNAMES = ["admin", "administrator"];
+
     const HASH = [
         "algorithm" => PASSWORD_ARGON2ID,
         "options" => [
@@ -117,6 +119,10 @@
             if (!str_contains(CREDENTIALS["characters"]["username"], $character)) {
                 return false;
             }
+        }
+
+        if (in_array(strtolower($username), BLACKLISTED_USERNAMES)) {
+            return false;
         }
 
         return true;
