@@ -59,6 +59,12 @@
         return get_server() . dirname($script);
     }
 
+    function calculate_price($price, $sale) {
+        $calculated_price = ($sale === 0) ? $price : $price * ($sale / 100);
+
+        return (floor($calculated_price) == $calculated_price) ? $calculated_price : bcadd($calculated_price, 0, 2);
+    }
+
     function generate_id($length, $database) {
         global $id_characters_length;
 
@@ -119,10 +125,6 @@
             if (!str_contains(CREDENTIALS["characters"]["username"], $character)) {
                 return false;
             }
-        }
-
-        if (in_array(strtolower($username), BLACKLISTED_USERNAMES)) {
-            return false;
         }
 
         return true;

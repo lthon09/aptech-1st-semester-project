@@ -5,7 +5,7 @@
         "title" => "About Us",
         "navigation_bar" => true,
         "footer" => true,
-        "content" => <<<CONTENT
+        "content" => <<<HTML
             <!-- Why choose us-->
             <section class="section section-sm section-first bg-default text-md-left">
                 <div class="container">
@@ -127,6 +127,6 @@
                     </div>
                 </div>
             </section>
-        CONTENT,
+        HTML,
     ]);
 ?>

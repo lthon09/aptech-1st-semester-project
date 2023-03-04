@@ -71,7 +71,7 @@
 
                 render_template("authentication", [
                     "title" => "Reset Password",
-                    "content" => <<<CONTENT
+                    "content" => <<<HTML
                         <div class="signin-content">
                             <div class="signin-form">
                                 <h2 class="form-title">Reset Password</h2>
@@ -93,7 +93,7 @@
                                 </form>
                             </div>
                         </div>
-                    CONTENT,
+                    HTML,
                 ]);
             }
         }

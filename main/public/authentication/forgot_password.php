@@ -50,7 +50,7 @@
                     $link = get_directory() . "/reset_password.php?id=" . $reset_password_id;
 
                     if (!send_mail($email, "Reset Your Password",
-                        <<<BODY
+                        <<<HTML
                             <strong>{$username}</strong>,
                             <br><br>
                             A password reset request has just been for with your account. Please click on the link below in order to reset your password.
@@ -67,7 +67,7 @@
                                 <br>
                                 Pleasant Tours
                             </strong>
-                        BODY,
+                        HTML,
                         "
                             {$username},
 
@@ -104,7 +104,7 @@
 
     render_template("authentication", [
         "title" => "Forgot Password",
-        "style" => <<<STYLE
+        "style" => <<<CSS
             <style>
                 .select-dropdown {
                     position: relative;
@@ -148,8 +148,8 @@
                     display: none;
                 }
             </style>
-        STYLE,
-        "content" => <<<CONTENT
+        CSS,
+        "content" => <<<HTML
             <div class="signin-content">
                 <div class="signin-form">
                     <h2 class="form-title">Forgot Password</h2>
@@ -196,6 +196,6 @@
                     }
                 });
             </script>
-        CONTENT,
+        HTML,
     ]);
 ?>

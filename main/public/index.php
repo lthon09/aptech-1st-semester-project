@@ -1,11 +1,79 @@
 <?php
     require_once "../global.php";
 
+    $hot_tours = "";
+    $other_tours = "";
+
+    $connection = connect();
+
+    $statement = $connection -> prepare("
+        SELECT * FROM HotTours;
+    ");
+
+    $statement -> execute();
+
+    if ($statement -> rowCount() === 0) {
+        $hot_tours = <<<HTML
+            <div class="col">
+                <h5 class="box-icon-classic-title" style="font-weight:normal">No Hot Tour</h5>
+            </div>
+        HTML;
+    } else {
+        foreach (($statement -> fetchAll()) as $hot_tour) {
+            $id = $hot_tour["Tour"];
+
+            $statement = $connection -> prepare("
+                SELECT * FROM Tours WHERE ID = :id LIMIT 1;
+            ");
+
+            $statement -> execute(["id" => $id]);
+
+            $tour = $statement -> fetch();
+
+            $name = $tour["Name"];
+            $country = $tour["Country"];
+            $description = $tour["ShortDescription"];
+            $price = "$" . calculate_price($tour["Price"], $tour["Sale"]);
+
+            $hot_tours .= <<<HTML
+                <div class="col-sm-6 col-md-12 wow fadeInRight">
+                    <!-- Product Big-->
+                    <article class="product-big">
+                        <div class="unit flex-column flex-md-row align-items-md-stretch">
+                            <div class="unit-left"><img class="product-big-figure"
+                                        src="/static/assets/images/{$id}.jpg" alt="" width="600"
+                                        height="366" /></div>
+                            <div class="unit-body">
+                                <div class="product-big-body">
+                                    <h5 class="product-big-title">{$name}, {$country}</h5>
+                                    <p class="product-big-text">{$description}</p><a class="button button-black-outline button-ujarak"
+                                        href="/tour.php?id={$id}">Learn More</a>
+                                    <div class="product-big-price-wrap"><span class="product-big-price">{$price}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            HTML;
+        }
+
+        $other_tours = <<<HTML
+            <section class="section section-top-1">
+                <div class="container">
+                    <div class="box-categories cta-box-wrap"></div>
+                    <a class="link-classic wow fadeInUp" href="/tours.php">Other Tours<span></span></a>
+                    <!-- Owl Carousel-->
+                </div>
+            </section>
+        HTML;
+    }
+
     render_template("regular", [
         "title" => "Home",
         "navigation_bar" => true,
         "footer" => true,
-        "content" => <<<CONTENT
+        "content" => <<<HTML
             <!-- Swiper-->
             <section class="section swiper-container swiper-slider swiper-slider-corporate swiper-pagination-style-2"
                 data-loop="true" data-autoplay="5000" data-simulate-touch="true" data-nav="false" data-direction="vertical">
@@ -69,9 +137,10 @@
                 <div class="swiper-pagination"></div>
             </section>
             <!-- Section Box Categories-->
-            <section class="section section-lg section-top-1 bg-gray-4">
-                <div class="container offset-negative-1">
-                    <a class="link-classic wow fadeInUp" href="/tours.php">Other Tours<span></span></a>
+            <section class="section section-top-1">
+                <div class="container">
+                    <div class="box-categories cta-box-wrap"></div>
+                    <a class="link-classic wow fadeInUp" href="/tours.php">View Tours<span></span></a>
                     <!-- Owl Carousel-->
                 </div>
             </section>
@@ -153,7 +222,7 @@
                                         <div class="box-icon-classic-icon fl-bigmug-line-circular220"></div>
                                     </div>
                                     <div class="unit-body">
-                                        <h5 class="box-icon-classic-title"><a>Wide Variety of Tours</a></h5>
+                                        <h5 class="box-icon-classic-title">Wide Variety of Tours</h5>
                                         <p class="box-icon-classic-text">We offer a wide variety of personally picked tours
                                             with destinations
                                             all over the globe.</p>
@@ -169,7 +238,7 @@
                                         <div class="box-icon-classic-icon fl-bigmug-line-favourites5"></div>
                                     </div>
                                     <div class="unit-body">
-                                        <h5 class="box-icon-classic-title"><a>Highly Qualified Service</a></h5>
+                                        <h5 class="box-icon-classic-title">Highly Qualified Service</h5>
                                         <p class="box-icon-classic-text">Our tour managers are qualified, skilled, and
                                             friendly to bring you
                                             the best service.</p>
@@ -185,7 +254,7 @@
                                         <div class="box-icon-classic-icon fl-bigmug-line-headphones32"></div>
                                     </div>
                                     <div class="unit-body">
-                                        <h5 class="box-icon-classic-title"><a>24/7 Support</a></h5>
+                                        <h5 class="box-icon-classic-title">24/7 Support</h5>
                                         <p class="box-icon-classic-text">You can always get professional support from our
                                             staff 24/7 and ask
                                             any question you have.</p>
@@ -202,7 +271,7 @@
                                         <div class="box-icon-classic-icon fl-bigmug-line-wallet26"></div>
                                     </div>
                                     <div class="unit-body">
-                                        <h5 class="box-icon-classic-title"><a>Best Price Guarantee</a></h5>
+                                        <h5 class="box-icon-classic-title">Best Price Guarantee</h5>
                                         <p class="box-icon-classic-text">If you find tours that are cheaper than ours, we
                                             will compensate the
                                             difference.</p>
@@ -219,71 +288,10 @@
                 <div class="container">
                     <h3 class="oh-desktop"><span class="d-inline-block wow slideInDown">Hot Tours</span></h3>
                     <div class="row row-sm row-40 row-md-50">
-                        <div class="col-sm-6 col-md-12 wow fadeInRight">
-                            <!-- Product Big-->
-                            <article class="product-big">
-                                <div class="unit flex-column flex-md-row align-items-md-stretch">
-                                    <div class="unit-left"><a class="product-big-figure" href="#"><img
-                                                src="images/product-big-1-600x366.jpg" alt="" width="600"
-                                                height="366" /></a></div>
-                                    <div class="unit-body">
-                                        <div class="product-big-body">
-                                            <h5 class="product-big-title"><a href="#">Benidorm, Spain</a></h5>
-                                            <div class="group-sm group-middle justify-content-start">
-                                                <div class="product-big-rating"><span
-                                                        class="icon material-icons-star"></span><span
-                                                        class="icon material-icons-star"></span><span
-                                                        class="icon material-icons-star"></span><span
-                                                        class="icon material-icons-star"></span><span
-                                                        class="icon material-icons-star_half"></span>
-                                                </div><a class="product-big-reviews" href="#">4 customer reviews</a>
-                                            </div>
-                                            <p class="product-big-text">Benidorm is a buzzing resort with a big reputation
-                                                for beach holidays.
-                                                Situated in sunny Costa Blanca, the town is one of the original Spanish
-                                                beach resorts...</p><a class="button button-black-outline button-ujarak"
-                                                href="#">Buy This Tour</a>
-                                            <div class="product-big-price-wrap"><span class="product-big-price">$790</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-sm-6 col-md-12 wow fadeInLeft">
-                            <!-- Product Big-->
-                            <article class="product-big">
-                                <div class="unit flex-column flex-md-row align-items-md-stretch">
-                                    <div class="unit-left"><a class="product-big-figure" href="#"><img
-                                                src="images/product-big-2-600x366.jpg" alt="" width="600"
-                                                height="366" /></a></div>
-                                    <div class="unit-body">
-                                        <div class="product-big-body">
-                                            <h5 class="product-big-title"><a href="#">Mauritius Island, Africa</a></h5>
-                                            <div class="group-sm group-middle justify-content-start">
-                                                <div class="product-big-rating"><span
-                                                        class="icon material-icons-star"></span><span
-                                                        class="icon material-icons-star"></span><span
-                                                        class="icon material-icons-star"></span><span
-                                                        class="icon material-icons-star"></span><span
-                                                        class="icon material-icons-star_half"></span>
-                                                </div><a class="product-big-reviews" href="#">5 customer reviews</a>
-                                            </div>
-                                            <p class="product-big-text">The beautiful and inviting island nation of
-                                                Mauritius is an ideal ‘flop
-                                                and drop’ at the conclusion of your safari. Indulge in the delightful scents
-                                                of the fragrant...
-                                            </p><a class="button button-black-outline button-ujarak" href="#">Buy This
-                                                Tour</a>
-                                            <div class="product-big-price-wrap"><span class="product-big-price">$890</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
+                        {$hot_tours}
                     </div>
                 </div>
+                {$other_tours}
             </section>
             <!-- Section Subscribe-->
             <section class="section bg-default text-center offset-top-50">
@@ -302,6 +310,6 @@
                     </div>
                 </div>
             </section>
-        CONTENT,
+        HTML,
     ]);
 ?>

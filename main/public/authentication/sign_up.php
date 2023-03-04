@@ -22,85 +22,90 @@
                 $message_color = "red";
                 $message = "Invalid credentials entered! (The username must be 2-20 characters and the password must be 8-40 characters)";
             } else {
-                $connection = connect();
-
-                $statement1 = $connection -> prepare("
-                    SELECT * FROM UnverifiedMembers WHERE Email = :email LIMIT 1;
-                ");
-                $statement2 = $connection -> prepare("
-                    SELECT * FROM Members WHERE Email = :email LIMIT 1;
-                ");
-
-                $statement1 -> execute(["email" => $email]);
-                $statement2 -> execute(["email" => $email]);
-
-                if (($statement1 -> rowCount() !== 0) || ($statement2 -> rowCount() !== 0)) {
+                if (in_array(strtolower($username), BLACKLISTED_USERNAMES)) {
                     $message_color = "red";
-                    $message = "This email is unavailable!";
+                    $message = "This username is blacklisted!";
                 } else {
-                    $hashed_password = hash_password($password);
+                    $connection = connect();
 
-                    if ($hashed_password === false) {
+                    $statement1 = $connection -> prepare("
+                        SELECT * FROM UnverifiedMembers WHERE Email = :email LIMIT 1;
+                    ");
+                    $statement2 = $connection -> prepare("
+                        SELECT * FROM Members WHERE Email = :email LIMIT 1;
+                    ");
+
+                    $statement1 -> execute(["email" => $email]);
+                    $statement2 -> execute(["email" => $email]);
+
+                    if (($statement1 -> rowCount() !== 0) || ($statement2 -> rowCount() !== 0)) {
                         $message_color = "red";
-                        $message = "Something went wrong, please try again.";
+                        $message = "This email is unavailable!";
                     } else {
-                        $id = generate_id(IDS["lengths"]["secure"], "UnverifiedMembers");
+                        $hashed_password = hash_password($password);
 
-                        if ($id === false) {
+                        if ($hashed_password === false) {
                             $message_color = "red";
                             $message = "Something went wrong, please try again.";
                         } else {
-                            $link = get_directory() . "/verify.php?id=" . $id;
+                            $id = generate_id(IDS["lengths"]["secure"], "UnverifiedMembers");
 
-                            if (!send_mail($email, "Confirm Your Email Address",
-                                <<<BODY
-                                    <strong>{$username}</strong>,
-                                    <br><br>
-                                    It looks like a Pleasant Tours account has just been created using your email address. Please verify this by opening the link below.
-                                    <br>
-                                    This link will expire in <strong>15 minutes</strong>.
-                                    <br>
-                                    <br>
-                                    If this wasn't you, please ignore this email.
-                                    <br><br>
-                                    <a target="_blank" href="{$link}">CONFIRM YOUR EMAIL ADDRESS</a>
-                                    <br><br>
-                                    <strong>
-                                        Cheers,
-                                        <br>
-                                        Pleasant Tours
-                                    </strong>
-                                BODY,
-                                "
-                                    {$username},
-
-                                    It looks like a Pleasant Tours account has just been created using your email address. Please verify this by clicking on the link below.
-                                    This link will expire in 15 minutes.
-
-                                    If this wasn't you, please ignore this email.
-
-                                    CONFIRM YOUR EMAIL ADDRESS: {$link}
-
-                                    Cheers,
-                                    Pleasant Tours
-                                ",
-                            )) {
+                            if ($id === false) {
                                 $message_color = "red";
                                 $message = "Something went wrong, please try again.";
                             } else {
-                                $connection -> prepare("
-                                    INSERT INTO UnverifiedMembers
-                                    (ID, Username, Email, `Password`)
-                                    VALUES (:id, :username, :email, :password);
-                                ") -> execute([
-                                    "id" => $id,
-                                    "username" => $username,
-                                    "email" => $email,
-                                    "password" => $hashed_password,
-                                ]);
+                                $link = get_directory() . "/verify.php?id=" . $id;
 
-                                $message_color = "#00ff00";
-                                $message = "Please check your email for an email in order to confirm your membership! (Make sure to check all the folders)";
+                                if (!send_mail($email, "Confirm Your Email Address",
+                                    <<<HTML
+                                        <strong>{$username}</strong>,
+                                        <br><br>
+                                        It looks like a Pleasant Tours account has just been created using your email address. Please verify this by opening the link below.
+                                        <br>
+                                        This link will expire in <strong>15 minutes</strong>.
+                                        <br>
+                                        <br>
+                                        If this wasn't you, please ignore this email.
+                                        <br><br>
+                                        <a target="_blank" href="{$link}">CONFIRM YOUR EMAIL ADDRESS</a>
+                                        <br><br>
+                                        <strong>
+                                            Cheers,
+                                            <br>
+                                            Pleasant Tours
+                                        </strong>
+                                    HTML,
+                                    "
+                                        {$username},
+
+                                        It looks like a Pleasant Tours account has just been created using your email address. Please verify this by clicking on the link below.
+                                        This link will expire in 15 minutes.
+
+                                        If this wasn't you, please ignore this email.
+
+                                        CONFIRM YOUR EMAIL ADDRESS: {$link}
+
+                                        Cheers,
+                                        Pleasant Tours
+                                    ",
+                                )) {
+                                    $message_color = "red";
+                                    $message = "Something went wrong, please try again.";
+                                } else {
+                                    $connection -> prepare("
+                                        INSERT INTO UnverifiedMembers
+                                        (ID, Username, Email, `Password`)
+                                        VALUES (:id, :username, :email, :password);
+                                    ") -> execute([
+                                        "id" => $id,
+                                        "username" => $username,
+                                        "email" => $email,
+                                        "password" => $hashed_password,
+                                    ]);
+
+                                    $message_color = "#00ff00";
+                                    $message = "Please check your email for an email in order to confirm your membership! (Make sure to check all the folders)";
+                                }
                             }
                         }
                     }
@@ -111,11 +116,11 @@
 
     render_template("authentication", [
         "title" => "Sign Up",
-        "resources" => <<<RESOURCES
+        "resources" => <<<HTML
             <link rel="stylesheet" href="/static/frontend/css/authentication_fonts.css">
             <link rel="stylesheet" href="/static/frontend/css/authentication_style.css">
-        RESOURCES,
-        "content" => <<<CONTENT
+        HTML,
+        "content" => <<<HTML
             <div class="signup-content">
                 <div class="signup-form">
                     <h2 class="form-title">Sign Up</h2>
@@ -148,6 +153,6 @@
                     </form>
                 </div>
             </div>
-        CONTENT,
+        HTML,
     ]);
 ?>

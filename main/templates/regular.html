@@ -53,7 +53,11 @@
                                             <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/sign_up.php">Sign Up</a>
                                         {{/logged_in}}
                                         {{#logged_in}}
-                                            <span>Welcome back,</span><a href="#" style="margin-left:5px">{{ username }}</a><span>!</span>
+                                            <div style="display:flex;margin-right:-30px">
+                                                <span>Welcome back,</span>
+                                                <a href="#" style="margin-left:5px">{{ username }}</a>
+                                                <span>!</span>
+                                            </div>
                                             <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/log_out.php">Log Out</a>
                                         {{/logged_in}}
                                     </div>
