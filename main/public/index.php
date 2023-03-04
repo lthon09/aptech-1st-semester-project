@@ -108,7 +108,7 @@
             <section class="section section-sm section-first bg-default text-md-left">
                 <div class="container">
                     <div class="row row-50 align-items-center justify-content-center justify-content-xl-between">
-                        <div class="col-lg-6 text-center wow fadeInUp"><img src="images/index-3-556x382.jpg" alt=""
+                        <div class="col-lg-6 text-center wow fadeInUp"><img src="/static/assets/images/discover.jpg" alt=""
                                 width="556" height="382" />
                         </div>
                         <div class="col-lg-6 wow fadeInRight" data-wow-delay=".1s">
@@ -316,7 +316,7 @@
             </section>
             <!-- Section Subscribe-->
             <section class="section bg-default text-center offset-top-50">
-                <div class="parallax-container" data-parallax-img="images/parallax-1-1920x850.jpg">
+                <div class="parallax-container" data-parallax-img="/static/assets/images/book_now.jpg">
                     <div class="parallax-content section-xl section-inset-custom-1 context-dark bg-overlay-2-21">
                         <div class="container">
                             <h2 class="heading-2 oh font-weight-normal wow slideInDown"><span

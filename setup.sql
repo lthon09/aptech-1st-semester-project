@@ -78,8 +78,6 @@ CREATE TABLE IF NOT EXISTS Tours (
 
     Country CHAR(16) NOT NULL,
 
-    Avatar VARCHAR(25) NOT NULL,
-
     Category CHAR(16) NOT NULL,
 
     `From` DATETIME NOT NULL,
@@ -99,7 +97,6 @@ CREATE TABLE IF NOT EXISTS ShowcaseCategories (
     ID CHAR(16),
 
     Category CHAR(16),
-    Avatar VARCHAR(25) NOT NULL,
 
     PRIMARY KEY (ID),
 
