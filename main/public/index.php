@@ -48,7 +48,7 @@
                 HTML;
 
                 $_price = <<<HTML
-                    <span style="color:red">{$price}</span>
+                    <span style="color:red">{$discounted_price}</span>
                 HTML;
             } else {
                 $_price = $_original_price;
