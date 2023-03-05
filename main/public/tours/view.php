@@ -120,7 +120,7 @@
                                     <div>{$comments}</div>
                                 </div>
                             </div>
-                            <div class="bg-gray-4" style="text-align:center;width:30%;padding-top:175px">
+                            <div class="bg-gray-4" style="text-align:center;width:30%;padding-top:175px"> <!-- TODO: make this sticky -->
                                 <div class="product-price-wrap">
                                     <span class="product-price" style="display:flex;flex-direction:row;justify-content:center;gap:50px">
                                         {$_sale}
