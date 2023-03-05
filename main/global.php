@@ -259,18 +259,6 @@
         }
     }
 
-    function administrator_only() {
-        global $member;
-
-        if ($member === false) {
-            redirect("/");
-        }
-
-        if ($member["Administrator"] === 0) {
-            redirect("/");
-        }
-    }
-
     function log_out() {
         unset($_COOKIE["member"]);
         setcookie("member", null, -1, "/");

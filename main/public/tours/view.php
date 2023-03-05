@@ -11,6 +11,21 @@
         if (!validate_id($id)) {
             redirect("list.php");
         } else {
+            $comments = "";
+
+            if (!is_logged_in()) {
+                $current_page = urlencode(get_server() . $script . "?id={$id}");
+
+                $create = <<<HTML
+                    <a href="/authentication/log_in.php?destination={$current_page}">Log In</a> to review on this tour.
+                HTML;
+            } else {
+                $create = <<<HTML
+                HTML; // TODO: create comment form
+            }
+
+            // TODO: list comments
+
             $connection = connect();
 
             $statement = $connection -> prepare("
@@ -100,7 +115,10 @@
                                     <i class="fa fa-comments" style="font-size:25px;margin-right:7px"></i>
                                     Reviews
                                 </h6>
-                                <!-- TODO: reviews -->
+                                <div class="container" style="margin-top:15px">
+                                    <div>{$create}</div>
+                                    <div>{$comments}</div>
+                                </div>
                             </div>
                             <div class="bg-gray-4" style="text-align:center;width:30%;padding-top:175px">
                                 <div class="product-price-wrap">

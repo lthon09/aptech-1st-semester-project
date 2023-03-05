@@ -61,10 +61,10 @@
 
                     $queries = get_queries();
 
-                    redirect(
-                        (isset($queries["destination"]))
+                    redirect( // FIXME: this isnt redirecting to the destination
+                        (isset($queries["destination"]) && $queries["destination"] !== "")
                             ? urldecode($queries["destination"])
-                            : ""
+                            : "/"
                     );
                 }
             }
