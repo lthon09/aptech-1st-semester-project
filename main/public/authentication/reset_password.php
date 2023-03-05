@@ -3,10 +3,7 @@
 
     not_logged_in_only();
 
-    $query_string = $_SERVER["QUERY_STRING"];
-
-    $queries = [];
-    parse_str($query_string, $queries);
+    $queries = get_queries();
 
     if (!isset($queries["id"])) {
         redirect("/");

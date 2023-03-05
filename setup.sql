@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS Tours (
 
     ShortDescription VARCHAR(200) NOT NULL,
     LongDescription VARCHAR(1000) NOT NULL,
+    DetailedInformations TEXT NOT NULL,
 
     Price DECIMAL(15, 2) NOT NULL,
     Sale TINYINT UNSIGNED DEFAULT 0,
@@ -69,9 +70,6 @@ CREATE TABLE IF NOT EXISTS Tours (
     Country CHAR(16) NOT NULL,
 
     Category CHAR(16) NOT NULL,
-
-    `From` DATETIME NOT NULL,
-    `To` DATETIME NOT NULL,
 
     PRIMARY KEY (ID),
 

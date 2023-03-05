@@ -59,8 +59,7 @@
                         true,
                     );
 
-                    $queries = [];
-                    parse_str($query_string, $queries);
+                    $queries = get_queries();
 
                     redirect(
                         (isset($queries["destination"]))

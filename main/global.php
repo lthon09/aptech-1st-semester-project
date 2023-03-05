@@ -23,6 +23,8 @@
 
     $id_characters_length = strlen(IDS["characters"]);
 
+    const LARGE_QUERY_PAGE_ITEMS_COUNT = 50;
+
     const CREDENTIALS = [
         "characters" => [
             "username" => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ",
@@ -45,25 +47,29 @@
         ],
     ];
 
-    function get_server() {
+    function get_server() : string {
         $port = $_SERVER["SERVER_PORT"];
 
         return (isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)) ? "https" : "http" . "://" . $_SERVER["SERVER_NAME"] . (((!in_array($port, [80, 443]))) ? ":{$port}" : ""); // using $_SERVER variables here is fine here since we have UseCanonicalName turned on
     }
 
-    function get_directory() {
+    function get_directory() : string {
         global $script;
 
         return get_server() . dirname($script);
     }
 
-    function calculate_price($price, $sale) {
-        $calculated_price = ($sale === 0) ? $price : $price * ($sale / 100);
-
-        return (floor($calculated_price) == $calculated_price) ? $calculated_price : bcadd($calculated_price, 0, 2);
+    function format_price(int | float $price, int $true, float $false) : int | float {
+        return (floor($price) == $price) ? $true : $false;
     }
 
-    function generate_id($length, $database) {
+    function calculate_discounted_price(int | float $price, int $sale) : int | float {
+        $calculated_price = $price - ($price * $sale / 100);
+
+        return format_price($calculated_price, (int)$calculated_price, bcadd($calculated_price, 0, 2));
+    }
+
+    function generate_id(int $length, string $database) : string | false {
         global $id_characters_length;
 
         $tries = 0;
@@ -97,7 +103,7 @@
         }
     }
 
-    function validate_id($id) {
+    function validate_id(string $id) : bool {
         foreach (mb_str_split($id) as $character) {
             if (!str_contains(IDS["characters"], $character)) {
                 return false;
@@ -107,11 +113,11 @@
         return true;
     }
 
-    function validate_email($email) {
+    function validate_email(string $email) : bool {
         return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
     }
 
-    function validate_username($username) {
+    function validate_username(string $username) : bool {
         if (
             (strlen($username) < CREDENTIALS["length"]["username"][0]) ||
             (strlen($username) > CREDENTIALS["length"]["username"][1])
@@ -128,7 +134,7 @@
         return true;
     }
 
-    function validate_password($password) {
+    function validate_password(string $password) : bool {
         if (
             (strlen($password) < CREDENTIALS["length"]["password"][0]) ||
             (strlen($password) > CREDENTIALS["length"]["password"][1])
@@ -145,7 +151,7 @@
         return true;
     }
 
-    function validate_hashed_password($password) {
+    function validate_hashed_password(string $password) : bool {
         if (strlen($password) !== CREDENTIALS["length"]["hashed_password"]) {
             return false;
         }
@@ -159,21 +165,30 @@
         return true;
     }
 
-    function validate_credentials($username, $password) {
+    function validate_credentials(string $username, string $password) : bool {
         return validate_username($username) && validate_password($password);
     }
 
-    function hash_password($password) {
+    function hash_password(string $password) : string {
         return password_hash($password, HASH["algorithm"], HASH["options"]);
     }
 
-    function redirect($url) {
+    function get_queries() : array {
+        $query_string = $_SERVER["QUERY_STRING"];
+
+        $queries = [];
+        parse_str($query_string, $queries);
+
+        return $queries;
+    }
+
+    function redirect(string $url) {
         header("Location: $url");
 
         die();
     }
 
-    function get_member() {
+    function get_member() : array | false {
         if (!is_logged_in()) {
             return false;
         }
@@ -227,7 +242,7 @@
 
     $member = get_member();
 
-    function is_logged_in() {
+    function is_logged_in() : bool {
         return isset($_COOKIE["member"]);
     }
 
@@ -260,11 +275,42 @@
         setcookie("member", null, -1, "/");
     }
 
-    function connect() {
+    function connect() : PDO {
         return new PDO("mysql:host=localhost;port=3306;dbname=PleasantTours", "root", "");
     }
 
-    function send_mail($receiver, $subject, $primary_body, $alternative_body) {
+    function large_query(string $database) : array {
+        $offset = 0;
+        $results = [];
+
+        $connection = connect();
+
+        while (true) {
+            $statement = $connection -> prepare(
+                "
+                    SELECT * FROM $database LIMIT $offset, 
+                "
+                    . LARGE_QUERY_PAGE_ITEMS_COUNT
+                    . ";"
+            );
+
+            $statement -> execute();
+
+            if ($statement -> rowCount() === 0) {
+                break;
+            }
+
+            foreach (($statement -> fetchAll()) as $row) {
+                $results[$row["ID"]] = $row;
+            }
+
+            $offset += LARGE_QUERY_PAGE_ITEMS_COUNT;
+        }
+
+        return $results;
+    }
+
+    function send_mail(string $receiver, string $subject, string $primary_body, string $alternative_body) : bool {
         try {
             $mail = new PHPMailer();
 
@@ -303,7 +349,7 @@
         }
     }
 
-    function render_template($template, $variables) {
+    function render_template(string $template, array $variables) {
         global $member;
 
         $is_logged_in = is_logged_in();

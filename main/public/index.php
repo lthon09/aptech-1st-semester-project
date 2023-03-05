@@ -30,10 +30,28 @@
 
             $tour = $statement -> fetch();
 
-            $name = $tour["Name"];
-            $country = $tour["Country"];
-            $description = $tour["ShortDescription"];
-            $price = "$" . calculate_price($tour["Price"], $tour["Sale"]);
+            $name = htmlentities($tour["Name"]);
+            $country = htmlentities($tour["Country"]);
+            $description = htmlentities($tour["ShortDescription"]);
+            $original_price = $tour["Price"];
+            $sale = $tour["Sale"];
+            $_original_price = "$" . format_price($original_price, (int)$original_price, $original_price);
+
+            $_sale = "";
+
+            if ($sale !== 0) {
+                $discounted_price = "$" . calculate_discounted_price($original_price, $sale);
+
+                $_sale = <<<HTML
+                    <span style="color:#d3d3d3;text-decoration:line-through;font-size:17px">{$_original_price}</span>
+                HTML;
+
+                $_price = <<<HTML
+                    <span style="color:red">{$discounted_price}</span>
+                HTML;
+            } else {
+                $_price = $_original_price;
+            }
 
             $hot_tours .= <<<HTML
                 <div class="col-sm-6 col-md-12 wow fadeInRight">
@@ -41,14 +59,18 @@
                     <article class="product-big">
                         <div class="unit flex-column flex-md-row align-items-md-stretch">
                             <div class="unit-left"><img class="product-big-figure"
-                                        src="/static/assets/images/{$id}.jpg" alt="" width="600"
+                                        src="/static/assets/tours/{$id}/avatar.jpg" alt="" width="600"
                                         height="366" /></div>
                             <div class="unit-body">
                                 <div class="product-big-body">
                                     <h5 class="product-big-title">{$name}, {$country}</h5>
                                     <p class="product-big-text">{$description}</p><a class="button button-black-outline button-ujarak"
                                         href="/tour.php?id={$id}">Learn More</a>
-                                    <div class="product-big-price-wrap"><span class="product-big-price">{$price}</span>
+                                    <div class="product-big-price-wrap">
+                                        <span class="product-big-price" style="display:flex;flex-direction:column;gap:10px">
+                                            {$_sale}
+                                            {$_price}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
