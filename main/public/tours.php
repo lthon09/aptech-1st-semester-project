@@ -6,21 +6,35 @@
     $query_categories = isset($queries["categories"]);
     $query_countries = isset($queries["countries"]);
 
+    $__categories = ($query_categories) ? $queries["categories"] : [];
+    $__countries = ($query_countries) ? $queries["countries"] : [];
+
+    $conditions = "";
+
+    if ($query_categories || $query_countries) {
+        $categories_queried = false;
+
+        $conditions .= "WHERE ";
+
+        if ($query_categories) {
+            $conditions .= "Category IN (" . implode(",", array_fill(0, count($__categories), "?")) . ")";
+
+            $categories_queried = true;
+        }
+        if ($query_countries) {
+            $conditions .=
+                (($categories_queried) ? " AND " : "")
+                    . "Country IN (" . implode(",", array_fill(0, count($__countries), "?")) . ")";
+        }
+    }
+
     $categories = "";
     $countries = "";
     $tours = "";
 
-    if (!$query_categories) {
-        $_categories = large_query("Categories");
-    } else {
-        $_categories = large_query("Categories", "WHERE ID IN (':ids')", [
-            "ids" => implode("','", $queries["categories"]),
-        ]);
-    }
-
-    if (!$query_countries) {
-        $_countries = large_query("Countries");
-    } else {}
+    $_categories = large_query("Categories", "", [], []);
+    $_countries = large_query("Countries", "", [], []);
+    $_tours = large_query("Tours", $conditions, array_merge($__categories, $__countries));
 
     foreach ($_categories as $category) {
         $id = htmlentities($category["ID"]);
@@ -44,64 +58,70 @@
         HTML;
     }
 
-    foreach (large_query("Tours") as $tour) {
-        $id = htmlentities($tour["ID"]);
-        $name = htmlentities($tour["Name"]);
-        $country = htmlentities($_countries[$tour["Country"]]["Name"]);
-        $category = htmlentities($_categories[$tour["Category"]]["Name"]);
-        $description = htmlentities($tour["ShortDescription"]);
-        $original_price = $tour["Price"];
-        $sale = $tour["Sale"];
-        $_original_price = "$" . format_price($original_price, (int)$original_price, $original_price);
+    if ($_tours) {
+        foreach ($_tours as $tour) {
+            $id = htmlentities($tour["ID"]);
+            $name = htmlentities($tour["Name"]);
+            $category = htmlentities($_categories[$tour["Category"]]["Name"]);
+            $country = htmlentities($_countries[$tour["Country"]]["Name"]);
+            $description = htmlentities($tour["ShortDescription"]);
+            $original_price = $tour["Price"];
+            $sale = $tour["Sale"];
+            $_original_price = "$" . format_price($original_price, (int)$original_price, $original_price);
 
-        $style = "";
-        $_sale = "";
+            $style = "";
+            $_sale = "";
 
-        if ($sale !== 0) {
-            $discounted_price = "$" . calculate_discounted_price($original_price, $sale);
+            if ($sale !== 0) {
+                $discounted_price = "$" . calculate_discounted_price($original_price, $sale);
 
-            $_sale = <<<HTML
-                <span style="color:#d3d3d3;text-decoration:line-through;font-size:15px">{$_original_price}</span>
-            HTML;
+                $_sale = <<<HTML
+                    <span style="color:#d3d3d3;text-decoration:line-through;font-size:15px">{$_original_price}</span>
+                HTML;
 
-            $_price = <<<HTML
-                <span style="color:red;font-weight:bold">{$discounted_price}</span>
-            HTML;
-        } else {
-            $style = "justify-content:center";
-            $_price = $_original_price;
-        }
+                $_price = <<<HTML
+                    <span style="color:red;font-weight:bold">{$discounted_price}</span>
+                HTML;
+            } else {
+                $style = "justify-content:center";
+                $_price = $_original_price;
+            }
 
-        $tours .= <<<HTML
-            <div class="span-one-third" style="min-width:350px">
-                <figure>
-                    <div class="unit flex-column flex-md-column align-items-md-stretch">
-                        <div class="unit-left">
-                            <a href="/tours.php?id={$id}">
-                                <img class="product-figure"
-                                    src="/static/assets/tours/{$id}/avatar.jpg" alt="" style="width:100%;height:200px" />
-                            </a>
-                        </div>
-                        <div class="unit-body">
-                            <div class="product-body">
-                                <h5 class="product-title">
-                                    <a href="/tours.php?id={$id}">{$name}, {$country}</a>
-                                </h5>
-                                <div class="product-text" style="display:flex;flex-direction:column;gap:20px;margin-top:10px">
-                                    <span style="color:gray;font-size:16px">{$category}</span>
-                                    <span>{$description}</span>
-                                </div>
-                                <div class="product-price-wrap" style="margin-top:40px">
-                                    <span class="product-price" style="display:flex;flex-direction:row;align-items:center;gap:40px;{$style}">
-                                        {$_sale}
-                                        {$_price}
-                                    </span>
+            $tours .= <<<HTML
+                <div class="span-one-third" style="min-width:350px">
+                    <figure>
+                        <div class="unit flex-column flex-md-column align-items-md-stretch">
+                            <div class="unit-left">
+                                <a href="/tours.php?id={$id}">
+                                    <img class="product-figure"
+                                        src="/static/assets/tours/{$id}/avatar.jpg" alt="" style="width:100%;height:200px" />
+                                </a>
+                            </div>
+                            <div class="unit-body">
+                                <div class="product-body">
+                                    <h5 class="product-title">
+                                        <a href="/tours.php?id={$id}">{$name}, {$country}</a>
+                                    </h5>
+                                    <div class="product-text" style="display:flex;flex-direction:column;gap:20px;margin-top:10px">
+                                        <span style="color:gray;font-size:16px">{$category}</span>
+                                        <span>{$description}</span>
+                                    </div>
+                                    <div class="product-price-wrap" style="margin-top:40px">
+                                        <span class="product-price" style="display:flex;flex-direction:row;align-items:center;gap:40px;{$style}">
+                                            {$_sale}
+                                            {$_price}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </figure>
-        </div>
+                    </figure>
+                </div>
+            HTML;
+        }
+    } else {
+        $tours = <<<HTML
+            No Result
         HTML;
     }
 
@@ -140,25 +160,6 @@
                     background-image: none !important;
                 }
 
-                .search, .search::placeholder {
-                    font-family: "Poppins";
-                    font-size: 13px;
-                }
-
-                .search {
-                    border: 1px solid #aaa;
-                    padding-left: 5px;
-                }
-
-                .search::placeholder {
-                    color: #333;
-                }
-
-                .search:focus {
-                    border-color: #01b3a7;
-                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                }
-
                 .update {
                     color: white;
                     background-color: #01b3a7;
@@ -172,6 +173,10 @@
 
                 .update:hover {
                     background-color: #008f85;
+                }
+
+                .update:active {
+                    background-color: #007d74;
                 }
             </style>
             <link rel="stylesheet" href="https://harvesthq.github.io/chosen/chosen.css">
@@ -187,8 +192,7 @@
                     <select class="chosen-select" name="countries[]" data-placeholder="Countries" multiple>
                         {$countries}
                     </select>
-                    <input class="search" type="text" name="search" placeholder="Search" autocomplete="off">
-                    <input class="update" type="submit" value="Update">
+                    <input class="update" type="submit" value="Update Filters">
                 </form>
                 <div class="row" style="display:flex;flex-direction:row;justify-content:center;gap:75px">
                     {$tours}
