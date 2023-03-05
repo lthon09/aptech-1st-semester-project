@@ -72,13 +72,13 @@
                                         </div>
                                         <div class="group-md group-middle"><a
                                                 class="button button-width-xl-230 button-primary button-pipaluk"
-                                                href="#footer">Get in touch</a></div>
+                                                href="/contact.php">Get in touch</a></div>
                                     </div>
                                     <div class="tab-pane fade" id="tabs-4-3">
                                         <p>Our mission is to provide the ultimate travel planning experience while becoming a one-stop shop for every travel service available in the industry.</p>
                                         <div class="group-md group-middle"><a
                                                 class="button button-width-xl-230 button-primary button-pipaluk"
-                                                href="#footer">Get in touch</a></div>
+                                                href="/contact.php">Get in touch</a></div>
                                     </div>
                                 </div>
                             </div>

@@ -68,8 +68,10 @@ CREATE TABLE IF NOT EXISTS Tours (
     Sale TINYINT UNSIGNED DEFAULT 0,
 
     Country CHAR(16) NOT NULL,
-
     Category CHAR(16) NOT NULL,
+
+    Avatar VARCHAR(200) NOT NULL,
+    Document VARCHAR(200) NOT NULL,
 
     PRIMARY KEY (ID),
 

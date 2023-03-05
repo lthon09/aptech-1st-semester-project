@@ -36,6 +36,7 @@
             $original_price = $tour["Price"];
             $sale = $tour["Sale"];
             $_original_price = "$" . format_price($original_price, (int)$original_price, $original_price);
+            $avatar = $tour["Avatar"];
 
             $_sale = "";
 
@@ -59,7 +60,7 @@
                     <article class="product-big">
                         <div class="unit flex-column flex-md-row align-items-md-stretch">
                             <div class="unit-left"><img class="product-big-figure"
-                                        src="/static/assets/tours/{$id}/avatar.jpg" alt="" width="600"
+                                        src="/static/assets/tours/{$avatar}" alt="" width="600"
                                         height="366" /></div>
                             <div class="unit-body">
                                 <div class="product-big-body">
@@ -111,7 +112,7 @@
                                         <h2 class="oh font-weight-light" data-caption-animate="slideInUp"
                                             data-caption-delay="100">
                                             <span>Explore</span><span class="font-weight-bold"> The World</span>
-                                        </h2><a class="button button-default-outline button-ujarak" href="#footer"
+                                        </h2><a class="button button-default-outline button-ujarak" href="/contact.php"
                                             data-caption-animate="fadeInLeft" data-caption-delay="0">Get in touch</a>
                                     </div>
                                 </div>
@@ -129,7 +130,7 @@
                                         <h2 class="oh font-weight-light" data-caption-animate="slideInUp"
                                             data-caption-delay="100">
                                             <span>Trust</span><span class="font-weight-bold"> Our Experience</span>
-                                        </h2><a class="button button-default-outline button-ujarak" href="#footer"
+                                        </h2><a class="button button-default-outline button-ujarak" href="/contact.php"
                                             data-caption-animate="fadeInLeft" data-caption-delay="0">Get in touch</a>
                                     </div>
                                 </div>
@@ -147,7 +148,7 @@
                                         <h2 class="oh font-weight-light" data-caption-animate="slideInUp"
                                             data-caption-delay="100">
                                             <span>Create</span><span class="font-weight-bold"> Your Tour</span>
-                                        </h2><a class="button button-default-outline button-ujarak" href="#footer"
+                                        </h2><a class="button button-default-outline button-ujarak" href="/contact.php"
                                             data-caption-animate="fadeInLeft" data-caption-delay="0">Get in touch</a>
                                     </div>
                                 </div>
@@ -199,7 +200,7 @@
                                                 with you.</p>
                                             <div class="group-md group-middle"><a
                                                     class="button button-secondary button-pipaluk"
-                                                    href="#footer">Get in Touch</a><a
+                                                    href="/contact.php">Get in Touch</a><a
                                                     class="button button-black-outline button-md" href="/about.php">Read
                                                     More</a></div>
                                         </div>
@@ -210,7 +211,7 @@
                                                 way.</p>
                                             <div class="group-md group-middle"><a
                                                     class="button button-secondary button-pipaluk"
-                                                    href="#footer">Get in Touch</a><a
+                                                    href="/contact.php">Get in Touch</a><a
                                                     class="button button-black-outline button-md" href="/about.php">Read
                                                     More</a></div>
                                         </div>
@@ -220,7 +221,7 @@
                                                 for every travel service available in the industry.</p>
                                             <div class="group-md group-middle"><a
                                                     class="button button-secondary button-pipaluk"
-                                                    href="#footer">Get in Touch</a><a
+                                                    href="/contact.php">Get in Touch</a><a
                                                     class="button button-black-outline button-md" href="/about.php">Read
                                                     More</a></div>
                                         </div>
