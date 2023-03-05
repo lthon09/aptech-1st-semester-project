@@ -17,24 +17,22 @@
     $tours = large_query("Tours", "", []);
 
     foreach ($tours as $tour) {
-        $id = $tour["ID"];
+        $id = htmlentities($tour["ID"]);
 
         $statement = $connection -> prepare("
             SELECT * FROM Countries WHERE ID = :id LIMIT 1;
         ");
 
-        $statement -> execute(["id" => $tour["Country"]]);
-
-        $country = ($statement -> fetch())["Name"];
+        $statement -> execute(["id" => htmlentities($tour["Country"])]);
 
         $pdf -> SetTextColor(51, 194, 184);
-        $pdf -> Write(5, $tour["Name"], get_server() . "/tours/view.php?id={$id}");
+        $pdf -> Write(5, htmlentities($tour["Name"]), get_server() . "/tours/view.php?id={$id}");
 
         $pdf -> SetTextColor(0, 0, 0);
         $pdf -> Write(5, ", ");
 
         $pdf -> SetTextColor(51, 194, 184);
-        $pdf -> Write(5, $country);
+        $pdf -> Write(5, htmlentities(($statement -> fetch())["Name"]));
 
         $pdf -> SetTextColor(0, 0, 0);
         $pdf -> Write(5, ": ");

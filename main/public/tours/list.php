@@ -61,14 +61,14 @@
     if ($_tours) {
         foreach ($_tours as $tour) {
             $id = htmlentities($tour["ID"]);
+            $avatar = $tour["Avatar"];
             $name = htmlentities($tour["Name"]);
             $category = htmlentities($_categories[$tour["Category"]]["Name"]);
             $country = htmlentities($_countries[$tour["Country"]]["Name"]);
             $description = htmlentities($tour["ShortDescription"]);
             $original_price = $tour["Price"];
             $sale = $tour["Sale"];
-            $_original_price = "$" . format_price($original_price, (int)$original_price, $original_price);
-            $avatar = $tour["Avatar"];
+            $_original_price = "$" . htmlentities(format_price($original_price, (int)$original_price, $original_price));
 
             $style = "";
             $_sale = "";
@@ -89,13 +89,13 @@
             }
 
             $tours .= <<<HTML
-                <div class="span-one-third" style="min-width:350px">
+                <div class="span-one-third">
                     <figure>
                         <div class="unit flex-column flex-md-column align-items-md-stretch">
                             <div class="unit-left">
                                 <a href="view.php?id={$id}">
                                     <img class="product-figure"
-                                        src="/static/assets/images/tours/{$avatar}" alt="" style="width:100%;height:200px" />
+                                        src="/static/assets/images/tours/{$avatar}" alt="" width="100%" height="100%" />
                                 </a>
                             </div>
                             <div class="unit-body">
@@ -108,7 +108,7 @@
                                         <span>{$description}</span>
                                     </div>
                                     <div class="product-price-wrap" style="margin-top:40px">
-                                        <span class="product-price" style="display:flex;flex-direction:row;align-items:center;gap:40px;{$style}">
+                                        <span class="product-price" style="display:flex;flex-direction:row;justify-content:center;gap:50px;{$style}">
                                             {$_sale}
                                             {$_price}
                                         </span>
@@ -198,7 +198,7 @@
                     <input class="update" type="submit" value="Update Filters">
                     <a href="get/prices.php">View Tours Prices List</a>
                 </form>
-                <div class="row" style="display:flex;flex-direction:row;justify-content:center;gap:75px">
+                <div class="row" style="display:flex;flex-direction:row;justify-content:center;gap:75px;padding-left:20px;padding-right:20px">
                     {$tours}
                 </div>
             </div>

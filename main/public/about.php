@@ -10,8 +10,8 @@
             <section class="section section-sm section-first bg-default text-md-left">
                 <div class="container">
                     <div class="row row-50 justify-content-center align-items-xl-center">
-                        <div class="col-md-10 col-lg-5 col-xl-6"><img src="/static/assets/images/about.jpg" alt="" width="519"
-                                height="564" />
+                        <div class="col-md-10 col-lg-5 col-xl-6"><img src="/static/assets/images/about.jpg" alt="" width="100%"
+                                height="100%" />
                         </div>
                         <div class="col-md-10 col-lg-7 col-xl-6">
                             <h1 class="text-spacing-25 font-weight-normal title-opacity-9">Why choose us</h1>

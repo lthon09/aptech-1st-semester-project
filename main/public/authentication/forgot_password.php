@@ -41,13 +41,13 @@
                 } else {
                     $member = $statement -> fetch();
 
-                    $member_id = $member["ID"];
-                    $username = $member["Username"];
+                    $member_id = htmlentities($member["ID"]);
+                    $username = htmlentities($member["Username"]);
                     $email = $member["Email"];
 
                     $reset_password_id = generate_id(IDS["lengths"]["secure"], "ResetPasswordMembers");
 
-                    $link = get_directory() . "/reset_password.php?id=" . $reset_password_id;
+                    $link = get_directory() . "/reset_password.php?id={$reset_password_id}";
 
                     if (!send_mail($email, "Reset Your Password",
                         <<<HTML

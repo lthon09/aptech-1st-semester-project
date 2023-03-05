@@ -30,13 +30,13 @@
 
             $tour = $statement -> fetch();
 
+            $avatar = $tour["Avatar"];
             $name = htmlentities($tour["Name"]);
             $country = htmlentities($tour["Country"]);
             $description = htmlentities($tour["ShortDescription"]);
             $original_price = $tour["Price"];
             $sale = $tour["Sale"];
             $_original_price = "$" . format_price($original_price, (int)$original_price, $original_price);
-            $avatar = $tour["Avatar"];
 
             $_sale = "";
 
@@ -60,8 +60,8 @@
                     <article class="product-big">
                         <div class="unit flex-column flex-md-row align-items-md-stretch">
                             <div class="unit-left"><img class="product-big-figure"
-                                        src="/static/assets/images/tours/{$avatar}" alt="" width="600"
-                                        height="366" /></div>
+                                        src="/static/assets/images/tours/{$avatar}" alt="" width="100%"
+                                        height="100%" /></div>
                             <div class="unit-body">
                                 <div class="product-big-body">
                                     <h5 class="product-big-title">{$name}, {$country}</h5>
@@ -172,7 +172,7 @@
                 <div class="container">
                     <div class="row row-50 align-items-center justify-content-center justify-content-xl-between">
                         <div class="col-lg-6 text-center wow fadeInUp"><img src="/static/assets/images/discover.jpg" alt=""
-                                width="556" height="382" />
+                                width="100%" height="100%" />
                         </div>
                         <div class="col-lg-6 wow fadeInRight" data-wow-delay=".1s">
                             <div class="box-width-lg-470">
