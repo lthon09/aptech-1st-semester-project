@@ -3,18 +3,30 @@
 
     $queries = get_queries();
 
+    $query_categories = isset($queries["categories"]);
+    $query_countries = isset($queries["countries"]);
+
     $categories = "";
     $countries = "";
     $tours = "";
 
-    $_categories = large_query("Categories");
-    $_countries = large_query("Countries");
+    if (!$query_categories) {
+        $_categories = large_query("Categories");
+    } else {
+        $_categories = large_query("Categories", "WHERE ID IN (':ids')", [
+            "ids" => implode("','", $queries["categories"]),
+        ]);
+    }
+
+    if (!$query_countries) {
+        $_countries = large_query("Countries");
+    } else {}
 
     foreach ($_categories as $category) {
         $id = htmlentities($category["ID"]);
         $name = htmlentities($category["Name"]);
 
-        $selected = (isset($queries["categories"])) ? ((in_array($id, $queries["categories"])) ? "selected" : "") : "";
+        $selected = ($query_categories) ? ((in_array($id, $queries["categories"])) ? "selected" : "") : "";
 
         $categories .= <<<HTML
             <option value="{$id}" {$selected}>{$name}</option>
@@ -25,7 +37,7 @@
         $id = htmlentities($country["ID"]);
         $name = htmlentities($country["Name"]);
 
-        $selected = (isset($queries["countries"])) ? ((in_array($id, $queries["countries"])) ? "selected" : "") : "";
+        $selected = ($query_countries) ? ((in_array($id, $queries["countries"])) ? "selected" : "") : "";
 
         $countries .= <<<HTML
             <option value="{$id}" {$selected}>{$name}</option>

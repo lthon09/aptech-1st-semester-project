@@ -279,7 +279,7 @@
         return new PDO("mysql:host=localhost;port=3306;dbname=PleasantTours", "root", "");
     }
 
-    function large_query(string $database, string $conditions = "") : array {
+    function large_query(string $database, string $conditions = "", array $parameters = []) : array {
         $offset = 0;
         $results = [];
 
@@ -298,7 +298,7 @@
                         . ";"
             );
 
-            $statement -> execute();
+            $statement -> execute($parameters);
 
             if ($statement -> rowCount() === 0) {
                 break;
