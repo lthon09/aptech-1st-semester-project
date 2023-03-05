@@ -279,7 +279,7 @@
         return new PDO("mysql:host=localhost;port=3306;dbname=PleasantTours", "root", "");
     }
 
-    function large_query(string $database) : array {
+    function large_query(string $database, string $conditions = "") : array {
         $offset = 0;
         $results = [];
 
@@ -288,10 +288,14 @@
         while (true) {
             $statement = $connection -> prepare(
                 "
-                    SELECT * FROM $database LIMIT $offset, 
+                    SELECT * FROM $database 
                 "
-                    . LARGE_QUERY_PAGE_ITEMS_COUNT
-                    . ";"
+                    . $conditions
+                    . " 
+                        LIMIT $offset, 
+                    "
+                        . LARGE_QUERY_PAGE_ITEMS_COUNT
+                        . ";"
             );
 
             $statement -> execute();

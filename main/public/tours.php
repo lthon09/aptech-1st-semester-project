@@ -61,7 +61,7 @@
         }
 
         $tours .= <<<HTML
-            <div class="col-sm-6 col-lg-4">
+            <div class="span-one-third" style="min-width:350px">
                 <figure>
                     <div class="unit flex-column flex-md-column align-items-md-stretch">
                         <div class="unit-left">
@@ -128,6 +128,25 @@
                     background-image: none !important;
                 }
 
+                .search, .search::placeholder {
+                    font-family: "Poppins";
+                    font-size: 13px;
+                }
+
+                .search {
+                    border: 1px solid #aaa;
+                    padding-left: 5px;
+                }
+
+                .search::placeholder {
+                    color: #333;
+                }
+
+                .search:focus {
+                    border-color: #01b3a7;
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+                }
+
                 .update {
                     color: white;
                     background-color: #01b3a7;
@@ -156,9 +175,10 @@
                     <select class="chosen-select" name="countries[]" data-placeholder="Countries" multiple>
                         {$countries}
                     </select>
+                    <input class="search" type="text" name="search" placeholder="Search" autocomplete="off">
                     <input class="update" type="submit" value="Update">
                 </form>
-                <div class="row" style="display:flex;flex-direction:row;gap:75px">
+                <div class="row" style="display:flex;flex-direction:row;justify-content:center;gap:75px">
                     {$tours}
                 </div>
             </div>
