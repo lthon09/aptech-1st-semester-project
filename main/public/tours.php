@@ -95,7 +95,7 @@
                             <div class="unit-left">
                                 <a href="/tour.php?id={$id}">
                                     <img class="product-figure"
-                                        src="/static/assets/tours/{$avatar}" alt="" style="width:100%;height:200px" />
+                                        src="/static/assets/tours/{$id}/{$avatar}" alt="" style="width:100%;height:200px" />
                                 </a>
                             </div>
                             <div class="unit-body">
