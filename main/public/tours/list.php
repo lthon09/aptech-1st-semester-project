@@ -1,5 +1,5 @@
 <?php
-    require_once "../global.php";
+    require_once "../../global.php";
 
     $queries = get_queries();
 
@@ -93,15 +93,15 @@
                     <figure>
                         <div class="unit flex-column flex-md-column align-items-md-stretch">
                             <div class="unit-left">
-                                <a href="/tour.php?id={$id}">
+                                <a href="view.php?id={$id}">
                                     <img class="product-figure"
-                                        src="/static/assets/tours/{$id}/{$avatar}" alt="" style="width:100%;height:200px" />
+                                        src="/static/assets/images/tours/{$avatar}" alt="" style="width:100%;height:200px" />
                                 </a>
                             </div>
                             <div class="unit-body">
                                 <div class="product-body">
                                     <h5 class="product-title">
-                                        <a href="/tour.php?id={$id}">{$name}, {$country}</a>
+                                        <a href="view.php?id={$id}">{$name}, {$country}</a>
                                     </h5>
                                     <div class="product-text" style="display:flex;flex-direction:column;gap:20px;margin-top:10px">
                                         <span style="color:gray;font-size:16px">{$category}</span>

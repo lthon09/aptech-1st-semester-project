@@ -60,13 +60,13 @@
                     <article class="product-big">
                         <div class="unit flex-column flex-md-row align-items-md-stretch">
                             <div class="unit-left"><img class="product-big-figure"
-                                        src="/static/assets/tours/{$id}/{$avatar}" alt="" width="600"
+                                        src="/static/assets/images/tours/{$avatar}" alt="" width="600"
                                         height="366" /></div>
                             <div class="unit-body">
                                 <div class="product-big-body">
                                     <h5 class="product-big-title">{$name}, {$country}</h5>
                                     <p class="product-big-text">{$description}</p><a class="button button-black-outline button-ujarak"
-                                        href="/tour.php?id={$id}">Learn More</a>
+                                        href="/tours/view.php?id={$id}">Learn More</a>
                                     <div class="product-big-price-wrap">
                                         <span class="product-big-price" style="display:flex;flex-direction:column;gap:10px">
                                             {$_sale}
@@ -85,7 +85,7 @@
             <section class="section section-top-1">
                 <div class="container">
                     <div class="box-categories cta-box-wrap"></div>
-                    <a class="link-classic wow fadeInUp" href="/tours.php">Other Tours<span></span></a>
+                    <a class="link-classic wow fadeInUp" href="/tours/list.php">Other Tours<span></span></a>
                     <!-- Owl Carousel-->
                 </div>
             </section>
@@ -163,7 +163,7 @@
             <section class="section section-top-1">
                 <div class="container">
                     <div class="box-categories cta-box-wrap"></div>
-                    <a class="link-classic wow fadeInUp" href="/tours.php">View Tours<span></span></a>
+                    <a class="link-classic wow fadeInUp" href="/tours/list.php">View Tours<span></span></a>
                     <!-- Owl Carousel-->
                 </div>
             </section>
@@ -328,7 +328,7 @@
                                 offers travelers
                                 various tours and excursions with destinations all over the world. Browse our website to
                                 find your dream
-                                tour!</p><a class="button button-secondary button-pipaluk" href="/tours.php">Book a Tour Now</a>
+                                tour!</p><a class="button button-secondary button-pipaluk" href="/tours/list.php">Book a Tour Now</a>
                         </div>
                     </div>
                 </div>
