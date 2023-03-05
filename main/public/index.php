@@ -41,14 +41,14 @@
             $_sale = "";
 
             if ($sale !== 0) {
-                $discounted_price = "$" . calculate_discounted_price($original_price, $sale);
+                $discounted_price = "$" . calculate_price($original_price, $sale);
 
                 $_sale = <<<HTML
                     <span style="color:#d3d3d3;text-decoration:line-through;font-size:17px">{$_original_price}</span>
                 HTML;
 
                 $_price = <<<HTML
-                    <span style="color:red">{$discounted_price}</span>
+                    <span style="color:red">{$price}</span>
                 HTML;
             } else {
                 $_price = $_original_price;

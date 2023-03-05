@@ -5,6 +5,7 @@
 
     use League\OAuth2\Client\Provider\Google;
 
+    require_once __DIR__ . "/fpdf/fpdf.php";
     require_once __DIR__ . "/vendor/autoload.php";
 
     Dotenv\Dotenv::createImmutable(__DIR__) -> load();
@@ -63,7 +64,7 @@
         return (floor($price) == $price) ? $true : $false;
     }
 
-    function calculate_discounted_price(int | float $price, int $sale) : int | float {
+    function calculate_price(int | float $price, int $sale) : int | float {
         $calculated_price = $price - ($price * $sale / 100);
 
         return format_price($calculated_price, (int)$calculated_price, bcadd($calculated_price, 0, 2));

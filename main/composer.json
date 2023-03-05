@@ -1,7 +1,6 @@
 {
     "require": {
         "vlucas/phpdotenv": "5.5.0",
-        "phpoffice/phpword": "1.0.0",
         "mustache/mustache": "2.14.2",
         "league/oauth2-google": "4.0.0",
         "phpmailer/phpmailer": "6.7.1"
