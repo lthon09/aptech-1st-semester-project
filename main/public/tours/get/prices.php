@@ -7,7 +7,7 @@
 
     $pdf -> SetFont("Times", "B", 40);
     $pdf -> SetTextColor(1, 179, 167);
-    $pdf -> Cell(0, 10, "PRICES LIST", 0, 0, "C");
+    $pdf -> Cell(0, 10, "Tours Prices List", 0, 0, "C");
     $pdf -> Ln(25);
 
     $pdf -> SetFont("Arial", "", 12);
@@ -50,5 +50,5 @@
         $pdf -> Ln(7);
     }
 
-    $pdf -> Output("D", "prices_list.pdf");
+    $pdf -> Output("D", "tours_prices_list.pdf");
 ?>

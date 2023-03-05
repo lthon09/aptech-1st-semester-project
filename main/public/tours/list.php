@@ -186,14 +186,17 @@
         HTML,
         "content" => <<<HTML
             <div class="container" style="margin-top:30px;margin-bottom:50px">
-                <form method="get" style="display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:25px;row-gap:10px">
-                    <select class="chosen-select" name="categories[]" data-placeholder="Categories" multiple>
-                        {$categories}
-                    </select>
-                    <select class="chosen-select" name="countries[]" data-placeholder="Countries" multiple>
-                        {$countries}
-                    </select>
+                <form method="get" style="display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:35px">
+                    <div style="display:flex;flex-direction:row;flex-wrap:wrap;column-gap:25px;row-gap:10px">
+                        <select class="chosen-select" name="categories[]" data-placeholder="Categories" multiple>
+                            {$categories}
+                        </select>
+                        <select class="chosen-select" name="countries[]" data-placeholder="Countries" multiple>
+                            {$countries}
+                        </select>
+                    </div>
                     <input class="update" type="submit" value="Update Filters">
+                    <a href="get/prices.php">View Tours Prices List</a>
                 </form>
                 <div class="row" style="display:flex;flex-direction:row;justify-content:center;gap:75px">
                     {$tours}
