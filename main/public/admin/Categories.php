@@ -1,5 +1,9 @@
 <?php
 require_once('connect.php');
+session_start();
+if(!$_SESSION["Username"]){
+  header("location:login.php");
+}
 ?>
 
 <!DOCTYPE html>
