@@ -29,10 +29,7 @@
                 $message_color = "red";
                 $message = "Invalid credentials entered!";
             } else {
-                $member = $statement -> fetch();
-
-                $id = $member["ID"];
-                $hashed_password = $member["Password"];
+                $hashed_password = ($statement -> fetch())["Password"];
 
                 if (!password_verify($password, $hashed_password)) {
                     $message_color = "red";
@@ -42,16 +39,16 @@
                         $hashed_password = hash_password($password);
 
                         $connection -> prepare("
-                            UPDATE Members SET `Password` = :password WHERE ID = :id;
+                            UPDATE Members SET `Password` = :password WHERE Username = :username;
                         ") -> execute([
                             "password" => $hashed_password,
-                            "id" => $id,
+                            "username" => $username,
                         ]);
                     }
 
                     setcookie(
                         "member",
-                        base64_encode("$id|$hashed_password"),
+                        base64_encode("$username|$hashed_password"),
                         (isset($_POST["remember"])) ? time() + (86400 * 30) : 0,
                         "/",
                         "",

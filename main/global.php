@@ -206,23 +206,23 @@
             return false;
         }
 
-        if (count($member) === 0) {
+        if (count($member) !== 2) {
             return false;
         }
 
-        $id = $member[0];
+        $username = $member[0];
         $password = $member[1];
 
-        if (!validate_id($id) || !validate_hashed_password($password)) {
+        if (!validate_username($username) || !validate_hashed_password($password)) {
             return false;
         }
 
         $statement = connect() -> prepare("
-            SELECT * FROM Members WHERE ID = :id AND PASSWORD = :password LIMIT 1;
+            SELECT * FROM Members WHERE Username = :username AND PASSWORD = :password LIMIT 1;
         ");
 
         $statement -> execute([
-            "id" => $id,
+            "username" => $username,
             "password" => $password,
         ]);
 
