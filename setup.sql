@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS ShowcaseCategories (
 CREATE TABLE IF NOT EXISTS HotTours (
     ID CHAR(16),
 
-    Tour CHAR(16),
+    Tour CHAR(16) NOT NULL,
 
     PRIMARY KEY (ID),
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
 
     Tour CHAR(16) NOT NULL,
 
-    Author VARCHAR(20),
+    Author VARCHAR(20) NOT NULL,
 
     Content VARCHAR(1000) NOT NULL,
     Rating TINYINT UNSIGNED NOT NULL,
