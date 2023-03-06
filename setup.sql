@@ -27,8 +27,6 @@ CREATE TABLE IF NOT EXISTS ResetPasswordMembers (
 );
 
 CREATE TABLE IF NOT EXISTS Members (
-    ID CHAR(16),
-
     Username VARCHAR(20) NOT NULL,
     `Password` CHAR(97) NOT NULL,
 
@@ -36,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Members (
 
     Administrator BOOLEAN NOT NULL, 
 
-    PRIMARY KEY (ID)
+    PRIMARY KEY (Username)
 );
 
 CREATE TABLE IF NOT EXISTS Categories (
@@ -105,7 +103,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
 
     Tour CHAR(16) NOT NULL,
 
-    Author CHAR(16),
+    Author VARCHAR(20),
 
     Content VARCHAR(1000) NOT NULL,
     Rating TINYINT UNSIGNED NOT NULL,
@@ -113,7 +111,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
     PRIMARY KEY (ID),
 
     FOREIGN KEY (Tour) REFERENCES Tours(ID),
-    FOREIGN KEY (Author) REFERENCES Members(ID),
+    FOREIGN KEY (Author) REFERENCES Members(Username),
 
     CHECK (1 >= Rating <= 5)
 );

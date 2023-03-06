@@ -60,7 +60,7 @@
                     <article class="product-big">
                         <div class="unit flex-column flex-md-row align-items-md-stretch">
                             <div class="unit-left"><img class="product-big-figure"
-                                        src="/static/assets/images/tours/{$avatar}" alt="" width="100%"
+                                        src="{$avatar}" alt="" width="100%"
                                         height="100%" /></div>
                             <div class="unit-body">
                                 <div class="product-big-body">

@@ -35,22 +35,38 @@
                     $password = $member["Password"];
                     $email = $member["Email"];
 
-                    $connection -> prepare("
-                        DELETE FROM UnverifiedMembers WHERE ID = :id;
-                    ") -> execute(["id" => $unverified_id]);
+                    $statement1= $connection -> prepare("
+                        SELECT * FROM Members WHERE Username = :username LIMIT 1;
+                    ");
+                    $statement2 = $connection -> prepare("
+                        SELECT * FROM Members WHERE Email = :email LIMIT 1;
+                    ");
 
-                    $connection -> prepare("
-                        INSERT INTO Members
-                        (ID, Username, `Password`, Email, Administrator)
-                        VALUES (:id, :username, :password, :email, FALSE);
-                    ") -> execute([
-                        "id" => $verified_id,
-                        "username" => $username,
-                        "password" => $password,
-                        "email" => $email,
-                    ]);
+                    $statement1 -> execute(["username" => $username]);
+                    $statement2 -> execute(["email" => $email]);
 
-                    redirect("log_in.php");
+                    if ($statement1 -> rowCount() !== 0) {
+                        echo "This username has already been taken!";
+                    } elseif ($statement2 -> rowCount() !== 0) {
+                        echo "This email has already been taken!";
+                    } else {
+                        $connection -> prepare("
+                            DELETE FROM UnverifiedMembers WHERE ID = :id;
+                        ") -> execute(["id" => $unverified_id]);
+
+                        $connection -> prepare("
+                            INSERT INTO Members
+                            (ID, Username, `Password`, Email, Administrator)
+                            VALUES (:id, :username, :password, :email, FALSE);
+                        ") -> execute([
+                            "id" => $verified_id,
+                            "username" => $username,
+                            "password" => $password,
+                            "email" => $email,
+                        ]);
+
+                        redirect("log_in.php");
+                    }
                 }
             }
         }

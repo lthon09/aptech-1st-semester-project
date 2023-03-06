@@ -24,17 +24,20 @@
             } else {
                 $connection = connect();
 
-                $statement1 = $connection -> prepare("
-                    SELECT * FROM UnverifiedMembers WHERE Email = :email LIMIT 1;
+                $statement1= $connection -> prepare("
+                    SELECT * FROM Members WHERE Username = :username LIMIT 1;
                 ");
                 $statement2 = $connection -> prepare("
                     SELECT * FROM Members WHERE Email = :email LIMIT 1;
                 ");
 
-                $statement1 -> execute(["email" => $email]);
+                $statement1 -> execute(["username" => $username]);
                 $statement2 -> execute(["email" => $email]);
 
-                if (($statement1 -> rowCount() !== 0) || ($statement2 -> rowCount() !== 0)) {
+                if ($statement1 -> rowCount() !== 0) {
+                    $message_color = "red";
+                    $message = "This username is unavailable!";
+                } elseif ($statement2 -> rowCount() !== 0) {
                     $message_color = "red";
                     $message = "This email is unavailable!";
                 } else {
