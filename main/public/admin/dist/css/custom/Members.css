@@ -1,0 +1,11 @@
+.label-danger{
+    background-color: #d9534f;
+    color:white;
+    border-radius: 2px;
+}
+
+.label-success{
+    background-color: #117add;
+    color:white;
+    border-radius: 2px;
+}
