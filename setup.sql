@@ -16,16 +16,6 @@ CREATE TABLE IF NOT EXISTS UnverifiedMembers (
     PRIMARY KEY (ID)
 );
 
-CREATE TABLE IF NOT EXISTS ResetPasswordMembers (
-    ID CHAR(32),
-
-    Member CHAR(16),
-
-    Expiration DATETIME DEFAULT ADDTIME(NOW(), 900), -- 900 seconds = 15 minutes
-
-    PRIMARY KEY (ID)
-);
-
 CREATE TABLE IF NOT EXISTS Members (
     Username VARCHAR(20) NOT NULL,
     `Password` CHAR(97) NOT NULL,
@@ -35,6 +25,18 @@ CREATE TABLE IF NOT EXISTS Members (
     Administrator BOOLEAN NOT NULL, 
 
     PRIMARY KEY (Username)
+);
+
+CREATE TABLE IF NOT EXISTS ResetPasswordMembers (
+    ID CHAR(32),
+
+    Member VARCHAR(20) NOT NULL,
+
+    Expiration DATETIME DEFAULT ADDTIME(NOW(), 900), -- 900 seconds = 15 minutes
+
+    PRIMARY KEY (ID),
+
+    FOREIGN KEY (Member) REFERENCES Members(Username)
 );
 
 CREATE TABLE IF NOT EXISTS Categories (
