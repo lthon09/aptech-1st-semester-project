@@ -41,13 +41,12 @@
                 } else {
                     $member = $statement -> fetch();
 
-                    $member_id = htmlentities($member["ID"]);
                     $username = htmlentities($member["Username"]);
                     $email = $member["Email"];
 
-                    $reset_password_id = generate_id(IDS["lengths"]["secure"], "ResetPasswordMembers");
+                    $id = generate_id(IDS["lengths"]["secure"], "ResetPasswordMembers");
 
-                    $link = get_directory() . "/reset_password.php?id={$reset_password_id}";
+                    $link = get_directory() . "/reset_password.php?id={$id}";
 
                     if (!send_mail($email, "Reset Your Password",
                         <<<HTML
@@ -88,10 +87,10 @@
                         $connection -> prepare("
                             INSERT INTO ResetPasswordMembers
                             (ID, Member)
-                            VALUES (:id, :member);
+                            VALUES (:id, :username);
                         ") -> execute([
-                            "id" => $reset_password_id,
-                            "member" => $member_id,
+                            "id" => $id,
+                            "username" => $username,
                         ]);
 
                         $message_color = "#00ff00";
