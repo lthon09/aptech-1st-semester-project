@@ -63,7 +63,6 @@ if (!$_SESSION["Username"]) {
         <table class="table table-bordered" id="tbl_Members">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Username</th>
               <th>Email</th>
               <th>Administrator</th>

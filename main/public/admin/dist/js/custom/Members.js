@@ -25,7 +25,6 @@ function fncLoad() {
         }
 
         html_body += "<tr>";
-        html_body += "<td>" + val.id + "</td>";
         html_body += "<td>" + val.Username + "</td>";
         html_body += "<td>" + val.Email + "</td>";
         html_body +=
@@ -37,11 +36,11 @@ function fncLoad() {
         html_body += "<td>";
         html_body +=
           '<button type="button" class="btn btn-sm btn-warning btn-sua" attrIdSua="' +
-          val.id +
+          val.Username +
           '">Sửa</button>';
         html_body +=
           '<button type="button" class="btn btn-sm btn-danger btn-xoa" attrIdXoa="' +
-          val.id +
+          val.Username +
           '">Xóa</button>';
         html_body += "</td>";
         html_body += "</tr>";
@@ -53,7 +52,8 @@ function fncLoad() {
 
 function fncClick() {
   // cập nhât member
-  $(".btn-capnhat").click(function () {
+  $(".btn-capnhat").click(function (e) {
+    e.preventDefault();
     if (validate()) {
       var data = new FormData();
 
@@ -129,12 +129,13 @@ function fncClick() {
       data: { id: $(this).attr("attridsua") },
       dataType: "JSON",
       success: function (data) {
+        console.log(data)
         $("#InputName").val(data[0].Username);
         $("#Email").val(data[0].Email);
         if (data[0].Administrator == "1") {
-          $("#checkAdmin").attr("checked", "checked");
+          document.getElementById("checkAdmin").checked = true;
         } else {
-          $("#checkAdmin").attr("checked", false);
+          document.getElementById("checkAdmin").checked = false;
         }
       },
     });
