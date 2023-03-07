@@ -15,6 +15,7 @@ function fncClick() {
       cache: false,
       processData: false,
       success: function (strMessage) {
+          console.log(strMessage)
           if (strMessage == "0") {
             toastr.error("Tài khoản của bạn không chính xác!");
             $("#Username").val("");

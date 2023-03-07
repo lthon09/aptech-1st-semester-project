@@ -15,43 +15,42 @@ $(document).ready(function () {
 });
 
 function fncLoad() {
-  document.onload;
-  // $.ajax({
-  //   url: "../../../admin/php/loadTours.php",
-  //   method: "GET",
-  //   dataType: "JSON",
-  //   success: function (data) {
-  //     html_body = "";
-  //     $.each(data, function (key, val) {
-  //       html_body += "<tr>";
-  //       html_body += "<th>" + val.id + "</th>";
-  //       html_body += "<td>" + val.name + "</td>";
-  //       html_body += "<td>" + val.ShortDescription + "</td>";
-  //       html_body += "<td>" + val.LongDescription + "</td>";
-  //       html_body += "<td>" + val.Price + "</td>";
-  //       html_body += "<td>" + val.Sale + "%</td>";
-  //       html_body += "<td>" + val.NameCoutries + "</td>";
-  //       html_body +='<td>';
-  //         // '<td><img src="../static/assets/tours/' + val.id + "/avatar/'" + val.Avatar +' " width="50" height="50"></td>';
-  //         html_body +="<img src=\"data:image/jpg;charset=utf8;base64, \""+base64_encode($row['avatar'])+"\" \" />";
-  //         html_body += "</td>";
-  //       html_body += "<td>" + val.NameCategory + "</td>";
-  //       html_body += "<td>Không có tài liệu</td>";
-  //       html_body += "<td>";
-  //       html_body +=
-  //         '<button type="button" class="btn btn-sm btn-warning btn-sua" attrId="' +
-  //         val.id +
-  //         '" >Sửa</button>';
-  //       html_body +=
-  //         '<button type="button" class="btn btn-sm btn-danger btn-xoa" attrId="' +
-  //         val.id +
-  //         '" >Xóa</button>';
-  //       html_body += "</td>";
-  //       html_body += "</tr>";
-  //     });
-  //     $("#tbl_Tours tbody").empty().append(html_body);
-  //   },
-  // });
+  // document.onload;
+  $.ajax({
+    url: "../../../admin/php/loadTours.php",
+    method: "GET",
+    dataType: "JSON",
+    success: function (data) {
+      html_body = "";
+      $.each(data, function (key, val) {
+        html_body += "<tr>";
+        html_body += "<th>" + val.id + "</th>";
+        html_body += "<td>" + val.name + "</td>";
+        html_body += "<td>" + val.ShortDescription + "</td>";
+        html_body += "<td>" + val.LongDescription + "</td>";
+        html_body += "<td>" + val.Price + "</td>";
+        html_body += "<td>" + val.Sale + "%</td>";
+        html_body += "<td>" + val.NameCoutries + "</td>";
+        html_body +='<td>';
+          '<td><img src="../static/assets/tours/' + val.id + "/avatar/'" + val.Avatar +' " width="50" height="50"></td>';
+          html_body += "</td>";
+        html_body += "<td>" + val.NameCategory + "</td>";
+        html_body += "<td>Không có tài liệu</td>";
+        html_body += "<td>";
+        html_body +=
+          '<button type="button" class="btn btn-sm btn-warning btn-sua" attrId="' +
+          val.id +
+          '" >Sửa</button>';
+        html_body +=
+          '<button type="button" class="btn btn-sm btn-danger btn-xoa" attrId="' +
+          val.id +
+          '" >Xóa</button>';
+        html_body += "</td>";
+        html_body += "</tr>";
+      });
+      $("#tbl_Tours tbody").empty().append(html_body);
+    },
+  });
 }
 
 function fncClick() {
@@ -80,23 +79,24 @@ function fncClick() {
   // Update tours
   $(".btn-capnhat").click(function (e) {
     e.preventDefault();
-    // validate();
-    var form_data = new FormData(document.getElementById("my_form"));
-    form_data.append("id", $(this).attr("attrId"));
-    console.log(...form_data);
-    $.ajax({
-      url: "../../../admin/php/updateTours.php",
-      method: "POST",
-      data: form_data,
-      contentType: false,
-      cache: false,
-      processData: false,
-      success: function (strMessage) {
-        toastr.info(strMessage);
-        $("#modalTours").modal("hide");
-        fncLoad();
-      },
-    });
+    if (validate()) {
+      var form_data = new FormData(document.getElementById("my_form"));
+      form_data.append("id", $(this).attr("attrId"));
+      console.log(...form_data);
+      $.ajax({
+        url: "../../../admin/php/updateTours.php",
+        method: "POST",
+        data: form_data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (strMessage) {
+          toastr.info(strMessage);
+          $("#modalTours").modal("hide");
+          fncLoad();
+        },
+      });
+    }
   });
 
   // show modal sửa
@@ -129,25 +129,26 @@ function fncClick() {
   // Insert tours
   $(".btn-themmoi").click(function (e) {
     e.preventDefault();
-    validate();
-    var form_data = new FormData(document.getElementById("my_form"));
-    $.ajax({
-      url: "../../../admin/php/insertTours.php",
-      method: "POST",
-      data: form_data,
-      contentType: false,
-      cache: false,
-      processData: false,
-      success: function (strMessage) {
-        if(strMessage == "ok"){
-          toastr.info("Thêm mới thành công");
-          $("#modalTours").modal("hide");
-          fncLoad();
-        }else{
-          toastr.error("Lỗi thông báo IT");
-        }
-      },
-    });
+    if (validate()) {
+      var form_data = new FormData(document.getElementById("my_form"));
+      $.ajax({
+        url: "../../../admin/php/insertTours.php",
+        method: "POST",
+        data: form_data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (strMessage) {
+          if (strMessage == "ok") {
+            toastr.info("Thêm mới thành công");
+            $("#modalTours").modal("hide");
+            fncLoad();
+          } else {
+            toastr.error("Lỗi thông báo IT");
+          }
+        },
+      });
+    }
   });
 
   // show modal thêm mới
@@ -219,8 +220,10 @@ function validate() {
     $("#fileToUploadDoccument").get(0).files.length === 0
   ) {
     toastr.error("Vui lòng nhập đầy đủ các trường dữ liệu.");
-    return;
+    return false;
   }
+
+  return true;
 }
 
 function fncActionmodal() {

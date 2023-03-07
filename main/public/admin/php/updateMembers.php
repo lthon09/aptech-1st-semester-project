@@ -5,6 +5,7 @@ include '../../../global.php';
 $id = $_POST["id"];
 $username = $_POST['username'];
 $password = $_POST['password'];
+// $password = hash_password($_POST['password']);
 $checkadmin = $_POST['checkadmin'];
 $email = $_POST['email'];
 $sql = "update `members` set Username = '$username', Password = '$password' , Email = '$email' , Administrator = '$checkadmin'

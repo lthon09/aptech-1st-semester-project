@@ -37,7 +37,7 @@ function fncLoad() {
         html_body +=
           '<button type="button" class="btn btn-sm btn-warning btn-sua" attrIdSua="' +
           val.Username +
-          '">Sửa</button>';
+          '">Sửa</button> ';
         html_body +=
           '<button type="button" class="btn btn-sm btn-danger btn-xoa" attrIdXoa="' +
           val.Username +

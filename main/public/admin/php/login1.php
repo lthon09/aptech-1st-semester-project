@@ -1,8 +1,11 @@
 <?php
 require_once('../connect.php');
+include '../../../global.php';
 session_start();
 $username = $_POST["Username"];
 $password = $_POST["Password"];
+// $password = hash_password($_POST["Password"]);
+// echo $password;
 $sql = "Select COUNT(Username) as Username from members where Username = '" . $username . "'";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
