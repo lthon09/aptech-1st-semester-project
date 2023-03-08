@@ -31,9 +31,10 @@ function fncLoad() {
         html_body += "<td>" + val.Price + "</td>";
         html_body += "<td>" + val.Sale + "%</td>";
         html_body += "<td>" + val.NameCoutries + "</td>";
-        html_body +='<td>';
-          '<td><img src="../static/assets/tours/' + val.id + "/avatar/'" + val.Avatar +' " width="50" height="50"></td>';
-          html_body += "</td>";
+        html_body += "<td>";
+        // '<td><img src="../static/assets/tours/' + val.id + "/avatar/'" + val.Avatar +' " width="50" height="50"></td>';
+        '<td><img src="' + val.Avatar + '" width="50" height="50">';
+        html_body += "</td>";
         html_body += "<td>" + val.NameCategory + "</td>";
         html_body += "<td>Không có tài liệu</td>";
         html_body += "<td>";
