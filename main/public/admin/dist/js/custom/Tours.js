@@ -50,6 +50,7 @@ function fncLoad() {
         html_body += "</tr>";
       });
       $("#tbl_Tours tbody").empty().append(html_body);
+      $("#tbl_Tours").DataTable();
     },
   });
 }

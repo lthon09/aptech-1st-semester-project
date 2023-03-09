@@ -39,6 +39,8 @@ if (!$_SESSION["Username"]) {
   <link rel="stylesheet" href="dist/css/toastr.css">
 
   <link rel="stylesheet" href="dist/css/custom/Reviews.css">
+  <!-- datatable -->
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -185,6 +187,8 @@ if (!$_SESSION["Username"]) {
   <script type="text/javascript" src="dist/js/custom/Reviews.js"></script>
   <!-- Toastr js -->
   <script src="dist/js/toastr.js"></script>
+
+  <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 </body>
 

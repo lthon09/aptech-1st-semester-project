@@ -40,6 +40,8 @@ if (!$_SESSION["Username"]) {
   <link rel="stylesheet" href="dist/css/toastr.css">
 
   <link rel="stylesheet" href="dist/css/custom/Tours.css">
+  <!-- datatable -->
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -79,42 +81,42 @@ if (!$_SESSION["Username"]) {
           </thead>
           <tbody>
             <?php
-              // $sql = "SELECT  t.ID as ID,
-              // t.Name as Name , 
-              // t.ShortDescription as ShortDescription,
-              // t.LongDescription as LongDescription,
-              // t.DetailedInformations as DetailedInformations,
-              // t.Price as Price,
-              // t.Sale as Sale,
-              // t.Avatar as Avatar,
-              // ca.Name as NameCategory,
-              // co.Name as NameCoutries
-              // FROM `tours` t 
-              // LEFT JOIN categories ca on t.Category = ca.ID
-              // LEFT JOIN countries co on t.Country = co.ID";
-              // $result = mysqli_query($con, $sql);
-              // while ($row = mysqli_fetch_array($result)) {
-              //   echo
-              //   '
-              //     <tr>
-              //       <td>'.$row["ID"].'</td>
-              //       <td>'.$row["Name"].'</td>
-              //       <td>'.$row["ShortDescription"].'</td>
-              //       <td>'.$row["LongDescription"].'</td>
-              //       <td>'.$row["Price"].'</td>
-              //       <td>'.$row["Sale"].'</td>
-              //       <td>'.$row["NameCoutries"].'</td>
-              //       <td><img src="data:image/jpeg;base64,'.base64_encode($row["Avatar"]).'" /></td>
-              //       <td>'.$row["NameCategory"].'</td>
-              //       <td>Chưa có doc</td>
-              //       <td>
-              //         <button type="button" class="btn btn-sm btn-warning btn-sua" attrId="'.$row["ID"].'" >Sửa</button>
-              //         <button type="button" class="btn btn-sm btn-danger btn-xoa" attrId="'.$row["ID"].'" >Xóa</button>
-              //       </td>
-              //     </tr>
-              //   ';
-              // }
-            
+            // $sql = "SELECT  t.ID as ID,
+            // t.Name as Name , 
+            // t.ShortDescription as ShortDescription,
+            // t.LongDescription as LongDescription,
+            // t.DetailedInformations as DetailedInformations,
+            // t.Price as Price,
+            // t.Sale as Sale,
+            // t.Avatar as Avatar,
+            // ca.Name as NameCategory,
+            // co.Name as NameCoutries
+            // FROM `tours` t 
+            // LEFT JOIN categories ca on t.Category = ca.ID
+            // LEFT JOIN countries co on t.Country = co.ID";
+            // $result = mysqli_query($con, $sql);
+            // while ($row = mysqli_fetch_array($result)) {
+            //   echo
+            //   '
+            //     <tr>
+            //       <td>'.$row["ID"].'</td>
+            //       <td>'.$row["Name"].'</td>
+            //       <td>'.$row["ShortDescription"].'</td>
+            //       <td>'.$row["LongDescription"].'</td>
+            //       <td>'.$row["Price"].'</td>
+            //       <td>'.$row["Sale"].'</td>
+            //       <td>'.$row["NameCoutries"].'</td>
+            //       <td><img src="data:image/jpeg;base64,'.base64_encode($row["Avatar"]).'" /></td>
+            //       <td>'.$row["NameCategory"].'</td>
+            //       <td>Chưa có doc</td>
+            //       <td>
+            //         <button type="button" class="btn btn-sm btn-warning btn-sua" attrId="'.$row["ID"].'" >Sửa</button>
+            //         <button type="button" class="btn btn-sm btn-danger btn-xoa" attrId="'.$row["ID"].'" >Xóa</button>
+            //       </td>
+            //     </tr>
+            //   ';
+            // }
+
             ?>
           </tbody>
         </table>
@@ -280,6 +282,7 @@ if (!$_SESSION["Username"]) {
   <script type="text/javascript" src="dist/js/custom/Tours.js"></script>
   <!-- Toastr js -->
   <script src="dist/js/toastr.js"></script>
+  <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 </body>
 

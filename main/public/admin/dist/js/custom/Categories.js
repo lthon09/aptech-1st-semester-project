@@ -30,6 +30,7 @@ function fncLoad() {
         html_body += "</tr>";
       });
       $("#tbl_Categories tbody").empty().append(html_body);
+      $("#tbl_Categories").DataTable();
     },
   });
 }

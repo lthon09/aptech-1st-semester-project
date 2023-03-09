@@ -35,6 +35,7 @@ function fncLoad() {
         html_body += "</tr>";
       });
       $("#tbl_Reviews tbody").empty().append(html_body);
+      $("#tbl_Reviews").DataTable();
     },
   });
 }

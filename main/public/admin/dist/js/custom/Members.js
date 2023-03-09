@@ -46,6 +46,7 @@ function fncLoad() {
         html_body += "</tr>";
       });
       $("#tbl_Members tbody").empty().append(html_body);
+      $("#tbl_Members").DataTable();
     },
   });
 }

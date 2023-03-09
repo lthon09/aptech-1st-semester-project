@@ -39,6 +39,9 @@ if(!$_SESSION["Username"]){
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Toastr -->
   <link rel="stylesheet" href="dist/css/toastr.css">
+
+  <!-- datatable -->
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css"   >
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -119,8 +122,10 @@ if(!$_SESSION["Username"]){
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
+
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
+
   <!-- jQuery UI 1.11.4 -->
   <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -153,9 +158,13 @@ if(!$_SESSION["Username"]){
   <!-- <script src="dist/js/demo.js"></script> -->
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <!-- <script src="dist/js/pages/dashboard.js"></script> -->
+  <!-- datatable -->
+
   <script type="text/javascript" src="dist/js/custom/Categories.js"></script>
+
   <!-- Toastr js -->
   <script src="dist/js/toastr.js"></script>
+  <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 </body>
 
