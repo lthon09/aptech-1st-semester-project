@@ -173,11 +173,11 @@ if (!$_SESSION["Username"]) {
                   </div> -->
                 </div>
                 <div class="row">
-                  <div class="form-group col-4">
+                  <div class="form-group col-6">
                     <label for="Country">Country</label>
                     <select class="custom-select" name="country" id="country"></select>
                   </div>
-                  <div class="form-group col-4">
+                  <div class="form-group col-6">
                     <label for="Category">Category</label>
                     <select class="custom-select" name="category" id="category"></select>
                   </div>
@@ -185,14 +185,15 @@ if (!$_SESSION["Username"]) {
                 </div>
 
                 <div class="row">
-                  <div class="form-group col-3">
+                  <div class="form-group col-6">
                     <label for="fileupload">Avatar</label>
                     <!-- <div class="custom-file"> -->
-                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="fileToUpload" name="fileToUpload" class="form-control" id="fileToUpload" placeholder="Enter File">
+                    <!-- <input type="file" name="fileToUpload" id="fileToUpload"> -->
                     <!-- <label class="custom-file-label" for="fileupload">Choose file</label> -->
                     <!-- </div> -->
                   </div>
-                  <div class="form-group col-3">
+                  <div class="form-group col-6">
                     <label for="fileupload">Document</label>
                     <!-- <div class="custom-file"> -->
                     <input type="file" name="fileToUploadDoccument" id="fileToUploadDoccument">

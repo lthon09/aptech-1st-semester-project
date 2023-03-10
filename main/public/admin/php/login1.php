@@ -1,6 +1,8 @@
 <?php
 require_once('../connect.php');
 include '../../../global.php';
+
+
 session_start();
 $username = $_POST["Username"];
 $password = $_POST["Password"];

@@ -12,7 +12,8 @@ $price = $_POST['price'];
 $country = $_POST['country'];
 $category = $_POST['category'];
 $detailedInformation = $_POST['detailedInformation'];
-$avatar = $_FILES['fileToUpload']['tmp_name'];
+$avatar = $_POST['fileToUpload'];
+// $avatar = $_FILES['fileToUpload']['tmp_name'];
 // $avatar = addslashes(file_get_contents($image));
 
 $sql = "Insert into `tours` (ID, Name,ShortDescription,LongDescription,Price,Sale,Country,Category , DetailedInformations , avatar) 

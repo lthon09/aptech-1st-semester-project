@@ -11,7 +11,8 @@ $price = $_POST['price'];
 $country = $_POST['country'];
 $category = $_POST['category'];
 $detailedInformation = $_POST['detailedInformation'];
-$avatar = $_FILES["fileToUpload"]["tmp_name"];
+$avatar = $_POST['fileToUpload'];
+// $avatar = $_FILES["fileToUpload"]["tmp_name"];
 $sql = "update `tours` set Name = '$name',
                            ShortDescription = '$shortdescription',
                            LongDescription = '$longdescription',

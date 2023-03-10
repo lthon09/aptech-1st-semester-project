@@ -21,6 +21,7 @@ function fncLoad() {
     method: "GET",
     dataType: "JSON",
     success: function (data) {
+      console.log(data)
       html_body = "";
       $.each(data, function (key, val) {
         html_body += "<tr>";
@@ -31,10 +32,8 @@ function fncLoad() {
         html_body += "<td>" + val.Price + "</td>";
         html_body += "<td>" + val.Sale + "%</td>";
         html_body += "<td>" + val.NameCoutries + "</td>";
-        html_body += "<td>";
         // '<td><img src="../static/assets/tours/' + val.id + "/avatar/'" + val.Avatar +' " width="50" height="50"></td>';
-        '<td><img src="' + val.Avatar + '" width="50" height="50">';
-        html_body += "</td>";
+        html_body +='<td><img src="' + val.Avatar + '" width="50" height="50"></td>';
         html_body += "<td>" + val.NameCategory + "</td>";
         html_body += "<td>Không có tài liệu</td>";
         html_body += "<td>";
@@ -218,7 +217,7 @@ function validate() {
     $("#shortdescription").val() == "" ||
     $("#longdescription").val() == "" ||
     $("#detailedInformation").val() == "" ||
-    $("#fileToUpload").get(0).files.length === 0 ||
+    $("#fileToUpload").val() == "" ||
     $("#fileToUploadDoccument").get(0).files.length === 0
   ) {
     toastr.error("Vui lòng nhập đầy đủ các trường dữ liệu.");
