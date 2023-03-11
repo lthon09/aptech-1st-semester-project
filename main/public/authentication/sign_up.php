@@ -92,8 +92,7 @@
                                 $message = "Something went wrong, please try again.";
                             } else {
                                 $connection -> prepare("
-                                    INSERT INTO UnverifiedMembers
-                                    (ID, Username, Email, `Password`)
+                                    INSERT INTO UnverifiedMembers (ID, Username, Email, `Password`)
                                     VALUES (:id, :username, :email, :password);
                                 ") -> execute([
                                     "id" => $id,

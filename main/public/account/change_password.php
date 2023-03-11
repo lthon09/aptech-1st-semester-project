@@ -23,6 +23,31 @@
                 $message = "Invalid old password entered!";
             } else {
                 $connection = connect();
+
+                $statement = $connection -> prepare("
+                    SELECT * FROM Members WHERE Username = :username LIMIT 1;
+                ");
+
+                $statement -> execute(["username" => $username]);
+
+                if ($statement -> rowCount() === 0) {
+                    $message_color = "red";
+                    $message = "Something went wrong.";
+                } else {
+                    $current_password = ($statement -> fetch())["Password"];
+
+                    if (!password_verify($old_password, $current_password)) {
+                        $message_color = "red";
+                        $message = "Invalid old password entered!";
+                    } else {
+                        $connection -> prepare("
+                            UPDATE Members SET `Password` = :password WHERE Username = :username;
+                        ") -> execute([
+                            "password" => hash_password($new_password),
+                            "username" => $username,
+                        ]);
+                    }
+                }
             }
         }
     }

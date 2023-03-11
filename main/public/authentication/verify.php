@@ -50,8 +50,7 @@
                     ") -> execute(["id" => $id]);
 
                     $connection -> prepare("
-                        INSERT INTO Members
-                        (Username, `Password`, Email, Administrator)
+                        INSERT INTO Members (Username, `Password`, Email, Administrator)
                         VALUES (:username, :password, :email, FALSE);
                     ") -> execute([
                         "username" => $username,

@@ -45,18 +45,16 @@
                                 $message_color = "red";
                                 $message = "Something went wrong, please try again.";
                             } else {
-                                $member = ($statement -> fetch())["Member"];
+                                $username = ($statement -> fetch())["Username"];
                 
                                 $connection -> prepare("
                                     DELETE FROM ResetPasswordMembers WHERE ID = :id;
                                 ") -> execute(["id" => $id]);
 
                                 $connection -> prepare("
-                                    UPDATE Members
-                                    SET `Password` = :password
-                                    WHERE ID = :id;
+                                    UPDATE Members SET `Password` = :password WHERE Username = :username;
                                 ") -> execute([
-                                    "id" => $member,
+                                    "username" => $username,
                                     "password" => $hashed_password,
                                 ]);
 
