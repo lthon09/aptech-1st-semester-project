@@ -14,7 +14,7 @@
                                 height="100%" />
                         </div>
                         <div class="col-md-10 col-lg-7 col-xl-6">
-                            <h1 class="text-spacing-25 font-weight-normal title-opacity-9">Why choose us</h1>
+                            <h1 class="text-spacing-25 font-weight-normal">Why choose us</h1>
                             <!-- Bootstrap tabs-->
                             <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-4">
                                 <!-- Nav tabs-->

@@ -43,10 +43,9 @@
                                             data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                                         <!-- RD Navbar Brand-->
                                         <div class="rd-navbar-brand">
-                                            <!--Brand--><a class="brand" href="#"><img src="/static/assets/images/logo.png"
+                                            <!--Brand--><a class="brand" href="/"><img src="/static/assets/images/logo.png"
                                                     alt="" style="width:35px;height:35px" /></a>
                                         </div>
-                                        <a href="/">Pleasant Tours</a>
                                     </div>
                                     <div class="rd-navbar-aside-right rd-navbar-collapse">
                                         {{^logged_in}}
@@ -54,9 +53,9 @@
                                             <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/sign_up.php">Sign Up</a>
                                         {{/logged_in}}
                                         {{#logged_in}}
-                                            <div style="display:flex;margin-right:-30px"> <!-- TODO: change password + delete account -->
+                                            <div style="display:flex;margin-right:-30px">
                                                 <span>Welcome back,</span>
-                                                <a href="#" style="margin-left:5px">{{ username }}</a>
+                                                <a href="/account/settings.php" target="_blank" style="margin-left:5px">{{ username }}</a>
                                                 <span>!</span>
                                             </div>
                                             <a class="button button-md button-default-outline-2 button-ujarak" href="/authentication/log_out.php">Log Out</a>

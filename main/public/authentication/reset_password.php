@@ -66,7 +66,7 @@
                     }
                 }
 
-                render_template("authentication", [
+                render_template("form", [
                     "title" => "Reset Password",
                     "content" => <<<HTML
                         <div class="signin-content">
@@ -82,7 +82,7 @@
                                         <input type="password" name="confirm_new_password" id="re_pass" placeholder="Confirm New Password" />
                                     </div>
                                     <div class="form-group form-button">
-                                        <input type="submit" name="submit" id="signup" class="form-submit" value="Reset Password" />
+                                        <input type="submit" name="submit" id="signin" class="form-submit" value="Reset Password" />
                                     </div>
                                     <div class="form-group">
                                         <span style="color:{$message_color}">{$message}</span>

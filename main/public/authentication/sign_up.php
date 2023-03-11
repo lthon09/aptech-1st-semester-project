@@ -112,15 +112,11 @@
         }
     }
 
-    render_template("authentication", [
+    render_template("form", [
         "title" => "Sign Up",
-        "resources" => <<<HTML
-            <link rel="stylesheet" href="/static/frontend/css/authentication_fonts.css">
-            <link rel="stylesheet" href="/static/frontend/css/authentication_style.css">
-        HTML,
         "content" => <<<HTML
-            <div class="signup-content">
-                <div class="signup-form">
+            <div class="signin-content">
+                <div class="signin-form">
                     <h2 class="form-title">Sign Up</h2>
                     <form method="POST" class="register-form" id="register-form" action="{$script}">
                         <div class="form-group">
@@ -140,7 +136,7 @@
                             <input type="password" name="confirm_password" id="re_pass" placeholder="Confirm Password" />
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="submit" id="signup" class="form-submit" value="Sign Up" />
+                            <input type="submit" name="submit" id="signin" class="form-submit" value="Sign Up" />
                         </div>
                         <div class="form-group">
                             <span style="color:{$message_color}">{$message}</span>

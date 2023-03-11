@@ -101,7 +101,7 @@
         }
     }
 
-    render_template("authentication", [
+    render_template("form", [
         "title" => "Forgot Password",
         "resources" => <<<HTML
             <style>

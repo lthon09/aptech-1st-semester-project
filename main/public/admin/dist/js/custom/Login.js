@@ -26,7 +26,7 @@ function fncClick() {
             $("#Password").val("")
           }else if(strMessage == "2"){
             toastr.info("Đăng nhập thành công!");
-            window.location.href = ("http://localhost:8080/admin/Countries.php");
+            window.location.href = ("/admin");
           }
       },
     });

@@ -16,36 +16,41 @@
 
     $tours = large_query("Tours", "", []);
 
-    foreach ($tours as $tour) {
-        $id = htmlentities($tour["ID"]);
-
-        $statement = $connection -> prepare("
-            SELECT * FROM Countries WHERE ID = :id LIMIT 1;
-        ");
-
-        $statement -> execute(["id" => htmlentities($tour["Country"])]);
-
-        $pdf -> SetTextColor(51, 194, 184);
-        $pdf -> Write(5, htmlentities($tour["Name"]), get_server() . "/tours/view.php?id={$id}");
-
+    if (!$tours) {
         $pdf -> SetTextColor(0, 0, 0);
-        $pdf -> Write(5, ", ");
+        $pdf -> Cell(0, 0, "No Tour", 0, 0, "C");
+    } else {
+        foreach ($tours as $tour) {
+            $id = htmlentities($tour["ID"]);
 
-        $pdf -> SetTextColor(51, 194, 184);
-        $pdf -> Write(5, htmlentities(($statement -> fetch())["Name"]));
+            $statement = $connection -> prepare("
+                SELECT * FROM Countries WHERE ID = :id LIMIT 1;
+            ");
 
-        $pdf -> SetTextColor(0, 0, 0);
-        $pdf -> Write(5, ": ");
+            $statement -> execute(["id" => htmlentities($tour["Country"])]);
 
-        if ($tour["Sale"] === 0) {
-            $pdf -> SetTextColor(252, 232, 131);
-        } else {
-            $pdf -> SetTextColor(255, 0, 0);
+            $pdf -> SetTextColor(51, 194, 184);
+            $pdf -> Write(5, htmlentities($tour["Name"]), get_server() . "/tours/view.php?id={$id}");
+
+            $pdf -> SetTextColor(0, 0, 0);
+            $pdf -> Write(5, ", ");
+
+            $pdf -> SetTextColor(51, 194, 184);
+            $pdf -> Write(5, htmlentities(($statement -> fetch())["Name"]));
+
+            $pdf -> SetTextColor(0, 0, 0);
+            $pdf -> Write(5, ": ");
+
+            if ($tour["Sale"] === 0) {
+                $pdf -> SetTextColor(252, 232, 131);
+            } else {
+                $pdf -> SetTextColor(255, 0, 0);
+            }
+
+            $pdf -> Write(5, "$" . calculate_price($tour["Price"], $tour["Sale"]));
+
+            $pdf -> Ln(7);
         }
-
-        $pdf -> Write(5, "$" . calculate_price($tour["Price"], $tour["Sale"]));
-
-        $pdf -> Ln(7);
     }
 
     $pdf -> Output("D", "tours_prices_list.pdf");

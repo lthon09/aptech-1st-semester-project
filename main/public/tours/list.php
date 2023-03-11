@@ -95,7 +95,7 @@
                             <div class="unit-left">
                                 <a href="view.php?id={$id}">
                                     <img class="product-figure"
-                                        src="{$avatar}" alt="" width="100%" height="100%" />
+                                        src="{$avatar}" alt="" width="900" height="533" />
                                 </a>
                             </div>
                             <div class="unit-body">
@@ -162,8 +162,10 @@
                 }
 
                 .update {
-                    color: white;
+                    color: white !important;
                     background-color: #01b3a7;
+                    font-family: "Montserrat", sans-serif, Arial, sans-serif;
+                    font-weight: 500;
                     border: none;
                     cursor: pointer;
                     padding-top: 8px;
@@ -186,6 +188,7 @@
         HTML,
         "content" => <<<HTML
             <div class="container" style="margin-top:30px;margin-bottom:50px">
+                <h1 class="text-spacing-25 font-weight-normal" style="text-align:left;margin-bottom:20px">Tours</h1>
                 <form method="get" style="display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:35px">
                     <div style="display:flex;flex-direction:row;flex-wrap:wrap;column-gap:25px;row-gap:10px">
                         <select class="chosen-select" name="categories[]" data-placeholder="Categories" multiple>

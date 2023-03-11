@@ -68,7 +68,7 @@
         }
     }
 
-    render_template("authentication", [
+    render_template("form", [
         "title" => "Log In",
         "content" => <<<HTML
             <div class="signin-content">

@@ -60,8 +60,8 @@
                     <article class="product-big">
                         <div class="unit flex-column flex-md-row align-items-md-stretch">
                             <div class="unit-left"><img class="product-big-figure"
-                                        src="{$avatar}" alt="" width="100%"
-                                        height="100%" /></div>
+                                        src="{$avatar}" alt="" width="600"
+                                        height="366" /></div>
                             <div class="unit-body">
                                 <div class="product-big-body">
                                     <h5 class="product-big-title">{$name}, {$country}</h5>
