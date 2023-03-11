@@ -70,7 +70,7 @@
                         <div class="signin-content">
                             <div class="signin-form">
                                 <h2 class="form-title">Reset Password</h2>
-                                <form method="POST" class="register-form" id="login-form" action="{$script}?{$query_string}">
+                                <form method="POST" class="register-form" id="login-form" action="{$script}?id={$id}">
                                     <div class="form-group">
                                         <label for="new_password"><i class="zmdi zmdi-lock"></i></label>
                                         <input type="password" name="new_password" id="pass" placeholder="New Password" />
