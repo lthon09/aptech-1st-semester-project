@@ -46,6 +46,10 @@
                             "password" => hash_password($new_password),
                             "username" => $username,
                         ]);
+
+                        log_out();
+
+                        redirect("/authentication/log_in.php");
                     }
                 }
             }

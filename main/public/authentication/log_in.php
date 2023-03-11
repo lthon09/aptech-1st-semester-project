@@ -85,7 +85,7 @@
                         </div>
                         <div class="form-group">
                             <input type="checkbox" name="remember" id="remember" class="agree-term" />
-                            <label for="remember" class="label-agree-term"><span><span></span></span>Remember</label>
+                            <label for="remember" class="label-agree-term"><span><span></span></span>Remember Me</label>
                         </div>
                         <div class="form-group form-button">
                             <input type="submit" name="submit" id="signin" class="form-submit" value="Log In" />
