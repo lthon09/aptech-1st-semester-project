@@ -7,7 +7,7 @@
     $message = "";
 
     $query_string = $_SERVER["QUERY_STRING"];
-    $_query_string = ($query_string !== "") ? "?$query_string" : "";
+    $_query_string = ($query_string !== "") ? $query_string : "";
 
     if (isset($_POST["submit"])) {
         $username = $_POST["username"];
@@ -58,7 +58,7 @@
 
                     $queries = get_queries();
 
-                    redirect( // FIXME: this isnt redirecting to the destination
+                    redirect(
                         (isset($queries["destination"]) && $queries["destination"] !== "")
                             ? urldecode($queries["destination"])
                             : "/"
@@ -74,7 +74,7 @@
             <div class="signin-content">
                 <div class="signin-form">
                     <h2 class="form-title">Log In</h2>
-                    <form method="POST" class="register-form" id="login-form" action="{$script}">
+                    <form method="POST" class="register-form" id="login-form" action="{$script}?{$_query_string}">
                         <div class="form-group">
                             <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <input type="text" name="username" id="your_name" placeholder="Username" />
