@@ -11,20 +11,20 @@
         if (!validate_id($id)) {
             redirect("list.php");
         } else {
-            $comments = "";
+            $reviews = "";
 
             if (!is_logged_in()) {
                 $current_page = urlencode(get_server() . $script . "?id={$id}");
 
                 $create = <<<HTML
-                    <a href="/authentication/log_in.php?destination={$current_page}">Log In</a> to review on this tour.
+                    <a href="/authentication/log_in.php?destination={$current_page}">Log in</a> to review on this tour.
                 HTML;
             } else {
                 $create = <<<HTML
-                HTML; // TODO: create comment form
+                HTML; // TODO: create review form
             }
 
-            // TODO: list comments
+            // TODO: list reviews
 
             $connection = connect();
 
@@ -85,6 +85,7 @@
                 "resources" => <<<HTML
                 HTML,
                 "content" => <<<HTML
+                    <!-- TODO: mobile support -->
                     <div class="container" style="text-align:left;word-wrap:break-word;margin-top:30px;margin-bottom:50px">
                         <a href="list.php" style="display:flex;flex-direction:row;align-items:center;gap:7.5px;color:gray">
                             <span>←</span>
@@ -117,7 +118,7 @@
                                 </h6>
                                 <div class="container" style="margin-top:15px">
                                     <div>{$create}</div>
-                                    <div>{$comments}</div>
+                                    <div>{$reviews}</div>
                                 </div>
                             </div>
                             <div class="bg-gray-4" style="text-align:center;width:30%;padding-top:175px;padding-bottom:200px">
