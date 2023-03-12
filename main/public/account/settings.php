@@ -3,6 +3,10 @@
 
     logged_in_only();
 
+    $queries = get_queries();
+
+    $error = (isset($queries["deleteAccountError"])) ? "Couldn't delete your account: Invalid credentials entered" : "";
+
     render_template("regular", [
         "title" => "Settings",
         "resources" => <<<HTML
@@ -202,11 +206,14 @@
                     </div>
                 </div>
             </div>
-            <div class="container" style="text-align:left">
+            <div class="container" style="text-align:left;margin-top:30px;margin-bottom:50px">
                 <h1 class="text-spacing-25 font-weight-normal" style="font-size:50px;margin-bottom:20px">Settings</h1>
-                <div class="container group">
-                    <a class="button change-password" href="/account/change_password.php">Change Your Password</a>
-                    <a class="button delete-account" href="#" data-hystmodal="#delete-account-modal">Delete Your Account</a>
+                <div class="container">
+                    <span style="color:red">{$error}</span>
+                    <div class="group-md">
+                        <a class="button change-password" href="/account/change_password.php">Change Your Password</a>
+                        <a class="button delete-account" href="#" data-hystmodal="#delete-account-modal">Delete Your Account</a>
+                    </div>
                 </div>
             </div>
             <script src="/static/frontend/js/hystmodal.min.js"></script>

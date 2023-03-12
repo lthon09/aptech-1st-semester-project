@@ -7,19 +7,22 @@
         $password = $_POST["password"];
 
         if (!validate_password($password)) {
-            echo "error";
+            redirect("/account/settings.php?deleteAccountError");
         } else {
             if (!password_verify($password, $member["Password"])) {
-                echo "error";
+                redirect("/account/settings.php?deleteAccountError");
             } else {
                 $username = $member["Username"];
+                $connection = connect();
 
-                // connect() -> prepare("
-                //     DELETE FROM Members WHERE Username = :username LIMIT 1;
-                // ") -> execute(["username" => $username]);
+                $connection -> prepare("
+                    DELETE FROM Members WHERE Username = :username LIMIT 1;
+                ") -> execute(["username" => $username]);
 
                 foreach(large_query("Reviews", "WHERE Author = ?", [$username]) as $review) {
-                    echo $review;
+                    $connection -> prepare("
+                        DELETE FROM Reviews WHERE ID = :id LIMIT 1;
+                    ") -> execute(["id" => $review["ID"]]);
                 }
 
                 log_out();
