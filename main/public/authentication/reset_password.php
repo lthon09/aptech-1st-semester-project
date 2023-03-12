@@ -52,7 +52,7 @@
                                 ") -> execute(["id" => $id]);
 
                                 $connection -> prepare("
-                                    UPDATE Members SET `Password` = :password WHERE Username = :username;
+                                    UPDATE Members SET `Password` = :password WHERE Username = :username LIMIT 1;
                                 ") -> execute([
                                     "username" => $username,
                                     "password" => $hashed_password,

@@ -39,7 +39,7 @@
                         $hashed_password = hash_password($password);
 
                         $connection -> prepare("
-                            UPDATE Members SET `Password` = :password WHERE Username = :username;
+                            UPDATE Members SET `Password` = :password WHERE Username = :username LIMIT 1;
                         ") -> execute([
                             "password" => $hashed_password,
                             "username" => $username,

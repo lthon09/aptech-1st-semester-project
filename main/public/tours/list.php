@@ -32,8 +32,8 @@
     $countries = "";
     $tours = "";
 
-    $_categories = large_query("Categories", "", [], []);
-    $_countries = large_query("Countries", "", [], []);
+    $_categories = large_query("Categories", "", []);
+    $_countries = large_query("Countries", "", []);
     $_tours = large_query("Tours", $conditions, array_merge($__categories, $__countries));
 
     foreach ($_categories as $category) {

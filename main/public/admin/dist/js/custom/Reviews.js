@@ -17,7 +17,7 @@ function fncLoad() {
       html_body = "";
       $.each(data, function (key, val) {
         html_body += "<tr>";
-        html_body += "<th>" + val.id + "</th>";
+        html_body += "<td>" + val.id + "</td>";
         html_body += "<td>" + val.name + "</td>";
         html_body += "<td>" + val.Author + "</td>";
         html_body += "<td>" + val.Content + "</td>";

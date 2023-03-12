@@ -22,35 +22,22 @@
                 $message_color = "red";
                 $message = "Invalid old password entered!";
             } else {
-                $connection = connect();
+                $current_password = $member["Password"];
 
-                $statement = $connection -> prepare("
-                    SELECT * FROM Members WHERE Username = :username LIMIT 1;
-                ");
-
-                $statement -> execute(["username" => $username]);
-
-                if ($statement -> rowCount() === 0) {
+                if (!password_verify($old_password, $current_password)) {
                     $message_color = "red";
-                    $message = "Something went wrong.";
+                    $message = "Invalid old password entered!";
                 } else {
-                    $current_password = ($statement -> fetch())["Password"];
+                    connect() -> prepare("
+                        UPDATE Members SET `Password` = :password WHERE Username = :username LIMIT 1;
+                    ") -> execute([
+                        "password" => hash_password($new_password),
+                        "username" => $username,
+                    ]);
 
-                    if (!password_verify($old_password, $current_password)) {
-                        $message_color = "red";
-                        $message = "Invalid old password entered!";
-                    } else {
-                        $connection -> prepare("
-                            UPDATE Members SET `Password` = :password WHERE Username = :username;
-                        ") -> execute([
-                            "password" => hash_password($new_password),
-                            "username" => $username,
-                        ]);
+                    log_out();
 
-                        log_out();
-
-                        redirect("/authentication/log_in.php");
-                    }
+                    redirect("/authentication/log_in.php");
                 }
             }
         }

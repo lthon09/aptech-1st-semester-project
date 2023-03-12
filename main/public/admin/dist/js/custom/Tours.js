@@ -217,8 +217,7 @@ function validate() {
     $("#shortdescription").val() == "" ||
     $("#longdescription").val() == "" ||
     $("#detailedInformation").val() == "" ||
-    $("#fileToUpload").val() == "" ||
-    $("#fileToUploadDoccument").get(0).files.length === 0
+    $("#fileToUpload").val() == ""
   ) {
     toastr.error("Vui lòng nhập đầy đủ các trường dữ liệu.");
     return false;
@@ -238,6 +237,5 @@ function fncActionmodal() {
     $("#longdescription").val("");
     $("#detailedInformation").val("");
     $("#fileToUpload").val("");
-    $("#fileToUploadDoccument").val("");
   });
 }

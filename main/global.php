@@ -226,7 +226,7 @@
             "password" => $password,
         ]);
 
-        if ($statement -> rowCount() === 0) {
+        if (($statement -> rowCount()) === 0) {
             return false;
         }
 
