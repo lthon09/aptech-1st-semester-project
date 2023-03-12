@@ -75,7 +75,6 @@ if (!$_SESSION["Username"]) {
               <th>Country</th>
               <th>Avatar</th>
               <th>Category</th>
-              <th>Document</th>
               <th>Function</th>
             </tr>
           </thead>
@@ -188,37 +187,30 @@ if (!$_SESSION["Username"]) {
                   <div class="form-group col-6">
                     <label for="fileupload">Avatar</label>
                     <!-- <div class="custom-file"> -->
-                    <input type="fileToUpload" name="fileToUpload" class="form-control" id="fileToUpload" placeholder="Enter File">
+                    <input type="fileToUpload" name="fileToUpload" class="form-control" id="fileToUpload" placeholder="Enter URL">
                     <!-- <input type="file" name="fileToUpload" id="fileToUpload"> -->
                     <!-- <label class="custom-file-label" for="fileupload">Choose file</label> -->
                     <!-- </div> -->
                   </div>
-                  <div class="form-group col-6">
-                    <label for="fileupload">Document</label>
-                    <!-- <div class="custom-file"> -->
-                    <input type="file" name="fileToUploadDoccument" id="fileToUploadDoccument">
-                    <!-- <label class="custom-file-label" for="fileupload">Choose file</label> -->
-                    <!-- </div> -->
-                  </div>
                 </div>
 
                 <div class="row">
-                  <div class="form-group col-4">
+                  <div class="form-group" style="width:100%">
                     <label for="ShortDescription">Short Description</label>
-                    <textarea id="shortdescription" name="shortdescription" rows="4" cols="100"></textarea>
+                    <textarea class="form-control" id="shortdescription" name="shortdescription" rows="4" style="width:100%"></textarea>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col-4">
+                  <div class="form-group" style="width:100%">
                     <label for="LongDescription">Long Description</label>
-                    <textarea id="longdescription" name="longdescription" rows="4" cols="100"></textarea>
+                    <textarea class="form-control" id="longdescription" name="longdescription" rows="4" style="width:100%"></textarea>
                   </div>
                 </div>
 
                 <div class="row">
-                  <div class="form-group col-4">
+                  <div class="form-group" style="width:100%">
                     <label for="detailedInformation">Detailed Informations</label>
-                    <textarea id="detailedInformation" name="detailedInformation" rows="4" cols="100"></textarea>
+                    <textarea class="form-control" id="detailedInformation" name="detailedInformation" rows="4" style="width:100%"></textarea>
                     <!-- <input type="text" name="longdescription" class="form-control" id="LongDescription" placeholder="Enter LongDescription"> -->
                   </div>
                 </div>

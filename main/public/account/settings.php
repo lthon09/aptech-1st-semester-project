@@ -58,11 +58,14 @@
                     <a class="button delete-account" onclick="delete_account()">Delete Your Account</a>
                 </div>
             </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js"></script>
             <script>
                 function delete_account() {
-                    const password = prompt("Enter your password:");
-
-                    if ((password.length === 0) || (!password.trim())) return;
+                    bootbox.prompt({
+                        title: "Enter Your Password",
+                        inputType: "password",
+                        required: true,
+                    });
 
                     document.getElementsByName("password")[0].setAttribute("value", password);
                     document.getElementsByClassName("delete-account-form")[0].submit();

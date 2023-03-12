@@ -67,7 +67,7 @@ if (!$_SESSION["Username"]) {
             <tr>
               <th>Username</th>
               <th>Email</th>
-              <th>Administrator</th>
+              <th>Type</th>
               <th>Function</th>
             </tr>
           </thead>

@@ -78,6 +78,10 @@
                                                 <li class="rd-nav-item"><a class="rd-nav-link" href="/contact.php">Contact Us</a>
                                                 </li>
                                             {{/logged_in}}
+                                            {{#logged_in}}
+                                                <li class="rd-nav-item"><a class="rd-nav-link" href="/account/settings.php">Settings</a>
+                                                </li>
+                                            {{/logged_in}}
                                         </ul>
                                     </div>
                                 </div>

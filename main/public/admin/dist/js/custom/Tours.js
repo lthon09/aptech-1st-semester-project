@@ -35,7 +35,6 @@ function fncLoad() {
         // '<td><img src="../static/assets/tours/' + val.id + "/avatar/'" + val.Avatar +' " width="50" height="50"></td>';
         html_body +='<td><img src="' + val.Avatar + '" width="50" height="50"></td>';
         html_body += "<td>" + val.NameCategory + "</td>";
-        html_body += "<td>Không có tài liệu</td>";
         html_body += "<td>";
         html_body +=
           '<button type="button" class="btn btn-sm btn-warning btn-sua" attrId="' +
@@ -120,6 +119,7 @@ function fncClick() {
         $("#Price").val(data[0].Price);
         $("#country").val(data[0].NameCoutries);
         $("#category").val(data[0].NameCategory);
+        $("#fileToUpload").val(data[0].Avatar);
         $("#shortdescription").val(data[0].ShortDescription);
         $("#longdescription").val(data[0].LongDescription);
         $("#detailedInformation").val(data[0].DetailedInformations);
