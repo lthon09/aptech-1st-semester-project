@@ -60,14 +60,14 @@
         return get_server() . dirname($script);
     }
 
-    function format_price(int | float $price, int $true, float $false) : int | float {
-        return (floor($price) == $price) ? $true : $false;
+    function format_float(int | float $float, int $true, float $false) : int | float {
+        return (floor($float) == $float) ? $true : $false;
     }
 
     function calculate_price(int | float $price, int $sale) : int | float {
         $calculated_price = $price - ($price * $sale / 100);
 
-        return format_price($calculated_price, (int)$calculated_price, bcadd($calculated_price, 0, 2));
+        return format_float($calculated_price, (int)$calculated_price, bcadd($calculated_price, 0, 2));
     }
 
     function generate_id(int $length, string $database) : string | false {

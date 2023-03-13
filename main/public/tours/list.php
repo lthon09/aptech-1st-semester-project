@@ -68,7 +68,7 @@
             $description = htmlentities($tour["ShortDescription"]);
             $original_price = $tour["Price"];
             $sale = $tour["Sale"];
-            $_original_price = "$" . htmlentities(format_price($original_price, (int)$original_price, $original_price));
+            $_original_price = "$" . htmlentities(format_float($original_price, (int)$original_price, $original_price));
 
             $style = "";
             $_sale = "";
