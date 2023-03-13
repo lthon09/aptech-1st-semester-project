@@ -46,53 +46,58 @@
 
                     $id = generate_id(IDS["lengths"]["secure"], "ResetPasswordMembers");
 
-                    $link = get_directory() . "/reset_password.php?id={$id}";
-
-                    if (!send_mail($email, "Reset Your Password",
-                        <<<HTML
-                            <strong>{$username}</strong>,
-                            <br><br>
-                            A password reset request has just been for with your account. Please click on the link below in order to reset your password.
-                            <br>
-                            This link will expire in <strong>15 minutes</strong>.
-                            <br>
-                            <br>
-                            If this wasn't you, please ignore this email.
-                            <br><br>
-                            <a target="_blank" href="{$link}">RESET YOUR PASSWORD</a>
-                            <br><br>
-                            <strong>
-                                Cheers,
-                                <br>
-                                Pleasant Tours
-                            </strong>
-                        HTML,
-                        "
-                            {$username},
-
-                            A password reset request has just been for with your account. Please open the link below in order to reset your password.
-                            This link will expire in 15 minutes.
-
-                            If this wasn't you, please ignore this email.
-
-                            RESET YOUR PASSWORD: {$link}
-
-                            Cheers,
-                            Pleasant Tours
-                        ",
-                    )) {
+                    if ($id === false) {
                         $message_color = "red";
                         $message = "Something went wrong, please try again.";
                     } else {
-                        $connection -> prepare("
-                            INSERT INTO ResetPasswordMembers (ID, Member) VALUES (:id, :username);
-                        ") -> execute([
-                            "id" => $id,
-                            "username" => $username,
-                        ]);
+                        $link = get_directory() . "/reset_password.php?id={$id}";
 
-                        $message_color = "#00ff00";
-                        $message = "Please check your email for an email in order to reset your password! (Make sure to check all the folders)";
+                        if (!send_mail($email, "Reset Your Password",
+                            <<<HTML
+                                <strong>{$username}</strong>,
+                                <br><br>
+                                A password reset request has just been for with your account. Please click on the link below in order to reset your password.
+                                <br>
+                                This link will expire in <strong>15 minutes</strong>.
+                                <br>
+                                <br>
+                                If this wasn't you, please ignore this email.
+                                <br><br>
+                                <a target="_blank" href="{$link}">RESET YOUR PASSWORD</a>
+                                <br><br>
+                                <strong>
+                                    Cheers,
+                                    <br>
+                                    Pleasant Tours
+                                </strong>
+                            HTML,
+                            "
+                                {$username},
+
+                                A password reset request has just been for with your account. Please open the link below in order to reset your password.
+                                This link will expire in 15 minutes.
+
+                                If this wasn't you, please ignore this email.
+
+                                RESET YOUR PASSWORD: {$link}
+
+                                Cheers,
+                                Pleasant Tours
+                            ",
+                        )) {
+                            $message_color = "red";
+                            $message = "Something went wrong, please try again.";
+                        } else {
+                            $connection -> prepare("
+                                INSERT INTO ResetPasswordMembers (ID, Member)VALUES (:id, :username) LIMIT 1;
+                            ") -> execute([
+                                "id" => $id,
+                                "username" => $username,
+                            ]);
+
+                            $message_color = "#00ff00";
+                            $message = "Please check your email for an email in order to reset your password! (Make sure to check all the folders)";
+                        }
                     }
                 }
             }

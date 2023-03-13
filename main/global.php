@@ -25,6 +25,7 @@
     $id_characters_length = strlen(IDS["characters"]);
 
     const LARGE_QUERY_PAGE_ITEMS_COUNT = 50;
+    const MAXIMUM_REVIEW_CONTENT_LENGTH = 4000;
 
     const CREDENTIALS = [
         "characters" => [

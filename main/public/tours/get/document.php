@@ -1,3 +1,3 @@
 <?php
-    // TODO: detailed tour informations
+    // TODO
 ?>
