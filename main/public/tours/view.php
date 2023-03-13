@@ -241,7 +241,7 @@
                 HTML,
                 "content" => <<<HTML
                     <div class="container" style="text-align:left;word-wrap:break-word;margin-top:30px;margin-bottom:50px">
-                        <a href="list.php" style="display:flex;flex-direction:row;align-items:center;gap:7.5px;color:gray">
+                        <a href="list.php" style="display:inline-flex;flex-direction:row;align-items:center;gap:7.5px;color:gray">
                             <span>←</span>
                             <span>Back to Tours</span>
                         </a>
