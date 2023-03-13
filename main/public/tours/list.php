@@ -95,7 +95,7 @@
                             <div class="unit-left">
                                 <a href="view.php?id={$id}">
                                     <img class="product-figure"
-                                        src="{$avatar}" alt="" width="900" height="533" />
+                                        src="{$avatar}" alt="" style="max-width:100%;max-height:100%;width:900px;height:533px" />
                                 </a>
                             </div>
                             <div class="unit-body">
