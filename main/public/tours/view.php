@@ -214,7 +214,7 @@
                             }
 
                             .left {
-                                max-width: 70%;
+                                min-width: 70%;
                             }
 
                             .right {
