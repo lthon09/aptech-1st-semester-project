@@ -21,13 +21,13 @@
         $pdf -> Cell(0, 0, "No Tour", 0, 0, "C");
     } else {
         foreach ($tours as $tour) {
-            $id = htmlentities($tour["ID"]);
+            $id = $tour["ID"];
 
             $statement = $connection -> prepare("
                 SELECT * FROM Countries WHERE ID = :id LIMIT 1;
             ");
 
-            $statement -> execute(["id" => htmlentities($tour["Country"])]);
+            $statement -> execute(["id" => $tour["Country"]]);
 
             $pdf -> SetTextColor(51, 194, 184);
             $pdf -> Write(5, htmlentities($tour["Name"]), get_server() . "/tours/view.php?id={$id}");
@@ -53,5 +53,5 @@
         }
     }
 
-    $pdf -> Output("D", "tours_prices_list.pdf");
+    $pdf -> Output("D", "[Pleasant Tours] Tours Prices List.pdf");
 ?>
