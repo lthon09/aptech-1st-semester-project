@@ -350,7 +350,7 @@
         $variables["logged_in"] = $is_logged_in;
 
         if ($is_logged_in) {
-            $variables["username"] = $member["Username"];
+            $variables["username"] = htmlentities($member["Username"]);
         }
 
         echo (new Mustache_Engine([

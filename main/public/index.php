@@ -30,7 +30,7 @@
 
             $tour = $statement -> fetch();
 
-            $avatar = $tour["Avatar"];
+            $avatar = htmlentities($tour["Avatar"]);
             $name = htmlentities($tour["Name"]);
             $country = htmlentities($tour["Country"]);
             $description = htmlentities($tour["ShortDescription"]);

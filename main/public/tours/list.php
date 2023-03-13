@@ -61,14 +61,14 @@
     if ($_tours) {
         foreach ($_tours as $tour) {
             $id = htmlentities($tour["ID"]);
-            $avatar = $tour["Avatar"];
+            $avatar = htmlentities($tour["Avatar"]);
             $name = htmlentities($tour["Name"]);
             $category = htmlentities($_categories[$tour["Category"]]["Name"]);
             $country = htmlentities($_countries[$tour["Country"]]["Name"]);
             $description = htmlentities($tour["ShortDescription"]);
             $original_price = $tour["Price"];
             $sale = $tour["Sale"];
-            $_original_price = "$" . htmlentities(format_float($original_price, (int)$original_price, $original_price));
+            $_original_price = "$" . format_float($original_price, (int)$original_price, $original_price);
 
             $style = "";
             $_sale = "";

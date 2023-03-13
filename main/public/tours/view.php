@@ -36,14 +36,14 @@
                 $statement1 -> execute(["id" => $tour["Category"]]);
                 $statement2 -> execute(["id" => $tour["Country"]]);
 
-                $avatar = $tour["Avatar"];
+                $avatar = htmlentities($tour["Avatar"]);
                 $name = htmlentities($tour["Name"]);
                 $category = htmlentities(($statement1 -> fetch())["Name"]);
                 $country = htmlentities(($statement2 -> fetch())["Name"]);
                 $description = htmlentities($tour["LongDescription"]);
                 $original_price = $tour["Price"];
                 $sale = $tour["Sale"];
-                $_original_price = "$" . htmlentities(format_float($original_price, (int)$original_price, $original_price));
+                $_original_price = "$" . format_float($original_price, (int)$original_price, $original_price);
 
                 $style = "";
                 $_sale = "";
