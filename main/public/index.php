@@ -6,36 +6,31 @@
 
     $connection = connect();
 
-    $statement = $connection -> prepare("
-        SELECT * FROM HotTours;
-    ");
+    $_hot_tours = large_query("Tours", "WHERE Hot = TRUE", []);
 
-    $statement -> execute();
-
-    if ($statement -> rowCount() === 0) {
+    if (!$_hot_tours) {
         $hot_tours = <<<HTML
             <div class="col">
                 <h5 class="box-icon-classic-title" style="font-weight:normal">No Hot Tour</h5>
             </div>
         HTML;
     } else {
-        foreach (($statement -> fetchAll()) as $hot_tour) {
-            $id = $hot_tour["Tour"];
+        foreach ($_hot_tours as $hot_tour) {
+            $id = htmlentities($hot_tour["ID"]);
+            $avatar = htmlentities($hot_tour["Avatar"]);
+            $name = htmlentities($hot_tour["Name"]);
 
             $statement = $connection -> prepare("
-                SELECT * FROM Tours WHERE ID = :id LIMIT 1;
+                SELECT * FROM Countries WHERE ID = :id LIMIT 1;
             ");
 
-            $statement -> execute(["id" => $id]);
+            $statement -> execute(["id" => $hot_tour["Country"]]);
 
-            $tour = $statement -> fetch();
+            $country = htmlentities(($statement -> fetch())["Name"]);
 
-            $avatar = htmlentities($tour["Avatar"]);
-            $name = htmlentities($tour["Name"]);
-            $country = htmlentities($tour["Country"]);
-            $description = htmlentities($tour["ShortDescription"]);
-            $original_price = $tour["Price"];
-            $sale = $tour["Sale"];
+            $description = htmlentities($hot_tour["ShortDescription"]);
+            $original_price = $hot_tour["Price"];
+            $sale = $hot_tour["Sale"];
             $_original_price = "$" . format_float($original_price, (int)$original_price, $original_price);
 
             $_sale = "";

@@ -219,7 +219,7 @@
         }
 
         $statement = connect() -> prepare("
-            SELECT * FROM Members WHERE Username = :username AND PASSWORD = :password LIMIT 1;
+            SELECT * FROM Members WHERE Username = :username AND `Password` = :password LIMIT 1;
         ");
 
         $statement -> execute([

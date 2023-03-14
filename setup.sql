@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Members (
 
     Email VARCHAR(255) NOT NULL,
 
-    Administrator BOOLEAN NOT NULL, 
+    Administrator BOOLEAN DEFAULT 0, 
 
     PRIMARY KEY (Username)
 );
@@ -72,34 +72,14 @@ CREATE TABLE IF NOT EXISTS Tours (
 
     Avatar VARCHAR(200) NOT NULL,
 
+    Hot BOOLEAN DEFAULT 0,
+
     PRIMARY KEY (ID),
 
     FOREIGN KEY (Country) REFERENCES Countries(ID),
     FOREIGN KEY (Category) REFERENCES Categories(ID),
 
     CHECK (Sale <= 100)
-);
-
--- CREATE TABLE IF NOT EXISTS ToursCategories (
---     ID CHAR(16),
-
---     Tour CHAR(16),
---     Category CHAR(16),
-
---     PRIMARY KEY (ID),
-
---     FOREIGN KEY (Tour) REFERENCES Tours(ID),
---     FOREIGN KEY (Category) REFERENCES Categories(ID)
--- );
-
-CREATE TABLE IF NOT EXISTS HotTours (
-    ID CHAR(16),
-
-    Tour CHAR(16) NOT NULL,
-
-    PRIMARY KEY (ID),
-
-    FOREIGN KEY (Tour) REFERENCES Tours(ID)
 );
 
 CREATE TABLE IF NOT EXISTS Reviews (

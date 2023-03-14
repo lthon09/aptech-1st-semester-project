@@ -89,7 +89,7 @@
                             $message = "Something went wrong, please try again.";
                         } else {
                             $connection -> prepare("
-                                INSERT INTO ResetPasswordMembers (ID, Member)VALUES (:id, :username) LIMIT 1;
+                                INSERT INTO ResetPasswordMembers (ID, Member) VALUES (:id, :username) LIMIT 1;
                             ") -> execute([
                                 "id" => $id,
                                 "username" => $username,

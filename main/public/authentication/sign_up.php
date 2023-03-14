@@ -20,7 +20,13 @@
         } else {
             if (!validate_credentials($username, $password) || !validate_email($email)) {
                 $message_color = "red";
-                $message = "Invalid credentials entered! (The username must be 2-20 characters and the password must be 8-40 characters)";
+                $message = <<<HTML
+                    Invalid credentials entered!
+                    <ul>
+                        <li>The username must be alphanumerical and be between 2 and 20 characters</li>
+                        <li>The password must be between 8 and 40 characters and contain only alphanumerical characters and symbols</li>
+                    </ul>
+                HTML;
             } else {
                 $connection = connect();
 

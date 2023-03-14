@@ -224,7 +224,7 @@
                                 min-width: 70%;
                             }
 
-                            .right {
+                            .right.right-large {
                                 min-width: 30%;
                                 height: min-content;
                                 padding-top: 100px;
@@ -243,13 +243,17 @@
                                 flex-direction: column;
                             }
 
-                            .right {
+                            .right.right-small {
                                 padding-top: 50px;
                                 padding-bottom: 75px;
                             }
 
                             .right.right-large {
                                 display: none;
+                            }
+
+                            .product-text {
+                                margin-top: 30px;
                             }
                         }
                     </style>
@@ -283,7 +287,7 @@
                                                     </div>
                                                     <a class="button button-secondary button-pipaluk" href="get/document.php?id={$id}">Learn More</a>
                                                 </div>
-                                                <div class="product-text" style="display:flex;flex-direction:column;gap:20px;margin-top:30px">
+                                                <div class="product-text" style="display:flex;flex-direction:column;gap:20px">
                                                     <p>{$description}</p>
                                                 </div>
                                             </div>
@@ -293,7 +297,7 @@
                                 <div class="comments">
                                     <h6 style="margin-top:40px">
                                         <i class="fa fa-comments" style="font-size:25px;margin-right:7px"></i>
-                                        Reviews - Average: <span style="color:orange">{$average} star(s)</span>
+                                        Reviews <span style="color:darkgray">(</span>Average: <span style="color:orange">{$average} star(s)</span><span style="color:darkgray">)</span>
                                     </h6>
                                     <div class="container" style="margin-top:15px">
                                         <div>{$create}</div>

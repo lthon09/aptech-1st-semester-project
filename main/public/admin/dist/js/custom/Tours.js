@@ -27,7 +27,7 @@ function fncLoad() {
       $.each(data, function (key, val) {
         if (val.Hot == "1") {
           css_hot = "label-success";
-          text_hot = "Hot Tour";
+          text_hot = "Hot";
         } else {
           css_hot = "label-danger";
           text_hot = "Normal";
