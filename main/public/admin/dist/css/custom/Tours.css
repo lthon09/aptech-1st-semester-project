@@ -1,1 +1,15 @@
 #ui-datepicker-div {z-index:9999; clip:auto}
+
+.label-danger{
+    background-color: #d9534f;
+    color:white;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.label-success{
+    background-color: #117add;
+    color:white;
+    border-radius: 15px;
+    padding: 5px;
+}

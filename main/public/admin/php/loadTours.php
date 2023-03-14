@@ -10,7 +10,8 @@ t.Price as Price,
 t.Sale as Sale,
 t.Avatar as Avatar,
 ca.Name as NameCategory,
-co.Name as NameCoutries
+co.Name as NameCoutries,
+t.Hot as Hot
 FROM `tours` t 
 LEFT JOIN categories ca on t.Category = ca.ID
 LEFT JOIN countries co on t.Country = co.ID";
@@ -28,6 +29,7 @@ while ($row = mysqli_fetch_array($result)) {
         'NameCoutries' => $row['NameCoutries'],
         'NameCategory' => $row['NameCategory'],
         'Avatar' => $row['Avatar'],
+        'Hot' => $row['Hot'],
     );
 }
 header('Content-Type: application/json; charset=utf-8');

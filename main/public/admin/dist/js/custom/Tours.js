@@ -1,5 +1,7 @@
 var html_option = "";
 var html_body = "";
+var css_hot;
+var text_hot;
 $(document).ready(function () {
   fncLoad();
   fncClick();
@@ -23,6 +25,14 @@ function fncLoad() {
     success: function (data) {
       html_body = "";
       $.each(data, function (key, val) {
+        if (val.Hot == "1") {
+          css_hot = "label-success";
+          text_hot = "Hot Tour";
+        } else {
+          css_hot = "label-danger";
+          text_hot = "Normal";
+        }
+
         html_body += "<tr>";
         html_body += "<td>" + val.id + "</td>";
         html_body += "<td>" + val.name + "</td>";
@@ -31,8 +41,15 @@ function fncLoad() {
         html_body += "<td>" + val.Price + "</td>";
         html_body += "<td>" + val.Sale + "%</td>";
         html_body += "<td>" + val.NameCoutries + "</td>";
-        html_body +='<td><img src="' + val.Avatar + '" width="50" height="50"></td>';
+        html_body +=
+          '<td><img src="' + val.Avatar + '" width="50" height="50"></td>';
         html_body += "<td>" + val.NameCategory + "</td>";
+        html_body +=
+          '<td><span class="label span-normal-width ' +
+          css_hot +
+          ' ">' +
+          text_hot +
+          "</span></td>";
         html_body += "<td>";
         html_body +=
           '<button type="button" class="btn btn-sm btn-warning btn-sua" attrId="' +
@@ -140,7 +157,7 @@ function fncClick() {
     e.preventDefault();
     if (validate()) {
       var form_data = new FormData(document.getElementById("my_form"));
-      
+
       if ($("#checkboxTour").is(":checked")) {
         form_data.append("checkboxTour", "1");
       } else {

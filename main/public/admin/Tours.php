@@ -75,6 +75,7 @@ if (!$_SESSION["Username"]) {
               <th>Country</th>
               <th>Avatar</th>
               <th>Category</th>
+              <th>Hot</th>
               <th>Function</th>
             </tr>
           </thead>
