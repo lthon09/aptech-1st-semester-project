@@ -10,7 +10,7 @@
 
     Dotenv\Dotenv::createImmutable(__DIR__) -> load();
 
-    // error_reporting(0);
+    error_reporting(0);
 
     $script = $_SERVER["SCRIPT_NAME"];
 
