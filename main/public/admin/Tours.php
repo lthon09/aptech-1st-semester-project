@@ -186,11 +186,11 @@ if (!$_SESSION["Username"]) {
                 <div class="row">
                   <div class="form-group col-6">
                     <label for="fileupload">Avatar</label>
-                    <!-- <div class="custom-file"> -->
                     <input type="fileToUpload" name="fileToUpload" class="form-control" id="fileToUpload" placeholder="Enter URL">
-                    <!-- <input type="file" name="fileToUpload" id="fileToUpload"> -->
-                    <!-- <label class="custom-file-label" for="fileupload">Choose file</label> -->
-                    <!-- </div> -->
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="checkboxTour">Hot Tour</label>
+                    <input type="checkbox" name="checkboxTour" class="form-control" id="checkboxTour">
                   </div>
                 </div>
 

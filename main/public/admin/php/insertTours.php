@@ -13,11 +13,12 @@ $country = $_POST['country'];
 $category = $_POST['category'];
 $detailedInformation = $_POST['detailedInformation'];
 $avatar = $_POST['fileToUpload'];
+$checkhotTour = $_POST['checkboxTour'];
 // $avatar = $_FILES['fileToUpload']['tmp_name'];
 // $avatar = addslashes(file_get_contents($image));
 
-$sql = "Insert into `tours` (ID, Name,ShortDescription,LongDescription,Price,Sale,Country,Category , DetailedInformations , avatar) 
-  Values ('$id','$name','$shortdescription' , '$longdescription', '$price' , '$sale' , '$country' , '$category' ,  '$detailedInformation' , '$avatar') 
+$sql = "Insert into `tours` (ID, Name,ShortDescription,LongDescription,Price,Sale,Country,Category , DetailedInformations , avatar , Hot) 
+  Values ('$id','$name','$shortdescription' , '$longdescription', '$price' , '$sale' , '$country' , '$category' ,  '$detailedInformation' , '$avatar' , '$checkhotTour') 
 ";
 $result = mysqli_query($con, $sql);
 if ($result) {

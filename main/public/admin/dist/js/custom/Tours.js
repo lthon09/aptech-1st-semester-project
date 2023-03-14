@@ -21,7 +21,6 @@ function fncLoad() {
     method: "GET",
     dataType: "JSON",
     success: function (data) {
-      console.log(data)
       html_body = "";
       $.each(data, function (key, val) {
         html_body += "<tr>";
@@ -32,7 +31,6 @@ function fncLoad() {
         html_body += "<td>" + val.Price + "</td>";
         html_body += "<td>" + val.Sale + "%</td>";
         html_body += "<td>" + val.NameCoutries + "</td>";
-        // '<td><img src="../static/assets/tours/' + val.id + "/avatar/'" + val.Avatar +' " width="50" height="50"></td>';
         html_body +='<td><img src="' + val.Avatar + '" width="50" height="50"></td>';
         html_body += "<td>" + val.NameCategory + "</td>";
         html_body += "<td>";
@@ -82,7 +80,12 @@ function fncClick() {
     if (validate()) {
       var form_data = new FormData(document.getElementById("my_form"));
       form_data.append("id", $(this).attr("attrId"));
-      console.log(...form_data);
+
+      if ($("#checkboxTour").is(":checked")) {
+        form_data.append("checkboxTour", "1");
+      } else {
+        form_data.append("checkboxTour", "0");
+      }
       $.ajax({
         url: "../../../admin/php/updateTours.php",
         method: "POST",
@@ -123,6 +126,11 @@ function fncClick() {
         $("#shortdescription").val(data[0].ShortDescription);
         $("#longdescription").val(data[0].LongDescription);
         $("#detailedInformation").val(data[0].DetailedInformations);
+        if (data[0].Hot == "1") {
+          document.getElementById("checkboxTour").checked = true;
+        } else {
+          document.getElementById("checkboxTour").checked = false;
+        }
       },
     });
   });
@@ -132,6 +140,13 @@ function fncClick() {
     e.preventDefault();
     if (validate()) {
       var form_data = new FormData(document.getElementById("my_form"));
+      
+      if ($("#checkboxTour").is(":checked")) {
+        form_data.append("checkboxTour", "1");
+      } else {
+        form_data.append("checkboxTour", "0");
+      }
+
       $.ajax({
         url: "../../../admin/php/insertTours.php",
         method: "POST",
@@ -156,14 +171,10 @@ function fncClick() {
   $(".btn-add").click(function () {
     loadCountries();
     loadCategory();
-    // $("#From").datepicker();
-    // $("#To").datepicker();
     $("#modalTours").modal("show");
     $(".modal-title").empty().append("Thêm mới Tours");
     $(".btn-themmoi").show();
     $(".btn-capnhat").hide();
-
-    // toastr.info('Are you the 6 fingered man?')
   });
 }
 
@@ -203,11 +214,6 @@ function loadCategory() {
 }
 
 function validate() {
-  // if (Date.parse($("#From").val()) - Date.parse($("#To").val()) > 0) {
-  //   alert("Ngày bắt đầu phải lớn hơn ngày kết thúc !");
-  //   return;
-  // }
-
   if (
     $("#InputName").val() == "" ||
     $("#Sale").val() == "" ||
@@ -237,5 +243,6 @@ function fncActionmodal() {
     $("#longdescription").val("");
     $("#detailedInformation").val("");
     $("#fileToUpload").val("");
+    $("#checkboxTour").prop("checked", false);
   });
 }
