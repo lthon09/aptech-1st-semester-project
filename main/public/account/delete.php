@@ -7,10 +7,10 @@
         $password = $_POST["password"];
 
         if (!validate_password($password)) {
-            redirect("/account/settings.php?deleteAccountError");
+            redirect("settings.php?deleteAccountError");
         } else {
             if (!password_verify($password, $member["Password"])) {
-                redirect("/account/settings.php?deleteAccountError");
+                redirect("settings.php?deleteAccountError");
             } else {
                 $username = $member["Username"];
                 $connection = connect();

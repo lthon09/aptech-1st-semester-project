@@ -51,7 +51,8 @@
 
                     $connection -> prepare("
                         INSERT INTO Members (Username, `Password`, Email, Administrator)
-                        VALUES (:username, :password, :email, FALSE);
+                        VALUES (:username, :password, :email, FALSE)
+                        LIMIT 1;
                     ") -> execute([
                         "username" => $username,
                         "password" => $password,

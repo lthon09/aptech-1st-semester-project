@@ -25,6 +25,7 @@
     $id_characters_length = strlen(IDS["characters"]);
 
     const LARGE_QUERY_PAGE_ITEMS_COUNT = 50;
+    const MAXIMUM_REVIEW_CONTENT_LENGTH = 4000;
 
     const CREDENTIALS = [
         "characters" => [
@@ -60,14 +61,14 @@
         return get_server() . dirname($script);
     }
 
-    function format_price(int | float $price, int $true, float $false) : int | float {
-        return (floor($price) == $price) ? $true : $false;
+    function format_float(int | float $float, int $true, float $false) : int | float {
+        return (floor($float) == $float) ? $true : $false;
     }
 
     function calculate_price(int | float $price, int $sale) : int | float {
         $calculated_price = $price - ($price * $sale / 100);
 
-        return format_price($calculated_price, (int)$calculated_price, bcadd($calculated_price, 0, 2));
+        return format_float($calculated_price, (int)$calculated_price, bcadd($calculated_price, 0, 2));
     }
 
     function generate_id(int $length, string $database) : string | false {
@@ -350,7 +351,7 @@
         $variables["logged_in"] = $is_logged_in;
 
         if ($is_logged_in) {
-            $variables["username"] = $member["Username"];
+            $variables["username"] = htmlentities($member["Username"]);
         }
 
         echo (new Mustache_Engine([

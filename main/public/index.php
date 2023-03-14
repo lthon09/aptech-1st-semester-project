@@ -30,13 +30,13 @@
 
             $tour = $statement -> fetch();
 
-            $avatar = $tour["Avatar"];
+            $avatar = htmlentities($tour["Avatar"]);
             $name = htmlentities($tour["Name"]);
             $country = htmlentities($tour["Country"]);
             $description = htmlentities($tour["ShortDescription"]);
             $original_price = $tour["Price"];
             $sale = $tour["Sale"];
-            $_original_price = "$" . format_price($original_price, (int)$original_price, $original_price);
+            $_original_price = "$" . format_float($original_price, (int)$original_price, $original_price);
 
             $_sale = "";
 

@@ -93,7 +93,8 @@
                             } else {
                                 $connection -> prepare("
                                     INSERT INTO UnverifiedMembers (ID, Username, Email, `Password`)
-                                    VALUES (:id, :username, :email, :password);
+                                    VALUES (:id, :username, :email, :password)
+                                    LIMIT 1;
                                 ") -> execute([
                                     "id" => $id,
                                     "username" => $username,
