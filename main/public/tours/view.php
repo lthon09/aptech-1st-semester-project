@@ -22,7 +22,8 @@
             if ($statement -> rowCount() === 0) {
                 redirect("list.php");
             } else {
-                $username = $member["Username"];
+                $is_logged_in = is_logged_in();
+                $username = ($is_logged_in) ? $member["Username"] : "";
 
                 $tour = $statement -> fetch();
 
@@ -76,7 +77,7 @@
 
                 $_reviews = large_query("Reviews", "WHERE Tour = ?", [$id]);
 
-                if (!is_logged_in()) {
+                if (!$is_logged_in) {
                     $current_page = urlencode(get_server() . $script . "?id={$id}");
 
                     $create = <<<HTML
@@ -130,40 +131,46 @@
                     }
                 }
 
-                foreach($_reviews as $review) {
-                    $_id = $review["ID"];
-                    $author = $review["Author"];
-                    $content = $review["Content"];
-                    $rating = $review["Rating"];
+                if (!$_reviews) {
+                    $reviews = <<<HTML
+                        <span style="margin-top:-15px">There isn't any review on this tour</span>
+                    HTML;
+                } else {
+                    foreach($_reviews as $review) {
+                        $_id = $review["ID"];
+                        $author = $review["Author"];
+                        $content = $review["Content"];
+                        $rating = $review["Rating"];
 
-                    $checked1 = ($rating >= 1) ? "checked" : "";
-                    $checked2 = ($rating >= 2) ? "checked" : "";
-                    $checked3 = ($rating >= 3) ? "checked" : "";
-                    $checked4 = ($rating >= 4) ? "checked" : "";
-                    $checked5 = ($rating === 5) ? "checked" : "";
+                        $checked1 = ($rating >= 1) ? "checked" : "";
+                        $checked2 = ($rating >= 2) ? "checked" : "";
+                        $checked3 = ($rating >= 3) ? "checked" : "";
+                        $checked4 = ($rating >= 4) ? "checked" : "";
+                        $checked5 = ($rating === 5) ? "checked" : "";
 
-                    $delete = "";
+                        $delete = "";
 
-                    if ($author === $username) {
-                        $delete = <<<HTML
-                            <a href="review/delete.php?tour={$id}&review={$_id}" style="display:inline-block;color:red;text-decoration:underline;margin-top:15px">Delete</a>
+                        if ($author === $username) {
+                            $delete = <<<HTML
+                                <a href="review/delete.php?tour={$id}&review={$_id}" style="display:inline-block;color:red;text-decoration:underline;margin-top:15px">Delete</a>
+                            HTML;
+                        }
+
+                        $reviews .= <<<HTML
+                            <div id="review-{$_id}">
+                                <span style="color:#01b3a7;cursor:pointer">{$author}</span>
+                                <p style="margin-top:5px">{$content}</span>
+                                <div style="margin-top:10px">
+                                    <label class="star {$checked1}"><i class="bi bi-star-fill"></i></label>
+                                    <label class="star {$checked2}"><i class="bi bi-star-fill"></i></label>
+                                    <label class="star {$checked3}"><i class="bi bi-star-fill"></i></label>
+                                    <label class="star {$checked4}"><i class="bi bi-star-fill"></i></label>
+                                    <label class="star {$checked5}"><i class="bi bi-star-fill"></i></label>
+                                </div>
+                                {$delete}
+                            </div>
                         HTML;
                     }
-
-                    $reviews .= <<<HTML
-                        <div id="review-{$_id}">
-                            <span style="color:#01b3a7;cursor:pointer">{$author}</span>
-                            <p style="margin-top:5px">{$content}</span>
-                            <div style="margin-top:10px">
-                                <label class="star {$checked1}"><i class="bi bi-star-fill"></i></label>
-                                <label class="star {$checked2}"><i class="bi bi-star-fill"></i></label>
-                                <label class="star {$checked3}"><i class="bi bi-star-fill"></i></label>
-                                <label class="star {$checked4}"><i class="bi bi-star-fill"></i></label>
-                                <label class="star {$checked5}"><i class="bi bi-star-fill"></i></label>
-                            </div>
-                            {$delete}
-                        </div>
-                    HTML;
                 }
             }
 
@@ -225,6 +232,10 @@
                                 padding-right: 50px;
                                 padding-bottom: 150px;
                             }
+
+                            .right.right-small {
+                                display: none;
+                            }
                         }
 
                         @media only screen and (max-width: 1000px) {
@@ -235,6 +246,10 @@
                             .right {
                                 padding-top: 50px;
                                 padding-bottom: 75px;
+                            }
+
+                            .right.right-large {
+                                display: none;
                             }
                         }
                     </style>
@@ -259,7 +274,16 @@
                                         </div>
                                         <div class="unit-body">
                                             <div class="product-body">
-                                                <div class="product-text" style="display:flex;flex-direction:column;gap:20px;margin-top:10px">
+                                                <div class="right right-small bg-gray-4" style="text-align:center">
+                                                    <div class="product-price-wrap" style="margin-bottom:20px">
+                                                        <span class="product-price" style="display:flex;flex-direction:row;justify-content:center;gap:50px">
+                                                            {$_sale}
+                                                            {$_price}
+                                                        </span>
+                                                    </div>
+                                                    <a class="button button-secondary button-pipaluk" href="get/document.php?id={$id}">Learn More</a>
+                                                </div>
+                                                <div class="product-text" style="display:flex;flex-direction:column;gap:20px;margin-top:30px">
                                                     <p>{$description}</p>
                                                 </div>
                                             </div>
@@ -277,7 +301,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="right bg-gray-4" style="text-align:center">
+                            <div class="right right-large bg-gray-4" style="text-align:center">
                                 <div class="product-price-wrap" style="margin-bottom:20px">
                                     <span class="product-price" style="display:flex;flex-direction:row;justify-content:center;gap:50px">
                                         {$_sale}
