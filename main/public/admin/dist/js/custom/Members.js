@@ -130,7 +130,7 @@ function fncClick() {
       data: { id: $(this).attr("attridsua") },
       dataType: "JSON",
       success: function (data) {
-        console.log(data)
+        // console.log(data)
         $("#InputName").val(data[0].Username);
         $("#Email").val(data[0].Email);
         if (data[0].Administrator == "1") {
@@ -218,6 +218,13 @@ function validate() {
       toastr.error("Mật khẩu không trùng khớp vui lòng thử lại");
       return false;
     }
+  }
+
+  var regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  var email =$("#Email").val();
+  if(!email.match(regexEmail)){
+    toastr.error("Email sai định dạng");
+    return false;
   }
 
   return true;
