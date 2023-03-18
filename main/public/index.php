@@ -58,7 +58,7 @@
                                         src="{$avatar}" alt="" width="600"
                                         height="366" /></div>
                             <div class="unit-body">
-                                <div class="product-big-body">
+                                <div class="product-big-body"> <!-- FIXME: add fixed width and height (or else alignment breaks for long and short content) -->
                                     <h5 class="product-big-title">{$name}, {$country}</h5>
                                     <p class="product-big-text">{$description}</p><a class="button button-black-outline button-ujarak"
                                         href="/tours/view.php?id={$id}">Learn More</a>

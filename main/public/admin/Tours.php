@@ -1,4 +1,4 @@
-<?php
+<?php // FIXME: dont display full details (too long)
 require_once('connect.php');
 session_start();
 if (!$_SESSION["Username"]) {
